@@ -39,7 +39,7 @@
             android:name=".view.detailpost.DetailPostActivity"
             android:exported="false" />
         <activity
-            android:name=".view.splash.SplashActivity"
+            android:name=".view.main.MainActivity"
             android:exported="false" />
         <activity
             android:name=".view.register.RegisterActivity"
@@ -51,7 +51,7 @@
             android:name=".view.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".view.main.MainActivity"
+            android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

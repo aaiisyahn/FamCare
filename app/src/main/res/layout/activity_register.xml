@@ -236,7 +236,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/ttsTextView"
+        android:id="@+id/bottom1TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
@@ -252,7 +252,7 @@
         tools:alpha="100" />
 
     <TextView
-        android:id="@+id/ttsTextViews"
+        android:id="@+id/bottom2TextViews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -265,7 +265,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ttsTextView"
+        app:layout_constraintStart_toEndOf="@+id/bottom1TextView"
         app:layout_constraintTop_toBottomOf="@+id/loginButton"
         app:layout_constraintVertical_bias="0.008"
         tools:alpha="100" />
