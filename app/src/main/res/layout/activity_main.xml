@@ -36,29 +36,46 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="38dp"
                     android:layout_marginEnd="8dp"
                     android:backgroundTint="@color/button"
                     android:fontFamily="@font/montserratsemibold"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
                     android:text="female"
                     android:textSize="10sp" />
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="55dp"
                     android:layout_height="38dp"
                     android:layout_marginEnd="8dp"
                     android:backgroundTint="@color/button"
                     android:fontFamily="@font/montserratsemibold"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
                     android:text="male"
                     android:textSize="10sp" />
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="140dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/button"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/years_experiences"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:layout_width="70dp"
                     android:layout_height="38dp"
                     android:backgroundTint="@color/button"
                     android:fontFamily="@font/montserratsemibold"
-                    android:text="@string/minimum_salary"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="monthly"
                     android:textSize="10sp" />
 
             </LinearLayout>
@@ -74,37 +91,34 @@
 
                 <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="38dp"
                     android:layout_marginEnd="8dp"
                     android:backgroundTint="@color/button"
                     android:fontFamily="@font/montserratsemibold"
-                    android:text="@string/years_experiences"
-                    android:textSize="10sp" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/button"
-                    android:fontFamily="@font/montserratsemibold"
-                    android:text="daily"
-                    android:textSize="10sp" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="8dp"
-                    android:backgroundTint="@color/button"
-                    android:fontFamily="@font/montserratsemibold"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
                     android:text="monthly"
                     android:textSize="10sp" />
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_width="130dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="8dp"
                     android:backgroundTint="@color/button"
                     android:fontFamily="@font/montserratsemibold"
-                    android:text="disability"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="@string/minimum_salary"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="38dp"
+                    android:backgroundTint="@color/button"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"
+                    android:text="disability care"
                     android:textSize="10sp" />
 
             </LinearLayout>
@@ -120,7 +134,7 @@
             android:padding="8dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
-            tools:listitem="@layout/item_row_cardview" />
+            tools:listitem="@layout/item_row_nanny" />
 
     </RelativeLayout>
 

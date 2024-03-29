@@ -1,10 +1,10 @@
 package com.app.famcare.view.profile
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import com.app.famcare.R
@@ -13,11 +13,10 @@ import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.maps.MapsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class ProfileActivity : AppCompatActivity() {
-
+class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_edit_profile)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -56,12 +55,6 @@ class ProfileActivity : AppCompatActivity() {
                 else -> false
             }
         }
-        val editProfileCardView = findViewById<CardView>(R.id.editProfile)
-        editProfileCardView.setOnClickListener {
-            val intent = Intent(this, EditProfileActivity::class.java)
-            startActivity(intent)
-        }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

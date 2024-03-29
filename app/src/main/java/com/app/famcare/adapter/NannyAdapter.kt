@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.famcare.R
-import com.app.famcare.adapter.Nanny
 import com.app.famcare.view.detailpost.DetailPostActivity
 
 class NannyAdapter(private val context: Context, private val nannyList: List<Nanny>) :
@@ -24,7 +23,7 @@ class NannyAdapter(private val context: Context, private val nannyList: List<Nan
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NannyViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_row_cardview, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_row_nanny, parent, false)
         return NannyViewHolder(view)
     }
 

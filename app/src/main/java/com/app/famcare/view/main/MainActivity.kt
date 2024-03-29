@@ -27,34 +27,36 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = NannyAdapter(this, nannyList)
 
-        // Mengatur RecyclerView
         binding.recyclerViewNanny.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerViewNanny.adapter = adapter
 
-        //Kode Navigasi untuk Bottom Bar
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.page_1
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.page_1 -> {
                     true
                 }
+
                 R.id.page_2 -> {
                     val intent = Intent(this, BookmarkActivity::class.java)
                     startActivity(intent)
                     true
                 }
+
                 R.id.page_3 -> {
                     val intent = Intent(this, MapsActivity::class.java)
                     startActivity(intent)
                     true
                 }
+
                 R.id.page_4 -> {
                     val intent = Intent(this, ProfileActivity::class.java)
                     startActivity(intent)
                     true
                 }
+
                 else -> false
             }
         }
