@@ -52,6 +52,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     true
                 }
                 R.id.page_3 -> {
+                    val intent = Intent(this, MapsActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.page_4 -> {
@@ -81,8 +83,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val daycare = LatLng(-6.246693261280425, 106.79158614986169)
+        mMap.addMarker(MarkerOptions().position(daycare).title("My Tootsie Bear Daycare Gandaria"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(daycare))
     }
 }

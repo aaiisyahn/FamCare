@@ -95,16 +95,16 @@ object DataNanny {
     )
 
     private val pictNanny = arrayOf(
-        R.drawable.ic_male_profile,
-        R.drawable.ic_female_profile,
-        R.drawable.ic_female_profile,
-        R.drawable.ic_female_profile,
-        R.drawable.ic_male_profile,
-        R.drawable.ic_male_profile,
-        R.drawable.ic_female_profile,
-        R.drawable.ic_female_profile,
-        R.drawable.ic_female_profile,
-        R.drawable.ic_male_profile
+        R.drawable.nanny_placeholder_male,
+        R.drawable.nanny_placeholder,
+        R.drawable.nanny_placeholder,
+        R.drawable.nanny_placeholder,
+        R.drawable.nanny_placeholder_male,
+        R.drawable.nanny_placeholder_male,
+        R.drawable.nanny_placeholder,
+        R.drawable.nanny_placeholder,
+        R.drawable.nanny_placeholder,
+        R.drawable.nanny_placeholder_male
     )
 
     private val locationNanny = arrayOf(
