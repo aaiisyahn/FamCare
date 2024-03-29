@@ -1,100 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.app.famcare.view.main.MainActivity">
 
-    <include
-        android:id="@+id/HeaderLayout"
-        layout="@layout/header_layout" />
-
-    <include
-        android:id="@+id/SearchBarLayout"
-        layout="@layout/search_bar_layout"
+    <!-- Content Area -->
+    <RelativeLayout
+        android:id="@+id/contentLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/HeaderLayout" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/tags"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/SearchBarLayout"
-        android:padding="8dp">
+        <include
+            android:id="@+id/SearchBarLayout"
+            layout="@layout/search_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <!-- tag baris pertama -->
         <LinearLayout
-            android:id="@+id/tag_row_1"
+            android:id="@+id/tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical|center_horizontal">
+            android:orientation="vertical"
+            android:layout_below="@id/SearchBarLayout"
+            android:padding="8dp">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:textSize="10sp"
-                android:text="Tag 1"
-                android:layout_marginEnd="8dp"/>
+            <!-- tag baris pertama -->
+            <LinearLayout
+                android:id="@+id/tag_row_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|center_horizontal">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:textSize="10sp"
-                android:text="Tag 2"
-                android:layout_marginEnd="8dp"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:textSize="10sp"
+                    android:text="Tag 1"
+                    android:layout_marginEnd="8dp"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:textSize="10sp"
-                android:text="ini ceritanya tag yang begitu"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:backgroundTint="@color/button"
+                    android:textSize="10sp"
+                    android:text="Tag 2"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:textSize="10sp"
+                    android:text="ini ceritanya tag yang begitu"/>
+
+            </LinearLayout>
+
+            <!-- tag baris kedua -->
+            <LinearLayout
+                android:id="@+id/tag_row_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/tag_row_1">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:textSize="10sp"
+                    android:text="Tag 4"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:textSize="10sp"
+                    android:text="ini ceritanya tag yang begitu"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:textSize="10sp"
+                    android:text="Tag 6"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <!-- tag baris kedua -->
         <LinearLayout
-            android:id="@+id/tag_row_2"
+            android:id="@+id/ContentView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_below="@+id/tag_row_1">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@id/tags">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:textSize="10sp"
-                android:text="Tag 4"
-                android:layout_marginEnd="8dp"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:textSize="10sp"
-                android:text="ini ceritanya tag yang begitu"
-                android:layout_marginEnd="8dp"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:textSize="10sp"
-                android:text="Tag 6"/>
+            <!-- Your content here -->
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <!-- BottomNavigationView -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@id/tags">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_navigation_menu" />
 
-    </LinearLayout>
-
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

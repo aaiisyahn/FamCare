@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.login.LoginActivity">
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="320dp"
@@ -58,6 +57,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailTextView"
@@ -75,8 +78,8 @@
 
     <TextView
         android:id="@+id/passwordTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="97dp"
+        android:layout_height="29dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:text="Password"
@@ -93,11 +96,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextView"
-        app:startIconDrawable="@drawable/baseline_email_24"
+        app:startIconDrawable="@drawable/baseline_lock_24"
         tools:alpha="100">
 
         <com.app.famcare.view.customview.PasswordEditText
@@ -150,29 +157,33 @@
         android:id="@+id/ttsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="4dp"
         android:text="Don't have account?"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.075"
+        app:layout_constraintVertical_bias="0.027"
         tools:alpha="100" />
 
     <TextView
         android:id="@+id/ttsTextViews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="90dp"
         android:text="Register"
-        android:textColor="@color/black"
+        android:textColor="@color/button"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ttsTextView"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.081"
+        app:layout_constraintVertical_bias="0.028"
         tools:alpha="100" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -180,6 +191,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="612dp" />
+        app:layout_constraintGuide_end="244dp" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

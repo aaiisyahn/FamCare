@@ -3,7 +3,8 @@
     <style name="Base.Theme.FamCare" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="colorPrimary">@color/icon</item>
+        <item name="colorPrimary">@color/icon_active</item>
+        <item name="colorOnPrimary">@color/main</item>
     </style>
 
     <style name="Theme.FamCare" parent="Base.Theme.FamCare" />
