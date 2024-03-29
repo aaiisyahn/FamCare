@@ -2,10 +2,10 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("kotlin-parcelize")
 }
 
 android {
-    namespace = "com.app.famcare"
     compileSdk = 33
 
     defaultConfig {
@@ -14,8 +14,9 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // Tambahkan namespace di sini
+        namespace = "com.app.famcare"
     }
 
     buildTypes {
@@ -37,10 +38,14 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    // Aktifkan View Binding di sini
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -51,5 +56,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
 }
