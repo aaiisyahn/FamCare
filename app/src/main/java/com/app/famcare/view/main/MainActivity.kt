@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         //Kode Navigasi untuk Bottom Bar
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigation.selectedItemId = R.id.page_1
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when(item.itemId) {
