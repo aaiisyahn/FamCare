@@ -27,9 +27,9 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = NannyAdapter(this, nannyList)
 
+        // Mengatur RecyclerView
         binding.recyclerViewNanny.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerViewNanny.adapter = adapter
-        setContentView(R.layout.activity_main)
 
         //Kode Navigasi untuk Bottom Bar
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
