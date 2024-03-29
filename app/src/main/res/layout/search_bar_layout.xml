@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    android:cardCornerRadius="8dp"
-    android:cardElevation="4dp"
-    android:clipToPadding="true">
+    android:clipToPadding="true"
+    app:cardCornerRadius="12dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,6 +19,9 @@
             android:id="@+id/editTextSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@id/imageViewSearch"
             android:background="@android:color/transparent"
             android:hint="@string/search_hint"
             android:imeOptions="actionSearch"
@@ -27,22 +29,19 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:singleLine="true"
-            android:textColorHint="@android:color/darker_gray"
-            android:layout_toStartOf="@id/imageViewSearch"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true" />
+            android:textColorHint="@android:color/darker_gray" />
 
         <ImageView
             android:id="@+id/imageViewSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:contentDescription="Search"
-            android:src="@drawable/ic_search"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
+            android:src="@drawable/ic_search" />
 
     </RelativeLayout>
 

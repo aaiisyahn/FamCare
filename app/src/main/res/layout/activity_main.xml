@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.app.famcare.view.main.MainActivity">
 
-    <!-- Content Area -->
     <RelativeLayout
         android:id="@+id/contentLayout"
         android:layout_width="match_parent"
@@ -16,95 +15,108 @@
             android:id="@+id/SearchBarLayout"
             layout="@layout/search_bar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp" />
 
         <LinearLayout
             android:id="@+id/tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_below="@id/SearchBarLayout"
+            android:orientation="vertical"
             android:padding="8dp">
 
-            <!-- tag baris pertama -->
             <LinearLayout
                 android:id="@+id/tag_row_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical|center_horizontal">
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="horizontal">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:textSize="10sp"
-                    android:text="Tag 1"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/button"
+                    android:text="female"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/button"
+                    android:text="male"
+                    android:textSize="10sp" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:backgroundTint="@color/button"
-                    android:textSize="10sp"
-                    android:text="Tag 2"
-                    android:layout_marginEnd="8dp"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:textSize="10sp"
-                    android:text="ini ceritanya tag yang begitu"/>
+                    android:text="@string/minimum_salary"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
-            <!-- tag baris kedua -->
             <LinearLayout
                 android:id="@+id/tag_row_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical|center_horizontal"
+                android:layout_below="@+id/tag_row_1"
                 android:layout_marginTop="8dp"
-                android:layout_below="@+id/tag_row_1">
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="horizontal">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:textSize="10sp"
-                    android:text="Tag 4"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/button"
+                    android:text="@string/years_experiences"
+                    android:textSize="10sp" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:textSize="10sp"
-                    android:text="ini ceritanya tag yang begitu"
-                    android:layout_marginEnd="8dp"/>
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/button"
+                    android:text="daily"
+                    android:textSize="10sp" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:textSize="10sp"
-                    android:text="Tag 6"/>
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/button"
+                    android:text="monthly"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:backgroundTint="@color/button"
+                    android:text="disability"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ContentView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewNanny"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_below="@id/tags">
-
-            <!-- Your content here -->
-
-        </LinearLayout>
+            android:layout_below="@id/tags"
+            android:layout_marginBottom="56dp"
+            android:padding="8dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/item_row_cardview" />
 
     </RelativeLayout>
 
-    <!-- BottomNavigationView -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
