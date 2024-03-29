@@ -69,8 +69,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> { // Jika tombol back di toolbar ditekan
-                onBackPressed() // Arahkan ke activity sebelumnya
+            android.R.id.home -> {
+                onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)

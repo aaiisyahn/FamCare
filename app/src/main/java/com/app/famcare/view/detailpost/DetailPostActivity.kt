@@ -20,7 +20,7 @@ class DetailPostActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
-            title = "Nanny's Detail"
+            title = ""
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
