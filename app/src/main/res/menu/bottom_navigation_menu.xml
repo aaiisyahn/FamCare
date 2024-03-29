@@ -3,21 +3,21 @@
     <item
         android:id="@+id/page_1"
         android:enabled="true"
-        android:icon="@drawable/baseline_lock_24"
+        android:icon="@drawable/round_business_center_24"
         android:title="Discover"/>
     <item
         android:id="@+id/page_2"
         android:enabled="true"
-        android:icon="@drawable/baseline_email_24"
-        android:title="Bookmars"/>
+        android:icon="@drawable/baseline_bookmark_24"
+        android:title="Bookmark"/>
     <item
         android:id="@+id/page_3"
         android:enabled="true"
-        android:icon="@drawable/baseline_email_24"
+        android:icon="@drawable/baseline_fmd_good_24"
         android:title="Maps"/>
     <item
         android:id="@+id/page_4"
         android:enabled="true"
-        android:icon="@drawable/baseline_email_24"
+        android:icon="@drawable/baseline_person_24"
         android:title="Profile"/>
 </menu>

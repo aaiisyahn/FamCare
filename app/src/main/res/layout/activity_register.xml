@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.main.MainActivity">
+    tools:context=".view.register.RegisterActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -25,13 +25,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/montserratbold"
         android:text="Sign Up"
         android:textColor="@color/black"
-        android:textSize="28sp"
-        android:textStyle="bold"
+        android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
@@ -46,6 +45,7 @@
         android:text="Email"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:fontFamily="@font/montserrat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fullnameEditTextLayout"
         tools:alpha="100" />
@@ -84,7 +84,8 @@
         android:layout_marginTop="12dp"
         android:text="Phone Number"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
+        android:fontFamily="@font/montserrat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
         tools:alpha="100" />
@@ -117,13 +118,14 @@
 
     <TextView
         android:id="@+id/passwordTextView"
-        android:layout_width="97dp"
-        android:layout_height="29dp"
+        android:layout_width="94dp"
+        android:layout_height="20dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
+        android:fontFamily="@font/montserrat"
         android:text="Password"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneEditTextLayout"
         tools:alpha="100" />
@@ -158,10 +160,11 @@
 
     <TextView
         android:id="@+id/fullnameTextView"
-        android:layout_width="97dp"
-        android:layout_height="29dp"
+        android:layout_width="99dp"
+        android:layout_height="24dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/montserrat"
         android:text="Full Name"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -200,20 +203,18 @@
     <Button
         android:id="@+id/loginButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="66dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
         android:backgroundTint="@color/icon_active"
+        android:fontFamily="@font/montserratsemibold"
         android:text="Register"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout"
-        app:layout_constraintVertical_bias="0.0"
         tools:alpha="100" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -222,7 +223,7 @@
         android:layout_height="64dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.23"
+        app:layout_constraintGuide_percent="0.17"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -231,22 +232,23 @@
         android:layout_height="64dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.06"
+        app:layout_constraintGuide_percent="0.02"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/ttsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/montserrat"
         android:text="Already have an account?"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        app:layout_constraintVertical_bias="0.008"
+        app:layout_constraintVertical_bias="0.006"
         tools:alpha="100" />
 
     <TextView
@@ -254,8 +256,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="90dp"
+        android:fontFamily="@font/montserratsemibold"
         android:text="Log in"
         android:textColor="@color/button"
         android:textSize="16sp"
