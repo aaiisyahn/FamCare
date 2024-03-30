@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import com.app.famcare.R
+import com.app.famcare.view.about.AboutActivity
 import com.app.famcare.view.bookmark.BookmarkActivity
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.maps.MapsActivity
@@ -59,6 +60,12 @@ class ProfileActivity : AppCompatActivity() {
         val editProfileCardView = findViewById<CardView>(R.id.editProfile)
         editProfileCardView.setOnClickListener {
             val intent = Intent(this, EditProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        val editAboutCardView = findViewById<CardView>(R.id.aboutPage)
+        editAboutCardView.setOnClickListener {
+            val intent = Intent(this, AboutActivity::class.java)
             startActivity(intent)
         }
 

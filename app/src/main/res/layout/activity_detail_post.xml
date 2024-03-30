@@ -37,32 +37,6 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageViewNanny"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:contentDescription="nanny image"
-                android:src="@drawable/nanny_placeholder" />
-
-            <ImageView
-                android:id="@+id/iv_bookmark"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="-25dp"
-                android:contentDescription="bookmark"
-                android:src="@drawable/baseline_bookmark_24" />
-        </LinearLayout>
-
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -80,10 +54,38 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp">
 
+                <LinearLayout
+                    android:id="@+id/imageViewNannyBookmark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageViewNanny"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="nanny image"
+                        android:src="@drawable/nanny_placeholder" />
+
+                    <ImageView
+                        android:id="@+id/iv_bookmark"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="-25dp"
+                        android:contentDescription="bookmark"
+                        android:src="@drawable/baseline_bookmark_24" />
+                </LinearLayout>
+
                 <ImageView
                     android:id="@+id/imageViewGender"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_below="@id/imageViewNannyBookmark"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:contentDescription="gender"
@@ -243,6 +245,7 @@
                     android:fontFamily="@font/montserratsemibold"
                     android:gravity="center_horizontal"
                     android:text="Skill"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -255,6 +258,7 @@
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/montserratsemibold"
                     android:gravity="center_horizontal"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"
                     tools:text="daily, cleaning, disability care" />
 
@@ -268,7 +272,7 @@
                     android:layout_marginBottom="15dp"
                     android:fontFamily="@font/montserratsemibold"
                     android:text="Contact Nanny"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
             </RelativeLayout>
 
