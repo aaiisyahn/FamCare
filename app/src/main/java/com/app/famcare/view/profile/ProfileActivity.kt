@@ -3,6 +3,7 @@ package com.app.famcare.view.profile
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -10,6 +11,7 @@ import androidx.cardview.widget.CardView
 import com.app.famcare.R
 import com.app.famcare.view.about.AboutActivity
 import com.app.famcare.view.bookmark.BookmarkActivity
+import com.app.famcare.view.login.LoginActivity
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.maps.MapsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -19,6 +21,9 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+        val usernameImageView = findViewById<ImageView>(R.id.image_profile)
+        usernameImageView.setImageResource(R.drawable.user)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -66,6 +71,12 @@ class ProfileActivity : AppCompatActivity() {
         val editAboutCardView = findViewById<CardView>(R.id.aboutPage)
         editAboutCardView.setOnClickListener {
             val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
+        }
+
+        val logoutCardView = findViewById<CardView>(R.id.logoutButton)
+        logoutCardView.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 

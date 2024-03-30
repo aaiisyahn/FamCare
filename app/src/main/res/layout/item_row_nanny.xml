@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserratsemibold"
                 android:gravity="center_vertical"
-                android:text="4.0"
+                android:text="4.5"
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
 

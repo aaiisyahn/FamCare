@@ -58,7 +58,7 @@
                 android:layout_marginTop="25dp"
                 android:src="@drawable/nanny_placeholder"
                 tools:alpha="100"
-                tools:src="@drawable/nanny_placeholder" />
+                tools:src="@drawable/user" />
 
             <ImageView
                 android:id="@+id/editProfileImage"
