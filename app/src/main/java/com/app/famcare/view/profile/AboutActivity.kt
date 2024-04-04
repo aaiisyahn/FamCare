@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.app.famcare.view.bookmark.BookmarkActivity
 import com.app.famcare.view.main.MainActivity
-import com.app.famcare.view.maps.MapsActivity
+import com.app.famcare.view.maps.DaycareMapsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AboutActivity : AppCompatActivity() {
@@ -40,7 +40,7 @@ class AboutActivity : AppCompatActivity() {
                 }
 
                 R.id.page_3 -> {
-                    val intent = Intent(this, MapsActivity::class.java)
+                    val intent = Intent(this, DaycareMapsActivity::class.java)
                     startActivity(intent)
                     true
                 }
