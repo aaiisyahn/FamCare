@@ -55,8 +55,8 @@ class ElderlyMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val daycare = LatLng(-6.246693261280425, 106.79158614986169)
-        mMap.addMarker(MarkerOptions().position(daycare).title("My Tootsie Bear Daycare Gandaria"))
+        val daycare = LatLng(-6.254177217492762, 106.78671192555775)
+        mMap.addMarker(MarkerOptions().position(daycare).title("Elderly Social Institution Tresna Budi Mulia"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(daycare))
     }
 }
