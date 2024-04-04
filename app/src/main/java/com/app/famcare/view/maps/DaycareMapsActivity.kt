@@ -7,7 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.app.famcare.R
 import com.app.famcare.databinding.ActivityMapsBinding
-import com.app.famcare.view.bookmark.BookmarkActivity
+import com.app.famcare.view.facilities.FacilitiesActivity
+import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.profile.ProfileActivity
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,7 +20,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class DaycareMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
@@ -34,36 +35,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
-
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigation.selectedItemId = R.id.page_3
-
-        bottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.page_1 -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.page_2 -> {
-                    val intent = Intent(this, BookmarkActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.page_3 -> {
-                    val intent = Intent(this, MapsActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.page_4 -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                else -> false
-            }
-        }
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment

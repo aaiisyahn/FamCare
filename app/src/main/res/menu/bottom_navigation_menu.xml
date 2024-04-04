@@ -14,7 +14,7 @@
         android:id="@+id/page_3"
         android:enabled="true"
         android:icon="@drawable/baseline_fmd_good_24"
-        android:title="Maps"/>
+        android:title="Facilities"/>
     <item
         android:id="@+id/page_4"
         android:enabled="true"

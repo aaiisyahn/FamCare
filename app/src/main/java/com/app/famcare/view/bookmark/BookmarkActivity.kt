@@ -10,9 +10,9 @@ import com.app.famcare.R
 import com.app.famcare.adapter.DataNanny
 import com.app.famcare.adapter.BookmarkAdapter
 import com.app.famcare.databinding.ActivityBookmarkBinding
-import com.app.famcare.databinding.ActivityMainBinding
+import com.app.famcare.view.facilities.FacilitiesActivity
+import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.main.MainActivity
-import com.app.famcare.view.maps.MapsActivity
 import com.app.famcare.view.profile.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -51,12 +51,12 @@ class BookmarkActivity : AppCompatActivity() {
                     true
                 }
                 R.id.page_2 -> {
-                    val intent = Intent(this, BookmarkActivity::class.java)
+                    val intent = Intent(this, HistoryActivity::class.java)
                     startActivity(intent)
                     true
                 }
                 R.id.page_3 -> {
-                    val intent = Intent(this, MapsActivity::class.java)
+                    val intent = Intent(this, FacilitiesActivity::class.java)
                     startActivity(intent)
                     true
                 }

@@ -1,57 +1,67 @@
-package com.app.famcare.view.about
+package com.app.famcare.view.facilities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.app.famcare.R
-import android.content.Intent
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
-import com.app.famcare.view.facilities.FacilitiesActivity
+import com.app.famcare.R
+import com.app.famcare.databinding.ActivityFacilitiesBinding
 import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.main.MainActivity
+import com.app.famcare.view.maps.DaycareMapsActivity
+import com.app.famcare.view.maps.ElderlyMapsActivity
 import com.app.famcare.view.profile.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class AboutActivity : AppCompatActivity() {
+class FacilitiesActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityFacilitiesBinding
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
+        binding = ActivityFacilitiesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigation.selectedItemId = R.id.page_4
+        bottomNavigation.selectedItemId = R.id.page_3
 
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
+        // Menambahkan onClickListener ke CardView untuk mengarahkan ke activity lain
+        binding.cardViewDaycare.setOnClickListener {
+            val intent = Intent(this, DaycareMapsActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cardViewElderlycare.setOnClickListener {
+            val intent = Intent(this, ElderlyMapsActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Menambahkan onClickListener ke BottomNavigationView
+        binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.page_1 -> {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     true
                 }
-
                 R.id.page_2 -> {
                     val intent = Intent(this, HistoryActivity::class.java)
                     startActivity(intent)
                     true
                 }
-
                 R.id.page_3 -> {
-                    val intent = Intent(this, FacilitiesActivity::class.java)
-                    startActivity(intent)
+                    // Tidak perlu melakukan apa pun karena sudah berada di halaman fasilitas
                     true
                 }
-
                 R.id.page_4 -> {
                     val intent = Intent(this, ProfileActivity::class.java)
                     startActivity(intent)
                     true
                 }
-
                 else -> false
             }
         }
@@ -63,7 +73,6 @@ class AboutActivity : AppCompatActivity() {
                 onBackPressed()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
