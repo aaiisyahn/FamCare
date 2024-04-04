@@ -17,6 +17,8 @@ class Nanny(
     var pict: Int = 0,
     var location: String = ""
 ) : Parcelable {
+    constructor() : this("", "", 0, "", "", ArrayList(), "", 0.0, "", 0, "")
+
     companion object {
         val listData: ArrayList<Nanny>
             get() {
