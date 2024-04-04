@@ -107,12 +107,12 @@
         app:startIconDrawable="@drawable/baseline_phone_24"
         tools:alpha="100">
 
-        <com.app.famcare.view.customview.EmailEditText
+        <EditText
             android:id="@+id/phoneEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textEmailAddress"
+            android:inputType="phone"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 

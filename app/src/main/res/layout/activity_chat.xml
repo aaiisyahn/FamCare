@@ -13,16 +13,28 @@
         android:layout_height="wrap_content"
         android:background="@color/icon_active">
 
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="28dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.005"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
             android:src="@drawable/nanny_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivBack"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -55,8 +67,8 @@
 
         <ImageView
             android:id="@+id/ivMessenger"
-            android:layout_width="38dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/baseline_account_circle_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -66,10 +78,10 @@
             android:id="@+id/tvMessenger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
             android:fontFamily="@font/montserratsemibold"
-            android:text="User"
+            android:text="Lee Dohyun"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="17sp"
             android:textStyle="bold"
@@ -82,7 +94,7 @@
             android:id="@+id/tvMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/rounded_message_tosca"
             android:maxWidth="250dp"
             android:padding="10dp"

@@ -8,12 +8,16 @@ import com.app.famcare.databinding.ActivityMainBinding
 
 class ChatActivity : AppCompatActivity() {
 
-
     private lateinit var binding: ActivityChatBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_chat)
+        setContentView(binding.root)
+
+        // Mengatur OnClickListener pada ImageView ivBack
+        binding.ivBack.setOnClickListener {
+            onBackPressed() // Memanggil method onBackPressed() untuk kembali ke activity sebelumnya
+        }
     }
 }
-
