@@ -18,7 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BookmarkActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBookmarkBinding
-    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,44 +38,15 @@ class BookmarkActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigation.selectedItemId = R.id.page_2
+    }
+        override fun onOptionsItemSelected(item: MenuItem): Boolean {
+            return when (item.itemId) {
+                android.R.id.home -> {
+                    onBackPressed()
+                    true
+                }
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.page_1 -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.page_2 -> {
-                    val intent = Intent(this, HistoryActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.page_3 -> {
-                    val intent = Intent(this, FacilitiesActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.page_4 -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                else -> false
+                else -> super.onOptionsItemSelected(item)
             }
         }
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-}
