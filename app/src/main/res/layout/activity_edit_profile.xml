@@ -104,18 +104,57 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/emailTextView"
+                android:id="@+id/genderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/montserrat"
-                android:text="Email"
+                android:text="Gender"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/genderRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp">
+
+                <RadioButton
+                    android:id="@+id/radioFemale"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:layout_width="0dp"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_weight="1"
+                    android:textSize="14sp"/>
+
+                <RadioButton
+                    android:id="@+id/radioMale"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_width="0dp"
+                    android:textSize="14sp"
+                    android:layout_weight="1" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/addressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Address"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailEditTextLayout"
+                android:id="@+id/addressEditTextLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -126,14 +165,14 @@
                 app:boxCornerRadiusBottomStart="20dp"
                 app:boxCornerRadiusTopEnd="20dp"
                 app:boxCornerRadiusTopStart="20dp"
-                app:startIconDrawable="@drawable/baseline_email_24">
+                app:startIconDrawable="@drawable/baseline_location_24">
 
                 <EditText
-                    android:id="@+id/emailEditText"
+                    android:id="@+id/addressEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textPersonName"
                     tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 

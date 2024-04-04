@@ -1,17 +1,14 @@
-package com.app.famcare.view.about
+package com.app.famcare.view.profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.app.famcare.R
 import android.content.Intent
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
 import com.app.famcare.view.bookmark.BookmarkActivity
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.maps.MapsActivity
-import com.app.famcare.view.profile.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AboutActivity : AppCompatActivity() {
