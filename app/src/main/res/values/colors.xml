@@ -14,4 +14,5 @@
     <color name="search_icon">#40A7AD</color>
     <color name="woman">#F527A3</color>
     <color name="man">#4886E3</color>
+    <color name="grey">#808080</color>
 </resources>

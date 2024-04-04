@@ -1,9 +1,17 @@
 package com.app.famcare.view.detailpost
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import com.app.famcare.R
 import com.app.famcare.adapter.Nanny
 import com.app.famcare.databinding.ActivityDetailPostBinding
+import com.app.famcare.view.chat.ChatActivity
+import com.app.famcare.view.profile.EditProfileActivity
+import android.widget.ImageView
+import com.app.famcare.view.booking.BookDailyActivity
+import android.widget.Button
 
 class DetailPostActivity : AppCompatActivity() {
 
@@ -57,6 +65,18 @@ class DetailPostActivity : AppCompatActivity() {
 
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
+        }
+
+        val chatNannyView = findViewById<ImageView>(R.id.imageViewContact)
+        chatNannyView.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
+
+        val bookNannyView = findViewById<Button>(R.id.buttonContactNanny)
+        bookNannyView.setOnClickListener {
+            val intent = Intent(this, BookDailyActivity::class.java)
+            startActivity(intent)
         }
     }
 

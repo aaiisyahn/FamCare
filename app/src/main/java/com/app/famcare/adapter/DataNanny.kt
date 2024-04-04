@@ -39,29 +39,29 @@ object DataNanny {
     )
 
     private val salaryNanny = arrayOf(
-        ">Rp5.000.000,00",
-        "<Rp5.000.000,00",
-        ">Rp5.000.000,00",
-        "<Rp5.000.000,00",
-        ">Rp5.000.000,00",
-        "<Rp5.000.000,00",
-        ">Rp5.000.000,00",
-        "<Rp5.000.000,00",
-        ">Rp5.000.000,00",
-        "<Rp5.000.000,00"
+        "Rp500.000,00 /8 hours",   // daily
+        "Rp4.200.000,00 /month",  // monthly
+        "Rp800.000,00 /8 hours",   // daily
+        "Rp3.000.000,00/month",  // monthly
+        "Rp600.000,00/8 hours",   // daily
+        "Rp2.500.000,00/month",  // monthly
+        "Rp700.000,00/8 hours",   // daily
+        "Rp3.800.000,00/month",  // monthly
+        "Rp550.000,00/8 hours",   // daily
+        "Rp2.800.000,00/month"   // monthly
     )
 
     private val skillNanny = arrayOf(
-        listOf("cooking", "cleaning", "child care"),
-        listOf("child care", "first aid"),
-        listOf("child care", "housekeeping"),
-        listOf("cooking", "child care"),
-        listOf("cleaning", "child care"),
-        listOf("cooking", "cleaning"),
-        listOf("child care", "housekeeping"),
-        listOf("cooking", "child care"),
-        listOf("cleaning", "child care"),
-        listOf("child care", "housekeeping")
+        listOf("Disability Care", "Multitasking", "Child Care", "Storytelling"),
+        listOf("Child Care", "First Aid", "Cooking", "Cleaning", "Driving"),
+        listOf("Child Care", "Housekeeping", "Cooking", "Disability Care"),
+        listOf("Cooking", "Child Care", "Disability Care", "Driving"),
+        listOf("Cleaning", "Child Care", "Storytelling", "Sewing"),
+        listOf("Cooking", "Cleaning", "Driving", "Multitasking"),
+        listOf("Child Care", "Housekeeping", "Storytelling", "Sewing"),
+        listOf("Cooking", "Child Care", "Multitasking", "Driving"),
+        listOf("Cleaning", "Child Care", "Disability Care", "Sewing"),
+        listOf("Child Care", "Housekeeping", "Multitasking", "Driving")
     )
 
     private val typeNanny = arrayOf(

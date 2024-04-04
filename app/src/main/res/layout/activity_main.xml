@@ -43,7 +43,7 @@
                     android:fontFamily="@font/montserratsemibold"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
-                    android:text="female"
+                    android:text="nanny"
                     android:textSize="10sp" />
 
                 <Button
@@ -54,7 +54,7 @@
                     android:fontFamily="@font/montserratsemibold"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
-                    android:text="male"
+                    android:text="manny"
                     android:textSize="10sp" />
 
                 <Button
@@ -97,7 +97,7 @@
                     android:fontFamily="@font/montserratsemibold"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
-                    android:text="monthly"
+                    android:text="daily"
                     android:textSize="10sp" />
 
                 <Button
