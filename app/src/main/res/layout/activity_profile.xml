@@ -74,7 +74,7 @@
                         android:layout_height="100dp"
                         android:layout_marginStart="10dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/user" />
+                        android:src="@drawable/user"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -90,7 +90,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserratsemibold"
-                            android:text="Nama Lengkap"
+                            android:text="Lee Dohyun"
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -112,7 +112,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:fontFamily="@font/montserratsemibold"
-                                android:text="email@example.com"
+                                android:text="dohyn@gmail.com"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -134,7 +134,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:fontFamily="@font/montserratsemibold"
-                                android:text="081234567788"
+                                android:text="081246576879"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
                         </LinearLayout>

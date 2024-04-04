@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import com.app.famcare.R
+import com.app.famcare.view.booking.BookDailyActivity
 import com.app.famcare.view.facilities.FacilitiesActivity
 import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.main.MainActivity
@@ -25,38 +27,12 @@ class EditProfileActivity : AppCompatActivity() {
         val usernameImageView = findViewById<ImageView>(R.id.profileImageView)
         usernameImageView.setImageResource(R.drawable.user)
 
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigation.selectedItemId = R.id.page_4
-
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.page_1 -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-
-                R.id.page_2 -> {
-                    val intent = Intent(this, HistoryActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-
-                R.id.page_3 -> {
-                    val intent = Intent(this, FacilitiesActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-
-                R.id.page_4 -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-
-                else -> false
-            }
+        val backProfileView = findViewById<Button>(R.id.saveChanges)
+        backProfileView.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
         }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

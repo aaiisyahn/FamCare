@@ -66,10 +66,10 @@ class BookDailyActivity : AppCompatActivity() {
             this,
             DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 val selectedDate = "$dayOfMonth/${month + 1}/$year"
-                outputBookingDate.text = "Selected Booking Date: $selectedDate"
-                bookingDateEditText.setText(selectedDate) // Optional: Update EditText text
+                outputBookingDate.text = "Booking Date     : $selectedDate"
+                bookingDateEditText.setText(selectedDate)
             },
-            // Set initial date:
+
             Calendar.getInstance().get(Calendar.YEAR),
             Calendar.getInstance().get(Calendar.MONTH),
             Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
