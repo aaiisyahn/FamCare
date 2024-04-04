@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.page_4 -> {
-                    val intent = Intent(this, ChatActivity::class.java)
+                    val intent = Intent(this, ProfileActivity::class.java)
                     startActivity(intent)
                     true
                 }

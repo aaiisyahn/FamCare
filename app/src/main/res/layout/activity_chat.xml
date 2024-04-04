@@ -1,11 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.chat.ChatActivity">
 
+    <!-- Implementasi layout item_message.xml -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/icon_active">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/nanny_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/headerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Putri Utami"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserratsemibold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.003"
+            app:layout_constraintStart_toEndOf="@+id/profile_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.508" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_message_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp">
+
+        <ImageView
+            android:id="@+id/ivMessenger"
+            android:layout_width="38dp"
+            android:layout_height="35dp"
+            android:src="@drawable/baseline_account_circle_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/tvMessenger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/montserratsemibold"
+            android:text="User"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tvMessage"
+            app:layout_constraintEnd_toStartOf="@+id/ivMessenger"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="FirstName LastName" />
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_message_tosca"
+            android:maxWidth="250dp"
+            android:padding="10dp"
+            android:text="Halo! Apakah anda bisa merawat anak hiperaktif?"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserratsemibold"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="@+id/tvMessenger"
+            app:layout_constraintTop_toBottomOf="@+id/tvMessenger"
+            tools:text="This is a message" />
+
+        <TextView
+            android:id="@+id/tvTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="4dp"
+            android:maxLines="2"
+            android:text="Just Now"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvMessage"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="Just Now" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- LinearLayout untuk input pesan -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -42,6 +151,7 @@
 
     </LinearLayout>
 
+    <!-- ProgressBar -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
@@ -50,24 +160,14 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_above="@+id/include_layout"
-        android:layout_marginBottom="8dp"
-        android:background="@android:color/white" />
-
-    <include
-        android:id="@+id/include_layout"
-        layout="@layout/item_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/item_message_layout"
+        android:layout_below="@+id/header"
+        android:background="@android:color/white"
+        android:layout_marginBottom="8dp" />
 
 </RelativeLayout>
