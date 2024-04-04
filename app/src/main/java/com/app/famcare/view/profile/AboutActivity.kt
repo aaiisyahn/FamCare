@@ -1,4 +1,4 @@
-package com.app.famcare.view.about
+package com.app.famcare.view.profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,10 +6,9 @@ import com.app.famcare.R
 import android.content.Intent
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
-import com.app.famcare.view.facilities.FacilitiesActivity
-import com.app.famcare.view.history.HistoryActivity
+import com.app.famcare.view.bookmark.BookmarkActivity
 import com.app.famcare.view.main.MainActivity
-import com.app.famcare.view.profile.ProfileActivity
+import com.app.famcare.view.maps.MapsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AboutActivity : AppCompatActivity() {
@@ -35,13 +34,13 @@ class AboutActivity : AppCompatActivity() {
                 }
 
                 R.id.page_2 -> {
-                    val intent = Intent(this, HistoryActivity::class.java)
+                    val intent = Intent(this, BookmarkActivity::class.java)
                     startActivity(intent)
                     true
                 }
 
                 R.id.page_3 -> {
-                    val intent = Intent(this, FacilitiesActivity::class.java)
+                    val intent = Intent(this, MapsActivity::class.java)
                     startActivity(intent)
                     true
                 }
