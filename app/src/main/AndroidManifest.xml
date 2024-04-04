@@ -62,6 +62,9 @@
             android:name=".view.facilities.FacilitiesActivity"
             android:exported="false" />
         <activity
+            android:name=".view.history.HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.chat.ChatActivity"
             android:exported="false" />
         <activity

@@ -8,6 +8,7 @@ import com.app.famcare.R
 import com.app.famcare.adapter.DataNanny
 import com.app.famcare.adapter.NannyAdapter
 import com.app.famcare.databinding.ActivityMainBinding
+import com.app.famcare.view.chat.ChatActivity
 import com.app.famcare.view.facilities.FacilitiesActivity
 import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.profile.ProfileActivity
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.page_4 -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
+                    val intent = Intent(this, ChatActivity::class.java)
                     startActivity(intent)
                     true
                 }
