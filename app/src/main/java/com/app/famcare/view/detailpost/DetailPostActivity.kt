@@ -67,7 +67,7 @@ class DetailPostActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        val chatNannyView = findViewById<ImageView>(R.id.imageViewContact)
+        val chatNannyView = findViewById<Button>(R.id.imageViewContact)
         chatNannyView.setOnClickListener {
             val intent = Intent(this, ChatActivity::class.java)
             startActivity(intent)

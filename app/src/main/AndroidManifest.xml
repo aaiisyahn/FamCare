@@ -13,6 +13,9 @@
         android:theme="@style/Theme.FamCare"
         tools:targetApi="31">
         <activity
+            android:name=".view.onboardinh.OnboardingActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.chat.ChatListActivity"
             android:exported="false" />
         <activity
@@ -75,6 +78,9 @@
             android:exported="false" />
         <activity
             android:name=".view.detailpost.DetailPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.detailhistory.DetailHistoryActivity"
             android:exported="false" />
         <activity
             android:name=".view.main.MainActivity"
