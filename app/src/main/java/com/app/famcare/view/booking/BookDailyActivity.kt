@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.DatePicker
@@ -16,6 +17,7 @@ import com.app.famcare.R
 import com.app.famcare.view.history.HistoryActivity
 import java.util.Calendar
 import android.widget.AdapterView
+import androidx.appcompat.widget.Toolbar
 
 class BookDailyActivity : AppCompatActivity() {
 
@@ -26,6 +28,11 @@ class BookDailyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_daily)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
 
         val workingHoursSpinner = findViewById<Spinner>(R.id.workingHoursSpinner)
         val adapter = ArrayAdapter.createFromResource(
@@ -58,6 +65,17 @@ class BookDailyActivity : AppCompatActivity() {
         val buttonBookNanny = findViewById<Button>(R.id.buttonBookNanny)
         buttonBookNanny.setOnClickListener {
             showBookingSuccessDialog()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

@@ -41,7 +41,7 @@ object DataNanny {
     private val salaryNanny = arrayOf(
         "Rp500.000,00 /8 hours",   // daily
         "Rp4.200.000,00 /month",  // monthly
-        "Rp800.000,00 /8 hours",   // daily
+        "Rp400.000,00 /8 hours",   // daily
         "Rp3.000.000,00/month",  // monthly
         "Rp600.000,00/8 hours",   // daily
         "Rp2.500.000,00/month",  // monthly
