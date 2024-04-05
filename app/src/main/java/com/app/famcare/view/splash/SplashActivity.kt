@@ -23,6 +23,3 @@ class SplashActivity : AppCompatActivity() {
         }, splashTimeOut)
     }
 }
-
-
-

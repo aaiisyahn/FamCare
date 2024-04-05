@@ -29,7 +29,6 @@ class FacilitiesActivity : AppCompatActivity() {
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.page_3
 
-        // Menambahkan onClickListener ke CardView untuk mengarahkan ke activity lain
         binding.cardViewDaycare.setOnClickListener {
             val intent = Intent(this, DaycareMapsActivity::class.java)
             startActivity(intent)
@@ -40,7 +39,6 @@ class FacilitiesActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Menambahkan onClickListener ke BottomNavigationView
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.page_1 -> {
@@ -48,20 +46,23 @@ class FacilitiesActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+
                 R.id.page_2 -> {
                     val intent = Intent(this, HistoryActivity::class.java)
                     startActivity(intent)
                     true
                 }
+
                 R.id.page_3 -> {
-                    // Tidak perlu melakukan apa pun karena sudah berada di halaman fasilitas
                     true
                 }
+
                 R.id.page_4 -> {
                     val intent = Intent(this, ProfileActivity::class.java)
                     startActivity(intent)
                     true
                 }
+
                 else -> false
             }
         }
@@ -73,6 +74,7 @@ class FacilitiesActivity : AppCompatActivity() {
                 onBackPressed()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

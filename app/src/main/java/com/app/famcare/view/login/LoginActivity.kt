@@ -19,13 +19,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loginButton.setOnClickListener {
-            // Membuat intent untuk memulai MainActivity
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         binding.bottom2TextViews.setOnClickListener {
-            // Membuat intent untuk memulai LoginActivity
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }

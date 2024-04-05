@@ -15,9 +15,8 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Mengatur OnClickListener pada ImageView ivBack
         binding.ivBack.setOnClickListener {
-            onBackPressed() // Memanggil method onBackPressed() untuk kembali ke activity sebelumnya
+            onBackPressed()
         }
     }
 }

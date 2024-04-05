@@ -4,20 +4,20 @@
         android:id="@+id/page_1"
         android:enabled="true"
         android:icon="@drawable/round_business_center_24"
-        android:title="Discover"/>
+        android:title="Discover" />
     <item
         android:id="@+id/page_2"
         android:enabled="true"
         android:icon="@drawable/baseline_history_24"
-        android:title="History"/>
+        android:title="History" />
     <item
         android:id="@+id/page_3"
         android:enabled="true"
         android:icon="@drawable/baseline_fmd_good_24"
-        android:title="Facilities"/>
+        android:title="Facilities" />
     <item
         android:id="@+id/page_4"
         android:enabled="true"
         android:icon="@drawable/baseline_person_24"
-        android:title="Profile"/>
+        android:title="Profile" />
 </menu>

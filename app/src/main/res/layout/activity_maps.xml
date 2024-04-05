@@ -21,10 +21,10 @@
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserratsemibold"
                 android:text="Day Care Facilities"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                android:fontFamily="@font/montserratsemibold"/>
+                android:textSize="18sp" />
 
         </androidx.appcompat.widget.Toolbar>
 

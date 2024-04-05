@@ -42,10 +42,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
+        android:fontFamily="@font/montserrat"
         android:text="Email"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:fontFamily="@font/montserrat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fullnameEditTextLayout"
         tools:alpha="100" />
@@ -82,10 +82,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
+        android:fontFamily="@font/montserrat"
         android:text="Phone Number"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:fontFamily="@font/montserrat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
         tools:alpha="100" />

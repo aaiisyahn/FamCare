@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.chat.ChatActivity">
 
-    <!-- Implementasi layout item_message.xml -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -42,10 +41,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Putri Utami"
-            android:textSize="18sp"
-            android:textColor="@color/white"
             android:fontFamily="@font/montserratsemibold"
+            android:text="Putri Utami"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.003"
@@ -96,13 +95,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:background="@drawable/rounded_message_tosca"
+            android:fontFamily="@font/montserratsemibold"
             android:maxWidth="250dp"
             android:padding="10dp"
             android:text="Halo! Apakah anda bisa merawat anak hiperaktif?"
-            android:textSize="15sp"
-            android:fontFamily="@font/montserratsemibold"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="@+id/tvMessenger"
             app:layout_constraintTop_toBottomOf="@+id/tvMessenger"
             tools:text="This is a message" />
@@ -126,7 +125,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- LinearLayout untuk input pesan -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -163,7 +161,6 @@
 
     </LinearLayout>
 
-    <!-- ProgressBar -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
@@ -172,14 +169,13 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/item_message_layout"
         android:layout_below="@+id/header"
-        android:background="@android:color/white"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/white" />
 
 </RelativeLayout>

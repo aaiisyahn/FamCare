@@ -37,16 +37,17 @@ class ElderlyMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         supportActionBar?.title = ""
 
 
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -56,7 +57,9 @@ class ElderlyMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
         val daycare = LatLng(-6.254177217492762, 106.78671192555775)
-        mMap.addMarker(MarkerOptions().position(daycare).title("Elderly Social Institution Tresna Budi Mulia"))
+        mMap.addMarker(
+            MarkerOptions().position(daycare).title("Elderly Social Institution Tresna Budi Mulia")
+        )
         mMap.moveCamera(CameraUpdateFactory.newLatLng(daycare))
     }
 }

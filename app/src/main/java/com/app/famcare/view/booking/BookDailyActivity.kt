@@ -36,9 +36,7 @@ class BookDailyActivity : AppCompatActivity() {
 
         val workingHoursSpinner = findViewById<Spinner>(R.id.workingHoursSpinner)
         val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.working_hours_array,
-            android.R.layout.simple_spinner_item
+            this, R.array.working_hours_array, android.R.layout.simple_spinner_item
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         workingHoursSpinner.adapter = adapter
@@ -52,13 +50,14 @@ class BookDailyActivity : AppCompatActivity() {
         }
 
         workingHoursSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long
+            ) {
                 val selectedWorkingHours = parent?.getItemAtPosition(position).toString()
                 outputWorkingHours.text = "Working Hours   : $selectedWorkingHours"
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
             }
         }
 

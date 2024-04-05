@@ -174,10 +174,10 @@
                             android:layout_marginTop="20dp"
                             android:layout_marginEnd="20dp"
                             android:fontFamily="@font/montserrat"
-                            android:textStyle="bold"
                             android:text="ID Booking: FMC0112250 "
                             android:textColor="@color/dark_grey"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/outputWorkingHours"
@@ -186,12 +186,11 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="30dp"
                             android:fontFamily="@font/montserratsemibold"
-                            android:textStyle="bold"
                             android:text="Working Hours   : 14.00 - 22.00 "
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
-                        <!-- Output Selected Booking Date -->
                         <TextView
                             android:id="@+id/outputBookingDate"
                             android:layout_width="wrap_content"
@@ -200,10 +199,10 @@
                             android:layout_marginTop="15dp"
                             android:layout_marginEnd="20dp"
                             android:fontFamily="@font/montserratsemibold"
-                            android:textStyle="bold"
                             android:text="Booking Date      : 6/4/2024"
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/outputSalary"
@@ -229,9 +228,9 @@
                         android:layout_marginTop="100dp"
                         android:layout_marginBottom="15dp"
                         android:fontFamily="@font/montserratsemibold"
-                        android:textStyle="bold"
                         android:text="Chat Nanny"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/buttonBookNanny"
@@ -240,11 +239,11 @@
                         android:layout_below="@id/buttonChatNanny"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="15dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:textStyle="bold"
-                        android:text="Cancel Book"
                         android:backgroundTint="@color/red"
-                        android:textSize="18sp" />
+                        android:fontFamily="@font/montserratsemibold"
+                        android:text="Cancel Book"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 

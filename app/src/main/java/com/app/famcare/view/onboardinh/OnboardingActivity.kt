@@ -15,11 +15,11 @@ class OnboardingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_onboarding)
         val loginButton = findViewById<Button>(R.id.loginButton)
         val registerButton = findViewById<Button>(R.id.registerButton)
-        loginButton.setOnClickListener { // Logic untuk mengarahkan ke halaman login
+        loginButton.setOnClickListener {
             val intent = Intent(this@OnboardingActivity, LoginActivity::class.java)
             startActivity(intent)
         }
-        registerButton.setOnClickListener { // Logic untuk mengarahkan ke halaman register
+        registerButton.setOnClickListener {
             val intent = Intent(this@OnboardingActivity, RegisterActivity::class.java)
             startActivity(intent)
         }

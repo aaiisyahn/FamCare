@@ -290,9 +290,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:fontFamily="@font/montserratsemibold"
+                            android:text="Skills Offered"
                             android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            android:text="Skills Offered" />
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -317,9 +317,9 @@
                         android:layout_marginTop="50dp"
                         android:layout_marginBottom="15dp"
                         android:fontFamily="@font/montserratsemibold"
-                        android:textStyle="bold"
                         android:text="Chat Nanny"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/buttonContactNanny"
