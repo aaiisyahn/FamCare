@@ -41,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill_vertical"
+        android:layout_marginBottom="72dp"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -307,15 +308,18 @@
                         android:textSize="16sp"
                         tools:text="daily, cleaning, disability care" />
 
-                    <ImageView
-                    android:id="@+id/imageViewContact"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_below="@id/textViewSkills"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="35dp"
-                    android:contentDescription="gender"
-                    android:src="@drawable/ic_chat" />
+                    <Button
+                        android:id="@+id/imageViewContact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewSkills"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="100dp"
+                        android:layout_marginBottom="15dp"
+                        android:fontFamily="@font/montserratsemibold"
+                        android:textStyle="bold"
+                        android:text="Chat Nanny"
+                        android:textSize="18sp" />
 
                     <Button
                         android:id="@+id/buttonContactNanny"
@@ -323,7 +327,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/imageViewContact"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="20dp"
                         android:layout_marginBottom="15dp"
                         android:fontFamily="@font/montserratsemibold"
                         android:text="Book Nanny"
