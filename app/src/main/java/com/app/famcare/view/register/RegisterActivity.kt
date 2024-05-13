@@ -5,18 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.app.famcare.R
-import com.app.famcare.databinding.ActivityLoginBinding
 import com.app.famcare.databinding.ActivityRegisterBinding
 import com.app.famcare.view.login.LoginActivity
-import com.app.famcare.view.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var firestore: FirebaseFirestore // Tambahkan variabel firestore
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +21,13 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance() // Inisialisasi Firestore
+        firestore = FirebaseFirestore.getInstance()
 
         binding.registerButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+            val fullName = binding.fullnameEditText.text.toString()
+            val phone = binding.phoneEditText.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { createUserTask ->
@@ -36,13 +35,13 @@ class RegisterActivity : AppCompatActivity() {
                         val user = firebaseAuth.currentUser
                         val uid = user?.uid
 
-                        // Jika UID berhasil diperoleh, simpan data ke Firestore
                         uid?.let { uid ->
-                            saveUserDataToFirestore(uid, email) // Panggil fungsi untuk menyimpan data ke Firestore
+                            saveUserDataToFirestore(uid, fullName, email, phone)
                         }
 
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)
+                        finish()
                     } else {
                         Toast.makeText(this, createUserTask.exception.toString(), Toast.LENGTH_SHORT).show()
                     }
@@ -58,21 +57,19 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveUserDataToFirestore(uid: String, email: String) {
-        // Mendefinisikan data pengguna yang akan disimpan di Firestore
+    private fun saveUserDataToFirestore(uid: String, fullName: String, email: String, phone: String) {
         val userData = hashMapOf(
-            "email" to email
-            // Anda bisa menambahkan data pengguna lainnya di sini, seperti nama lengkap atau nomor telepon
+            "uid" to uid,
+            "fullName" to fullName,
+            "email" to email,
+            "phone" to phone
         )
 
-        // Menyimpan data pengguna ke Firestore
-        firestore.collection("famcare_user").document(uid)
+        firestore.collection("User").document(uid)
             .set(userData)
             .addOnSuccessListener {
-                // Data pengguna berhasil disimpan di Firestore
             }
             .addOnFailureListener { exception ->
-                // Gagal menyimpan data pengguna di Firestore
                 Log.e("RegisterActivity", "Error writing document", exception)
             }
     }

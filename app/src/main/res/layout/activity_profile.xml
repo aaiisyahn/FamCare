@@ -90,7 +90,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserratsemibold"
-                            android:text="Lee Dohyun"
+                            android:text="User"
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -112,7 +112,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:fontFamily="@font/montserratsemibold"
-                                android:text="dohyn@gmail.com"
+                                android:text="user@mail.com"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -134,7 +134,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="4dp"
                                 android:fontFamily="@font/montserratsemibold"
-                                android:text="081246576879"
+                                android:text="08xxxxxxxxxx"
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
                         </LinearLayout>
