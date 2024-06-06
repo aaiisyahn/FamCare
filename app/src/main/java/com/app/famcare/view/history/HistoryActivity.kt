@@ -10,7 +10,6 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.famcare.R
 import com.app.famcare.adapter.BookmarkAdapter
-import com.app.famcare.adapter.DataNanny
 import com.app.famcare.databinding.ActivityBookmarkBinding
 import com.app.famcare.databinding.ActivityHistoryBinding
 import com.app.famcare.view.chat.ChatActivity

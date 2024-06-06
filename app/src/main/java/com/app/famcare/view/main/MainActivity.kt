@@ -3,20 +3,23 @@ package com.app.famcare.view.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import com.app.famcare.R
-import com.app.famcare.adapter.DataNanny
+import androidx.recyclerview.widget.GridLayoutManager
 import com.app.famcare.adapter.NannyAdapter
 import com.app.famcare.databinding.ActivityMainBinding
-import com.app.famcare.view.chat.ChatActivity
 import com.app.famcare.view.facilities.FacilitiesActivity
 import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.profile.ProfileActivity
+import com.app.famcare.view.main.FilterFragment
+import androidx.fragment.app.FragmentTransaction
+import com.app.famcare.repository.NannyRepository
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter: NannyAdapter
+    private val nannyRepository = NannyRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +27,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val nannyList = DataNanny.getListNanny()
-
-        val adapter = NannyAdapter(this, nannyList)
-
+        adapter = NannyAdapter(this)
         binding.recyclerViewNanny.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerViewNanny.adapter = adapter
 
@@ -36,10 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.page_1 -> {
-                    true
-                }
-
+                R.id.page_1 -> true
                 R.id.page_2 -> {
                     val intent = Intent(this, HistoryActivity::class.java)
                     startActivity(intent)
@@ -61,5 +58,23 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        // Panggil fetchData() saat aktivitas dimulai
+        fetchData()
+
+        binding.imageViewFilter.setOnClickListener {
+            val filterFragment = FilterFragment()
+            filterFragment.setFilterListener(this) // Set the listener
+            filterFragment.show(supportFragmentManager, "FilterFragment")
+        }
+    }
+
+    private fun fetchData() {
+        adapter.fetchData()
+    }
+
+    override fun onFilterApplied(filterCriteria: Map<String, Any>) {
+        // Handle filter criteria here
+        adapter.applyFilter(filterCriteria)
     }
 }

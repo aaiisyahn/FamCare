@@ -6,6 +6,5 @@
         <item name="colorPrimary">@color/icon_active</item>
         <item name="colorOnPrimary">@color/main</item>
     </style>
-
     <style name="Theme.FamCare" parent="Base.Theme.FamCare" />
 </resources>

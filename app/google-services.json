@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "630732949246",
-    "firebase_url": "https://grand-lamp-418706-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "grand-lamp-418706",
-    "storage_bucket": "grand-lamp-418706.appspot.com"
+    "project_number": "268997769793",
+    "project_id": "famcare-mobprog",
+    "storage_bucket": "famcare-mobprog.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:630732949246:android:b0e1dea31dc6cae68ac7af",
+        "mobilesdk_app_id": "1:268997769793:android:49d05f5b5fdf998f71e4c0",
         "android_client_info": {
           "package_name": "com.app.famcare"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBBGQ_iz4_WK81YszAb2ewbBCEWv3gTXKw"
+          "current_key": "AIzaSyDuYiMC8-YpZyn4GmO72qNWiqiIzWcu-NY"
         }
       ],
       "services": {

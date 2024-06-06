@@ -7,7 +7,6 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.famcare.R
-import com.app.famcare.adapter.DataNanny
 import com.app.famcare.adapter.BookmarkAdapter
 import com.app.famcare.databinding.ActivityBookmarkBinding
 import com.app.famcare.view.facilities.FacilitiesActivity
@@ -18,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BookmarkActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBookmarkBinding
+    private lateinit var adapter: BookmarkAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,11 +25,7 @@ class BookmarkActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val nannyList = DataNanny.getListNanny()
-
-        val adapter = BookmarkAdapter(this, nannyList)
-
-        // Mengatur RecyclerView
+        adapter = BookmarkAdapter(this)
         binding.recyclerView.layoutManager = GridLayoutManager(this, 1)
         binding.recyclerView.adapter = adapter
 
@@ -37,7 +33,6 @@ class BookmarkActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -46,7 +41,6 @@ class BookmarkActivity : AppCompatActivity() {
                 onBackPressed()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }

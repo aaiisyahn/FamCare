@@ -9,10 +9,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.famcare.R
+import com.app.famcare.model.Nanny
+import com.app.famcare.repository.NannyRepository
 import com.app.famcare.view.detailpost.DetailPostActivity
+import com.bumptech.glide.Glide
 
-class NannyAdapter(private val context: Context, private val nannyList: List<Nanny>) :
+class NannyAdapter(private val context: Context) :
     RecyclerView.Adapter<NannyAdapter.NannyViewHolder>() {
+
+    private var nannyList: MutableList<Nanny> = mutableListOf()
+
+    private val nannyRepository = NannyRepository()
+
+    init {
+        fetchData()
+    }
 
     class NannyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageViewNanny: ImageView = itemView.findViewById(R.id.imageViewNanny)
@@ -29,10 +40,10 @@ class NannyAdapter(private val context: Context, private val nannyList: List<Nan
 
     override fun onBindViewHolder(holder: NannyViewHolder, position: Int) {
         val nanny = nannyList[position]
-        holder.imageViewNanny.setImageResource(nanny.pict)
+        Glide.with(context).load(nanny.pict).into(holder.imageViewNanny)
         holder.textViewName.text = nanny.name
         holder.textViewCategory.text = nanny.type
-        holder.textViewRating.text = nanny.rate.toString()
+        holder.textViewRating.text = nanny.rate
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, DetailPostActivity::class.java)
@@ -43,5 +54,25 @@ class NannyAdapter(private val context: Context, private val nannyList: List<Nan
 
     override fun getItemCount(): Int {
         return nannyList.size
+    }
+
+    fun fetchData() {
+        nannyRepository.getNannies(onSuccess = { nannies ->
+            nannyList.clear()
+            nannyList.addAll(nannies)
+            notifyDataSetChanged()
+        }, onFailure = { exception ->
+            // Handle failure, e.g., show error message
+        })
+    }
+
+    fun applyFilter(filterCriteria: Map<String, Any>) {
+        nannyRepository.getNannies(filterCriteria, onSuccess = { filteredNannies ->
+            nannyList.clear()
+            nannyList.addAll(filteredNannies)
+            notifyDataSetChanged()
+        }, onFailure = { exception ->
+            // Handle failure, e.g., show error message
+        })
     }
 }

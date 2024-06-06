@@ -60,7 +60,7 @@
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageViewNanny">
+                app:layout_constraintTop_toBottomOf="@id/imageViewNannyDP">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -76,12 +76,12 @@
                         android:orientation="vertical">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/imageViewNanny"
+                            android:id="@+id/imageViewNannyDP"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_gravity="center"
                             android:contentDescription="nanny image"
-                            android:src="@drawable/nanny_placeholder" />
+                            android:src="@drawable/nanny_placeholder"/>
 
                         <ImageView
                             android:id="@+id/iv_bookmark"
@@ -95,33 +95,33 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/imageViewGender"
+                        android:id="@+id/imageViewGenderDP"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_below="@id/imageViewNannyBookmark"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="8dp"
                         android:contentDescription="gender"
-                        android:src="@drawable/ic_male" />
+                        android:src="@drawable/ic_male"/>
 
                     <TextView
-                        android:id="@+id/textViewName"
+                        android:id="@+id/textViewNameDP"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/imageViewGender"
+                        android:layout_below="@id/imageViewGenderDP"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/montserratsemibold"
                         android:textColor="@android:color/black"
                         android:textSize="24sp"
                         android:textStyle="bold"
-                        tools:text="Nanny's Name" />
+                        tools:text="Nanny's Name"/>
 
                     <TextView
-                        android:id="@+id/textViewAge"
+                        android:id="@+id/textViewAgeDP"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/textViewName"
+                        android:layout_below="@id/textViewNameDP"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="8dp"
                         android:fontFamily="@font/montserratsemibold"
@@ -133,7 +133,7 @@
                         android:id="@+id/ratingLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/textViewAge"
+                        android:layout_below="@id/textViewAgeDP"
                         android:layout_marginTop="6dp"
                         android:gravity="center_horizontal">
 
@@ -147,7 +147,7 @@
                             android:src="@drawable/ic_rate" />
 
                         <TextView
-                            android:id="@+id/textViewRate"
+                            android:id="@+id/textViewRateDP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -155,7 +155,7 @@
                             android:fontFamily="@font/montserratsemibold"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
-                            tools:text="4.0" />
+                            tools:text="4.0"/>
 
                     </RelativeLayout>
 
@@ -177,7 +177,7 @@
                             android:src="@drawable/ic_calendar" />
 
                         <TextView
-                            android:id="@+id/textViewType"
+                            android:id="@+id/textViewTypeDP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -185,7 +185,7 @@
                             android:fontFamily="@font/montserratsemibold"
                             android:textColor="@android:color/black"
                             android:textSize="16sp"
-                            tools:text="daily" />
+                            tools:text="daily"/>
 
                     </RelativeLayout>
 
@@ -205,7 +205,7 @@
                             android:src="@drawable/ic_timespan" />
 
                         <TextView
-                            android:id="@+id/textViewExperience"
+                            android:id="@+id/textViewExperienceDP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -231,7 +231,7 @@
                             android:src="@drawable/ic_location" />
 
                         <TextView
-                            android:id="@+id/textViewLocation"
+                            android:id="@+id/textViewLocationDP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -258,7 +258,7 @@
                             android:src="@drawable/ic_salary" />
 
                         <TextView
-                            android:id="@+id/textViewSalary"
+                            android:id="@+id/textViewSalaryDP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -297,7 +297,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/textViewSkills"
+                        android:id="@+id/textViewSkillsDP"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/skillLayout"
@@ -312,7 +312,7 @@
                         android:id="@+id/imageViewContact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/textViewSkills"
+                        android:layout_below="@id/textViewSkillsDP"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="50dp"
                         android:layout_marginBottom="15dp"
