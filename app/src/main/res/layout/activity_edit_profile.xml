@@ -5,32 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <ProgressBar
         android:id="@+id/saveChangesProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone" />
-
+        android:visibility="gone"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.profile.EditProfileActivity">
 
-
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -38,7 +33,6 @@
                     android:layout_height="?attr/actionBarSize"
                     android:background="?attr/colorPrimary"
                     android:elevation="4dp">
-
 
                     <TextView
                         android:id="@+id/toolbar_title"
@@ -49,13 +43,10 @@
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 
-
                 </androidx.appcompat.widget.Toolbar>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-
         </com.google.android.material.appbar.AppBarLayout>
-
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -64,12 +55,10 @@
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileImageView"
@@ -80,7 +69,6 @@
                     android:src="@drawable/nanny_placeholder"
                     tools:src="@drawable/user" />
 
-
                 <ImageView
                     android:id="@+id/editProfileImage"
                     android:layout_width="35dp"
@@ -89,7 +77,6 @@
                     android:layout_marginStart="45dp"
                     android:layout_marginTop="-25dp"
                     android:src="@drawable/ic_edit" />
-
 
                 <TextView
                     android:id="@+id/fullNameTextView"
@@ -101,7 +88,6 @@
                     android:text="Full Name"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fullNameEditTextLayout"
@@ -117,16 +103,15 @@
                     app:boxCornerRadiusTopStart="20dp"
                     app:startIconDrawable="@drawable/baseline_person_24">
 
-
                     <EditText
                         android:id="@+id/fullNameEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:hint="Lee Dohyun"
                         android:inputType="textPersonName"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
-
 
                 <TextView
                     android:id="@+id/genderTextView"
@@ -139,7 +124,6 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-
                 <RadioGroup
                     android:id="@+id/genderRadioGroup"
                     android:layout_width="match_parent"
@@ -149,7 +133,6 @@
                     android:layout_marginEnd="32dp"
                     android:orientation="horizontal">
 
-
                     <RadioButton
                         android:id="@+id/radioFemale"
                         android:layout_width="0dp"
@@ -158,7 +141,6 @@
                         android:fontFamily="@font/montserrat"
                         android:text="Female"
                         android:textSize="14sp" />
-
 
                     <RadioButton
                         android:id="@+id/radioMale"
@@ -170,7 +152,6 @@
                         android:textSize="14sp" />
                 </RadioGroup>
 
-
                 <TextView
                     android:id="@+id/addressTextView"
                     android:layout_width="wrap_content"
@@ -181,7 +162,6 @@
                     android:text="Address"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/addressEditTextLayout"
@@ -197,7 +177,6 @@
                     app:boxCornerRadiusTopStart="20dp"
                     app:startIconDrawable="@drawable/baseline_location_24">
 
-
                     <EditText
                         android:id="@+id/addressEditText"
                         android:layout_width="match_parent"
@@ -206,7 +185,6 @@
                         android:inputType="textPersonName"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
-
 
                 <TextView
                     android:id="@+id/phoneTextView"
@@ -218,7 +196,6 @@
                     android:text="Phone Number"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/phoneEditTextLayout"
@@ -234,16 +211,15 @@
                     app:boxCornerRadiusTopStart="20dp"
                     app:startIconDrawable="@drawable/baseline_phone_24">
 
-
                     <EditText
                         android:id="@+id/phoneEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:hint="081246576879"
                         android:inputType="phone"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
-
 
                 <Button
                     android:id="@+id/saveChanges"
@@ -263,7 +239,6 @@
 
 
             </LinearLayout>
-
 
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

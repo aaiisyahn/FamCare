@@ -1,26 +1,30 @@
 package com.app.famcare.view.profile
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.app.famcare.R
 import com.app.famcare.databinding.ActivityEditProfileBinding
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
-import com.bumptech.glide.Glide
-
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -47,9 +51,17 @@ class EditProfileActivity : AppCompatActivity() {
         binding.profileImageView.setImageResource(R.drawable.user)
 
         binding.editProfileImage.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED
+            ) {
+                openGallery()
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    PERMISSION_REQUEST_CODE
+                )
+            }
         }
 
         binding.saveChanges.setOnClickListener {
@@ -57,13 +69,31 @@ class EditProfileActivity : AppCompatActivity() {
                 binding.saveChangesProgressBar.visibility = View.VISIBLE
                 uploadImageToFirebaseStorage()
             } else {
-                Toast.makeText(this, "Please fill all fields and select gender", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Please fill all fields and select gender", Toast.LENGTH_SHORT).show()
             }
         }
 
         loadUserDataFromFirestore()
         addTextWatchers()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openGallery()
+        } else {
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -79,7 +109,8 @@ class EditProfileActivity : AppCompatActivity() {
         val currentUserUid = firebaseAuth.currentUser?.uid
 
         if (currentUserUid != null) {
-            firestore.collection("User").document(currentUserUid).get()
+            firestore.collection("User").document(currentUserUid)
+                .get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         val name = document.getString("fullName")
@@ -99,12 +130,15 @@ class EditProfileActivity : AppCompatActivity() {
 
                         val imageUrl = document.getString("profileImageUrl")
                         if (imageUrl != null && imageUrl.isNotEmpty()) {
-                            Glide.with(this).load(imageUrl).into(binding.profileImageView)
+                            Glide.with(this)
+                                .load(imageUrl)
+                                .into(binding.profileImageView)
                         }
 
                     }
 
-                }.addOnFailureListener { exception ->
+                }
+                .addOnFailureListener { exception ->
                     Toast.makeText(this, "Failed to load user data", Toast.LENGTH_SHORT).show()
                 }
         }
@@ -149,19 +183,24 @@ class EditProfileActivity : AppCompatActivity() {
             }
 
             val userData = mutableMapOf<String, Any>(
-                "fullName" to name, "phone" to phone, "address" to address, "gender" to gender
+                "fullName" to name,
+                "phone" to phone,
+                "address" to address,
+                "gender" to gender
             )
 
             if (imageUrl.isNotEmpty()) {
                 userData["profileImageUrl"] = imageUrl
             }
 
-            firestore.collection("User").document(currentUserUid).update(userData)
+            firestore.collection("User").document(currentUserUid)
+                .update(userData)
                 .addOnSuccessListener {
                     binding.saveChangesProgressBar.visibility = View.GONE
                     Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
                     finish()
-                }.addOnFailureListener { exception ->
+                }
+                .addOnFailureListener { exception ->
                     Toast.makeText(this, "Error updating profile", Toast.LENGTH_SHORT).show()
                     binding.saveChangesProgressBar.visibility = View.GONE
                 }
@@ -203,8 +242,12 @@ class EditProfileActivity : AppCompatActivity() {
                 onBackPressed()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    companion object {
+        private const val PERMISSION_REQUEST_CODE = 123
+    }
 }
+

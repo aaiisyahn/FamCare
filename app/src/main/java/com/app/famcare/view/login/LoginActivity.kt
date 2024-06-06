@@ -1,14 +1,20 @@
 package com.app.famcare.view.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.LayoutInflater
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.Button
+import android.widget.PopupWindow
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.app.famcare.R
 import com.app.famcare.databinding.ActivityLoginBinding
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.register.RegisterActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -20,6 +26,16 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
 
+        val isNewUser = intent.getBooleanExtra("isNewUser", false)
+        if (isNewUser) {
+            // Log statement for debugging
+            println("New user detected, scheduling verification popup")
+            // Schedule the popup to be shown after a short delay
+            Handler(Looper.getMainLooper()).postDelayed({
+                showVerificationPopup()
+            }, 500)
+        }
+
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
@@ -28,22 +44,19 @@ class LoginActivity : AppCompatActivity() {
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val currentUser = firebaseAuth.currentUser
-                        val isNewUser = isNewUser(currentUser)
-
-                        if (isNewUser) {
+                        if (currentUser != null && currentUser.isEmailVerified) {
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         } else {
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
+                            Toast.makeText(this, "Please verify your email first", Toast.LENGTH_SHORT).show()
                         }
-                        finish()
                     } else {
-                        Toast.makeText(this, "Email atau Password anda tidak sesuai", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Email or Password is incorrect", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                Toast.makeText(this, "Email dan Password tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Email and Password cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -53,7 +66,41 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun isNewUser(currentUser: FirebaseUser?): Boolean {
-        return currentUser?.metadata?.creationTimestamp == currentUser?.metadata?.lastSignInTimestamp
+    override fun onResume() {
+        super.onResume()
+        // Reset all TextViews to empty
+        resetTextViews()
+    }
+
+    private fun resetTextViews() {
+        binding.emailEditText.text?.clear()
+        binding.passwordEditText.text?.clear()
+    }
+
+    private fun showVerificationPopup() {
+        runOnUiThread {
+            val inflater = LayoutInflater.from(this)
+            val popupView = inflater.inflate(R.layout.activity_verification_popup, null)
+
+            val popupWindow = PopupWindow(popupView, WRAP_CONTENT, WRAP_CONTENT, true)
+            popupWindow.showAtLocation(binding.root, android.view.Gravity.CENTER, 0, 0)
+
+           // val resendButton = popupView.findViewById<Button>(R.id.resendVerificationEmailButton)
+            val dismissButton = popupView.findViewById<Button>(R.id.dismissButton)
+
+          //  resendButton.setOnClickListener {
+            //    firebaseAuth.currentUser?.sendEmailVerification()?.addOnCompleteListener { task ->
+             //       if (task.isSuccessful) {
+                    //    Toast.makeText(this, "Verification email sent", Toast.LENGTH_SHORT).show()
+              //      } else {
+              //          Toast.makeText(this, "Failed to send verification email", Toast.LENGTH_SHORT).show()
+                   // }
+              //  }
+       //     }
+
+            dismissButton.setOnClickListener {
+                popupWindow.dismiss()
+            }
+        }
     }
 }

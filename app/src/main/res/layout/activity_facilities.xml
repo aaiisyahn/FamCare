@@ -56,8 +56,8 @@
 
                 <ImageView
                     android:id="@+id/imageViewDaycare"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_daycare"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -71,10 +71,12 @@
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/montserratsemibold"
                     android:text="Day Care Facilities"
-                    android:textSize="16sp"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageViewDaycare"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.506" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -94,8 +96,8 @@
 
                 <ImageView
                     android:id="@+id/imageViewElderlycare"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_elderlycare"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -109,10 +111,12 @@
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/montserratsemibold"
                     android:text="Elderly Care Facilities"
-                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageViewElderlycare"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.506" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 

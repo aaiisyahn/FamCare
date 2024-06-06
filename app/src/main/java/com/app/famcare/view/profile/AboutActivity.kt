@@ -8,7 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.app.famcare.view.bookmark.BookmarkActivity
 import com.app.famcare.view.main.MainActivity
-import com.app.famcare.view.maps.DaycareMapsActivity
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AboutActivity : AppCompatActivity() {
