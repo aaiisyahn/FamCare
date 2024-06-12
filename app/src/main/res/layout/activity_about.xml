@@ -37,78 +37,59 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/editProfile"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardBackgroundColor="@color/main"
-            app:cardCornerRadius="30dp"
-            app:cardElevation="10dp">
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
-            <LinearLayout
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:contentDescription="logo"
+                android:src="@drawable/logo_toolbar_fit" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/montserrat"
+                android:paddingTop="4dp"
+                android:text="Version 1.0"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <com.codesgood.views.JustifiedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp">
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/montserrat"
+                android:paddingStart="20dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="16dp"
+                android:text="@string/desc_app"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
-                <ImageView
-                    android:layout_width="250dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="logo"
-                    android:src="@drawable/logo_toolbar_fit" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:fontFamily="@font/montserratsemibold"
-                    android:paddingTop="8dp"
-                    android:text="FamCare"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/montserratsemibold"
+                android:paddingStart="20dp"
+                android:paddingTop="6dp"
+                android:text="© 2024 MobProg Team 5. All rights reserved."
+                android:textColor="@android:color/darker_gray"
+                android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:fontFamily="@font/montserrat"
-                    android:paddingTop="4dp"
-                    android:text="Version 1.0"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="@font/montserrat"
-                    android:paddingStart="20dp"
-                    android:paddingTop="4dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/desc_app"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/montserratsemibold"
-                    android:paddingStart="20dp"
-                    android:paddingTop="8dp"
-                    android:text="© 2024 MobProg Team 5. All rights reserved."
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.app.famcare.view.maps
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -11,8 +12,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -20,14 +23,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.famcare.R
 import com.app.famcare.databinding.ActivityMapsBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
+import java.io.IOException
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.util.Locale
+import java.util.*
 
 class DaycareMapsActivity : AppCompatActivity() {
 
@@ -37,6 +39,8 @@ class DaycareMapsActivity : AppCompatActivity() {
     private lateinit var adapter: DaycareAdapter
     private lateinit var tvUserLocation: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var locationRequest: LocationRequest
+    private lateinit var locationCallback: LocationCallback
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
@@ -61,10 +65,33 @@ class DaycareMapsActivity : AppCompatActivity() {
         val dividerItemDecoration = DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
         recyclerView.addItemDecoration(dividerItemDecoration)
 
-        adapter = DaycareAdapter(emptyList())
+        adapter = DaycareAdapter(emptyList()) { websiteURL ->
+            val intent = Intent(this, WebViewActivity::class.java)
+            intent.putExtra("WEBSITE_URL", websiteURL)
+            startActivity(intent)
+        }
         recyclerView.adapter = adapter
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        // Initialize locationRequest
+        locationRequest = LocationRequest.create().apply {
+            interval = 10000
+            fastestInterval = 5000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+
+        // Initialize locationCallback
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?: return
+                for (location in locationResult.locations) {
+                    Log.d(TAG, "User location: Lat=${location.latitude}, Lng=${location.longitude}")
+                    getUserAddress(location)
+                    loadDaycareData(location)
+                }
+            }
+        }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
@@ -74,39 +101,90 @@ class DaycareMapsActivity : AppCompatActivity() {
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 LOCATION_PERMISSION_REQUEST_CODE)
         }
+
+        // Initialize CardView and set onClickListener
+        val locationLayout = findViewById<CardView>(R.id.locationLayout)
+        locationLayout.setOnClickListener {
+            // Check if location permission is granted
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+                fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                    if (location != null) {
+                        Log.d(TAG, "User location: Lat=${location.latitude}, Lng=${location.longitude}")
+                        showLocationPopup(location)
+                    } else {
+                        // Handle location not available
+                        showLocationPopup(null)
+                    }
+                }.addOnFailureListener { exception ->
+                    Log.e(TAG, "Error obtaining location", exception)
+                    showLocationPopup(null)
+                }
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+            }
+        }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
+    private fun showLocationPopup(location: Location?) {
+        val message = if (location != null) {
+            val geocoder = Geocoder(this, Locale.getDefault())
+            try {
+                val addresses: List<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                addresses?.get(0)?.getAddressLine(0) ?: "Unknown location"
+            } catch (e: IOException) {
+                Log.e(TAG, "Geocoder failed", e)
+                "Unknown location"
             }
-            else -> super.onOptionsItemSelected(item)
+        } else {
+            "Location not available"
         }
+
+        AlertDialog.Builder(this)
+            .setTitle("Your Location")
+            .setMessage(message)
+            .setPositiveButton("OK", null)
+            .show()
     }
 
     private fun enableMyLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
             return
         }
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-            location?.let {
-                val userLatLng = LatLng(location.latitude, location.longitude)
-                val geocoder = Geocoder(this, Locale.getDefault())
-                val addresses: List<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                val address = addresses?.get(0)?.getAddressLine(0) ?: "Unknown location"
-                tvUserLocation.text = address
+            if (location != null) {
+                Log.d(TAG, "User location: Lat=${location.latitude}, Lng=${location.longitude}")
+                getUserAddress(location)
                 loadDaycareData(location)
+            } else {
+                fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
             }
+        }.addOnFailureListener { exception ->
+            Log.e(TAG, "Error obtaining location", exception)
+            tvUserLocation.text = "Location not available"
+        }
+    }
+
+    private fun getUserAddress(location: Location) {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        try {
+            val addresses: List<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            val address = addresses?.get(0)?.getAddressLine(0) ?: "Unknown location"
+            if (address == "Unnamed Road") {
+                Log.d(TAG, "Geocoder returned 'Unnamed Road'")
+            }
+            tvUserLocation.text = address
+        } catch (e: IOException) {
+            Log.e(TAG, "Geocoder failed", e)
+            tvUserLocation.text = "Unknown location"
         }
     }
 
     private fun loadDaycareData(userLocation: Location) {
-        progressBar.visibility = View.VISIBLE // Menampilkan ProgressBar
+        progressBar.visibility = View.VISIBLE
 
         val firestore = FirebaseFirestore.getInstance()
         val daycareCollection = firestore.collection("Daycare")
@@ -119,32 +197,32 @@ class DaycareMapsActivity : AppCompatActivity() {
                     val locationName = document.getString("Location")
                     val daycareName = document.getString("Name")
                     val photoURL = document.getString("PhotoURL")
+                    val websiteURL = document.getString("WebsiteURL")
 
-                    if (geoPoint != null && locationName != null && daycareName != null && photoURL != null) {
+                    if (geoPoint != null && locationName != null && daycareName != null && photoURL != null && websiteURL != null) {
                         val daycareLocation = Location("").apply {
                             latitude = geoPoint.latitude
                             longitude = geoPoint.longitude
                         }
                         val distanceInMeters = userLocation.distanceTo(daycareLocation)
                         val distanceInKilometers = distanceInMeters / 1000
-                        val df = DecimalFormat("#.#")
-                        df.roundingMode = RoundingMode.HALF_UP
+                        val df = DecimalFormat("#.#").apply { roundingMode = RoundingMode.HALF_UP }
                         val roundedDistanceInKilometers = df.format(distanceInKilometers).toDouble()
 
-                        daycares.add(Daycare(daycareName, locationName, photoURL, geoPoint, roundedDistanceInKilometers))
-                        Log.d(TAG, "Distance from user to $daycareName: $roundedDistanceInKilometers km")
+                        daycares.add(Daycare(daycareName, locationName, photoURL, geoPoint, roundedDistanceInKilometers, websiteURL))
+                        Log.d(TAG, "Daycare: $daycareName, Lat=${geoPoint.latitude}, Lng=${geoPoint.longitude}, Distance: $roundedDistanceInKilometers km")
                     } else {
                         Log.d(TAG, "Document is missing required fields")
                     }
                 }
 
-                progressBar.visibility = View.GONE // Sembunyikan ProgressBar setelah selesai loading
+                progressBar.visibility = View.GONE
                 daycares.sortBy { it.distanceFromUser }
                 adapter.updateDaycares(daycares)
             }
             .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
-                progressBar.visibility = View.GONE // Sembunyikan ProgressBar jika terjadi kegagalan
+                Log.e(TAG, "get failed with ", exception)
+                progressBar.visibility = View.GONE
             }
     }
 
@@ -161,7 +239,7 @@ class DaycareMapsActivity : AppCompatActivity() {
     }
 
     private fun loadDaycareDataWithoutUserLocation() {
-        progressBar.visibility = View.VISIBLE // Menampilkan ProgressBar
+        progressBar.visibility = View.VISIBLE
 
         val firestore = FirebaseFirestore.getInstance()
         val daycareCollection = firestore.collection("Daycare")
@@ -174,19 +252,20 @@ class DaycareMapsActivity : AppCompatActivity() {
                     val locationName = document.getString("Location")
                     val daycareName = document.getString("Name")
                     val photoURL = document.getString("PhotoURL")
+                    val websiteURL = document.getString("WebsiteURL")
 
-                    if (geoPoint != null && locationName != null && daycareName != null && photoURL != null) {
-                        daycares.add(Daycare(daycareName, locationName, photoURL, geoPoint, 0.0)) // Default value for distanceFromUser is 0.0
+                    if (geoPoint != null && locationName != null && daycareName != null && photoURL != null && websiteURL != null) {
+                        daycares.add(Daycare(daycareName, locationName, photoURL, geoPoint, 0.0, websiteURL))
                     } else {
                         Log.d(TAG, "Document is missing required fields")
                     }
                 }
                 adapter.updateDaycares(daycares)
-                progressBar.visibility = View.GONE // Sembunyikan ProgressBar setelah selesai loading
+                progressBar.visibility = View.GONE
             }
             .addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
-                progressBar.visibility = View.GONE // Sembunyikan ProgressBar jika terjadi kegagalan
+                progressBar.visibility = View.GONE
             }
     }
 }

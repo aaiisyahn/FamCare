@@ -2,6 +2,7 @@ package com.app.famcare.view.profile
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -13,6 +14,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -25,6 +27,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -73,8 +77,33 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
+        binding.icDate.setOnClickListener {
+            showDatePickerDialog()
+        }
+
         loadUserDataFromFirestore()
         addTextWatchers()
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(selectedYear, selectedMonth, selectedDay)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+                binding.selectedDateTextView.text = dateFormat.format(selectedDate.time)
+            },
+            year, month, day
+        )
+
+        datePickerDialog.datePicker.maxDate = calendar.timeInMillis - 3L * 365 * 24 * 60 * 60 * 1000 // 3 years in milliseconds
+        datePickerDialog.show()
     }
 
     override fun onRequestPermissionsResult(
@@ -117,10 +146,16 @@ class EditProfileActivity : AppCompatActivity() {
                         val phone = document.getString("phone")
                         val address = document.getString("address") ?: ""
                         val gender = document.getString("gender") ?: ""
+                        val birthDate = document.getString("birthDate") ?: ""
 
                         binding.fullNameEditText.setText(name)
                         binding.phoneEditText.setText(phone)
                         binding.addressEditText.setText(address)
+                        if (birthDate.isNullOrEmpty()) {
+                            binding.selectedDateTextView.text = "dd/mm/yyyy"
+                        } else {
+                            binding.selectedDateTextView.text = birthDate
+                        }
 
                         when (gender) {
                             "Male" -> binding.genderRadioGroup.check(R.id.radioMale)
@@ -176,6 +211,7 @@ class EditProfileActivity : AppCompatActivity() {
             val name = binding.fullNameEditText.text.toString()
             val phone = binding.phoneEditText.text.toString()
             val address = binding.addressEditText.text.toString()
+            val birthDate = binding.selectedDateTextView.text.toString()
             val gender = when (binding.genderRadioGroup.checkedRadioButtonId) {
                 R.id.radioMale -> "Male"
                 R.id.radioFemale -> "Female"
@@ -186,7 +222,8 @@ class EditProfileActivity : AppCompatActivity() {
                 "fullName" to name,
                 "phone" to phone,
                 "address" to address,
-                "gender" to gender
+                "gender" to gender,
+                "birthDate" to birthDate
             )
 
             if (imageUrl.isNotEmpty()) {
@@ -212,8 +249,9 @@ class EditProfileActivity : AppCompatActivity() {
         val phone = binding.phoneEditText.text.toString().trim()
         val address = binding.addressEditText.text.toString().trim()
         val gender = binding.genderRadioGroup.checkedRadioButtonId
+        val birthDate = binding.selectedDateTextView.text.toString().trim()
 
-        return name.isNotEmpty() && phone.isNotEmpty() && address.isNotEmpty() && gender != -1
+        return name.isNotEmpty() && phone.isNotEmpty() && address.isNotEmpty() && gender != -1 && birthDate.isNotEmpty()
     }
 
     private fun addTextWatchers() {
@@ -250,4 +288,3 @@ class EditProfileActivity : AppCompatActivity() {
         private const val PERMISSION_REQUEST_CODE = 123
     }
 }
-

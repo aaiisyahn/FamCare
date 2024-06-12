@@ -26,29 +26,34 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+            val confirmPassword = binding.confirmPasswordEditText.text.toString()
             val fullName = binding.fullnameEditText.text.toString()
             val phone = binding.phoneEditText.text.toString()
 
-            if (email.isNotEmpty() && password.isNotEmpty()) {
-                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { createUserTask ->
-                    if (createUserTask.isSuccessful) {
-                        val user = firebaseAuth.currentUser
-                        val uid = user?.uid
+            if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && fullName.isNotEmpty() && phone.isNotEmpty()) {
+                if (password == confirmPassword) {
+                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { createUserTask ->
+                        if (createUserTask.isSuccessful) {
+                            val user = firebaseAuth.currentUser
+                            val uid = user?.uid
 
-                        uid?.let { uid ->
-                            saveUserDataToFirestore(uid, fullName, email, phone)
+                            uid?.let { uid ->
+                                saveUserDataToFirestore(uid, fullName, email, phone)
+                            }
+                            sendEmailVerification()
+                            val intent = Intent(this, LoginActivity::class.java)
+                            intent.putExtra("isNewUser", true)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(this, createUserTask.exception.toString(), Toast.LENGTH_SHORT).show()
                         }
-                        sendEmailVerification()
-                        val intent = Intent(this, LoginActivity::class.java)
-                        intent.putExtra("isNewUser", true)
-                        startActivity(intent)
-                        finish()
-                    } else {
-                        Toast.makeText(this, createUserTask.exception.toString(), Toast.LENGTH_SHORT).show()
                     }
+                } else {
+                    Toast.makeText(this, "Passwords do not match. Please try again.", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "Email dan Password tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -65,7 +70,8 @@ class RegisterActivity : AppCompatActivity() {
             "email" to email,
             "phone" to phone,
             "address" to "",
-            "gender" to ""
+            "gender" to "",
+            "birth" to ""
         )
 
         firestore.collection("User").document(uid)

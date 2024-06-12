@@ -62,10 +62,10 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileImageView"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="18dp"
                     android:src="@drawable/nanny_placeholder"
                     tools:src="@drawable/user" />
 
@@ -76,7 +76,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="45dp"
                     android:layout_marginTop="-25dp"
-                    android:src="@drawable/ic_edit" />
+                    android:src="@drawable/ic_pencil" />
 
                 <TextView
                     android:id="@+id/fullNameTextView"
@@ -108,7 +108,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Lee Dohyun"
                         android:inputType="textPersonName"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -118,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/montserrat"
                     android:text="Gender"
                     android:textColor="@color/black"
@@ -140,7 +139,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/montserrat"
                         android:text="Female"
-                        android:textSize="14sp" />
+                        android:textSize="15sp" />
 
                     <RadioButton
                         android:id="@+id/radioMale"
@@ -149,15 +148,51 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/montserrat"
                         android:text="Male"
-                        android:textSize="14sp" />
+                        android:textSize="15sp" />
                 </RadioGroup>
+                <!-- Birth -->
+                <TextView
+                    android:id="@+id/birthTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Birth"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/ic_date"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/nanny_placeholder"
+                    tools:src="@drawable/ic_calendar" />
+                <TextView
+                    android:id="@+id/selectedDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_marginLeft="16dp"
+                    android:text="dd/mm/yyyy"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/addressTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/montserrat"
                     android:text="Address"
                     android:textColor="@color/black"
@@ -191,7 +226,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/montserrat"
                     android:text="Phone Number"
                     android:textColor="@color/black"
@@ -216,19 +251,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="081246576879"
                         android:inputType="phone"
                         tools:ignore="SpeakableTextPresentCheck" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/saveChanges"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_below="@id/phoneEditTextLayout"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp"
                     android:layout_marginBottom="100dp"
                     android:fontFamily="@font/montserratsemibold"
                     android:text="Save Changes"

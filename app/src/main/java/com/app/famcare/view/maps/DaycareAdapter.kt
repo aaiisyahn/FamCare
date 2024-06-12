@@ -14,40 +14,44 @@ data class Daycare(
     val name: String,
     val location: String,
     val photoURL: String,
-    val coordinates: GeoPoint,
-    val distanceFromUser: Double
+    val coordinat: GeoPoint,
+    val distanceFromUser: Double,
+    val websiteURL: String
 )
 
-class DaycareAdapter(private var daycares: List<Daycare>) : RecyclerView.Adapter<DaycareAdapter.DaycareViewHolder>() {
-
-    inner class DaycareViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val daycareImage: ImageView = itemView.findViewById(R.id.daycare_image)
-        val daycareName: TextView = itemView.findViewById(R.id.daycare_name)
-        val daycareLocation: TextView = itemView.findViewById(R.id.daycare_location)
-        val daycareDistance: TextView = itemView.findViewById(R.id.tvDistancetoUser)
-    }
+class DaycareAdapter(private var daycares: List<Daycare>, private val itemClickListener: (String) -> Unit) : RecyclerView.Adapter<DaycareAdapter.DaycareViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DaycareViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_daycare, parent, false)
-        return DaycareViewHolder(view)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_daycare, parent, false)
+        return DaycareViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: DaycareViewHolder, position: Int) {
         val daycare = daycares[position]
-        holder.daycareName.text = daycare.name
-        holder.daycareLocation.text = daycare.location
-        holder.daycareDistance.text = "${daycare.distanceFromUser} km"
+        holder.nameTextView.text = daycare.name
+        holder.locationTextView.text = daycare.location
+        holder.distanceTextView.text = "${daycare.distanceFromUser} km"
+
         Glide.with(holder.itemView.context)
             .load(daycare.photoURL)
-            .into(holder.daycareImage)
+            .into(holder.photoImageView)
+
+        holder.itemView.setOnClickListener {
+            itemClickListener(daycare.websiteURL)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return daycares.size
-    }
+    override fun getItemCount() = daycares.size
 
     fun updateDaycares(newDaycares: List<Daycare>) {
         daycares = newDaycares
         notifyDataSetChanged()
+    }
+
+    class DaycareViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val nameTextView: TextView = itemView.findViewById(R.id.daycare_name)
+        val locationTextView: TextView = itemView.findViewById(R.id.daycare_location)
+        val distanceTextView: TextView = itemView.findViewById(R.id.tvDistancetoUser)
+        val photoImageView: ImageView = itemView.findViewById(R.id.daycare_image)
     }
 }

@@ -54,76 +54,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/item_message_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp">
 
-        <ImageView
-            android:id="@+id/ivMessenger"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/baseline_account_circle_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="16dp" />
-
-        <TextView
-            android:id="@+id/tvMessenger"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:fontFamily="@font/montserratsemibold"
-            android:text="Lee Dohyun"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/tvMessage"
-            app:layout_constraintEnd_toStartOf="@+id/ivMessenger"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="FirstName LastName" />
-
-        <TextView
-            android:id="@+id/tvMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/rounded_message_tosca"
-            android:fontFamily="@font/montserratsemibold"
-            android:maxWidth="250dp"
-            android:padding="10dp"
-            android:text="Halo! Apakah anda bisa merawat anak hiperaktif?"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white"
-            android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="@+id/tvMessenger"
-            app:layout_constraintTop_toBottomOf="@+id/tvMessenger"
-            tools:text="This is a message" />
-
-        <TextView
-            android:id="@+id/tvTimestamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginEnd="4dp"
-            android:maxLines="2"
-            android:text="Just Now"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvMessage"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            tools:text="Just Now" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -173,7 +104,7 @@
         android:id="@+id/messageRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/item_message_layout"
+        android:layout_above="@+id/linearLayout"
         android:layout_below="@+id/header"
         android:layout_marginBottom="8dp"
         android:background="@android:color/white" />

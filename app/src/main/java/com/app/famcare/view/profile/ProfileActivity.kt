@@ -1,16 +1,19 @@
 package com.app.famcare.view.profile
 
-
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import com.app.famcare.R
 import com.app.famcare.databinding.ActivityProfileBinding
 import com.app.famcare.view.bookmark.BookmarkActivity
+import com.app.famcare.view.chat.ChatActivity
 import com.app.famcare.view.login.LoginActivity
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.maps.DaycareMapsActivity
@@ -77,14 +80,52 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, EditProfileActivity::class.java)
             startActivity(intent)
         }
-
-        val logoutCardView: CardView = binding.logoutButton
-        logoutCardView.setOnClickListener {
-            firebaseAuth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
+        val settingsLayout: LinearLayout = binding.accountSettings
+        settingsLayout.setOnClickListener {
+            val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
-            finish()
         }
+        val bookmarkLayout: LinearLayout = binding.bookmarkActivity
+        bookmarkLayout.setOnClickListener {
+            val intent = Intent(this, BookmarkActivity::class.java)
+            startActivity(intent)
+        }
+        val termsofserviceLayout: LinearLayout = binding.termsOfServices
+        termsofserviceLayout.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
+        val privacypolicyLayout: LinearLayout = binding.privacyPolicy
+        privacypolicyLayout.setOnClickListener {
+            val intent = Intent(this, PrivacyPolicyActivity::class.java)
+            startActivity(intent)
+        }
+        val aboutLayout: LinearLayout = binding.aboutPage
+        aboutLayout.setOnClickListener {
+            val intent = Intent(this, AboutActivity::class.java)
+            startActivity(intent)
+        }
+        val logoutCardView: LinearLayout = binding.logoutButton
+        logoutCardView.setOnClickListener {
+            showLogoutConfirmationDialog()
+        }
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Apakah Anda yakin ingin keluar?")
+            .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, id ->
+                // User clicked OK button
+                firebaseAuth.signOut()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            })
+            .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
+                // User cancelled the dialog
+                dialog.dismiss()
+            })
+        builder.create().show()
     }
 
     override fun onResume() {

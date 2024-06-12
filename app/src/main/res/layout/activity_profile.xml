@@ -93,8 +93,8 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical|start"
                         android:orientation="vertical"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp">
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp">
 
 
                         <TextView
@@ -116,9 +116,9 @@
 
 
                             <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:src="@drawable/ic_email_2" />
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/ic_email" />
 
 
                             <TextView
@@ -129,7 +129,7 @@
                                 android:fontFamily="@font/montserrat"
                                 android:text="user@mail.com"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
 
 
@@ -141,8 +141,8 @@
 
 
                             <ImageView
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
                                 android:src="@drawable/ic_phone" />
 
 
@@ -154,212 +154,251 @@
                                 android:fontFamily="@font/montserrat"
                                 android:text="08xxxxxxxxxx"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
                     </LinearLayout>
 
 
                     <ImageView
                         android:id="@+id/btn_edit_profile"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginEnd="23dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:contentDescription="Edit Profile"
-                        android:padding="2dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="16dp"
                         android:src="@drawable/ic_pencil" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/bookmarkActivity"
+            <LinearLayout
+                android:id="@+id/accountSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="10dp">
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_bookmark" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Bookmark"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="190dp"
+                    android:src="@drawable/ic_arrow" />
+            </LinearLayout>
 
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_bookmark" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:text="Bookmark"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:id="@+id/termsOfServices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="10dp">
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_accountsetting2" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Account Settings"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="135dp"
+                    android:src="@drawable/ic_arrow" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/bookmarkActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_terms_of_service" />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_terms_of_service" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Terms of Services"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="135dp"
+                    android:src="@drawable/ic_arrow" />
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:text="Terms of Services"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:id="@+id/privacyPolicy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="10dp">
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_privacy_policy" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Privacy Policy"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="165dp"
+                    android:src="@drawable/ic_arrow" />
+            </LinearLayout>
 
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_privacy_policy" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:text="Privacy Policy"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:id="@+id/aboutPage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="10dp">
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_about" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="About"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="228dp"
+                    android:src="@drawable/ic_arrow" />
+            </LinearLayout>
 
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/ic_about" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="12dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:text="About"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:id="@+id/logoutButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="10dp">
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_logout2" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Logout"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="215dp"
+                    android:src="@drawable/ic_arrow" />
 
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_logout" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:text="Logout"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
+            </LinearLayout>
 
         </LinearLayout>
 
