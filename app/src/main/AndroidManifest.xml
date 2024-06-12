@@ -32,11 +32,6 @@
             android:name=".view.booking.BookDailyActivity"
             android:exported="false" />
         <activity
-            android:name=".view.BookingActivity.BookDailyActivity"
-            android:exported="false"
-            android:label="@string/title_activity_book_daily"
-            android:theme="@style/Theme.FamCare" />
-        <activity
             android:name=".view.profile.PrivacyPolicyActivity"
             android:exported="false" />
         <activity
@@ -87,7 +82,7 @@
             android:name=".view.detailpost.DetailPostActivity"
             android:exported="false" />
         <activity
-            android:name=".view.detailhistory.DetailHistoryActivity"
+            android:name=".view.detailhistory.DetailHistoryBDActivity"
             android:exported="false" />
         <activity
             android:name=".view.main.MainActivity"

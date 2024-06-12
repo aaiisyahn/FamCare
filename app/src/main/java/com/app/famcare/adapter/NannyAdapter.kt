@@ -14,11 +14,11 @@ import com.app.famcare.repository.NannyRepository
 import com.app.famcare.view.detailpost.DetailPostActivity
 import com.bumptech.glide.Glide
 
-class NannyAdapter(private val context: Context) :
-    RecyclerView.Adapter<NannyAdapter.NannyViewHolder>() {
+class NannyAdapter(
+    private val context: Context, private val onItemClick: (String) -> Unit
+) : RecyclerView.Adapter<NannyAdapter.NannyViewHolder>() {
 
     private var nannyList: MutableList<Nanny> = mutableListOf()
-
     private val nannyRepository = NannyRepository()
 
     init {
@@ -46,9 +46,7 @@ class NannyAdapter(private val context: Context) :
         holder.textViewRating.text = nanny.rate
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, DetailPostActivity::class.java)
-            intent.putExtra("nanny", nanny)
-            context.startActivity(intent)
+            onItemClick(nanny.id) // Pass the nannyId to the lambda function
         }
     }
 

@@ -8,7 +8,6 @@ import androidx.appcompat.widget.Toolbar
 import com.app.famcare.R
 import com.app.famcare.databinding.ActivityElderlyMapsBinding
 import com.app.famcare.view.facilities.FacilitiesActivity
-import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.profile.ProfileActivity
 import com.google.android.gms.maps.CameraUpdateFactory

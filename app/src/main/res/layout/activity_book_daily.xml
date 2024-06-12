@@ -145,7 +145,7 @@
                                         android:src="@drawable/ic_salary" />
 
                                     <TextView
-                                        android:id="@+id/text_phone"
+                                        android:id="@+id/text_salary"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="4dp"
@@ -240,18 +240,40 @@
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
+                    <LinearLayout
+                        android:id="@+id/skillLayouting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/locationLayout"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
                         <TextView
-                            android:id="@+id/outputSalary"
+                            android:id="@+id/textCost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="15dp"
                             android:layout_marginEnd="20dp"
                             android:fontFamily="@font/montserratsemibold"
-                            android:text="Total Cost             : Rp400.000,00"
+                            android:text="Total Cost             :"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/outputCost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="-15dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="0dp"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:text="Rp400.000,00"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                     </LinearLayout>
 

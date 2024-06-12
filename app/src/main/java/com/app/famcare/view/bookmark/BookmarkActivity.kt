@@ -10,7 +10,6 @@ import com.app.famcare.R
 import com.app.famcare.adapter.BookmarkAdapter
 import com.app.famcare.databinding.ActivityBookmarkBinding
 import com.app.famcare.view.facilities.FacilitiesActivity
-import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.profile.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView

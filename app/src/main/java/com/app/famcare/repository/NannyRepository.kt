@@ -9,20 +9,18 @@ class NannyRepository {
     private val db = FirebaseFirestore.getInstance()
 
     fun getNannies(
-        onSuccess: (List<Nanny>) -> Unit,
-        onFailure: (Exception) -> Unit
+        onSuccess: (List<Nanny>) -> Unit, onFailure: (Exception) -> Unit
     ) {
-        db.collection("Nanny")
-            .get()
-            .addOnSuccessListener { querySnapshot ->
+        db.collection("Nanny").get().addOnSuccessListener { querySnapshot ->
                 val nannyList = mutableListOf<Nanny>()
                 for (document in querySnapshot) {
-                    val nanny = document.toObject(Nanny::class.java)
+                    val nanny = document.toObject(Nanny::class.java).apply {
+                        id = document.id  // Set the id property
+                    }
                     nannyList.add(nanny)
                 }
                 onSuccess(nannyList)
-            }
-            .addOnFailureListener { exception ->
+            }.addOnFailureListener { exception ->
                 onFailure(exception)
             }
     }
@@ -40,20 +38,20 @@ class NannyRepository {
                 "type" -> query = query.whereEqualTo("type", value)
                 "location" -> query = query.whereIn("location", value as List<String>)
                 "skills" -> query = query.whereArrayContains("skills", value)
-                "experience" -> query = query.whereGreaterThanOrEqualTo("experience", value as Int) // Assume experience is an integer representing years
+                "experience" -> query = query.whereGreaterThanOrEqualTo("experience", value as Int)
             }
         }
 
-        query.get()
-            .addOnSuccessListener { querySnapshot ->
+        query.get().addOnSuccessListener { querySnapshot ->
                 val nannyList = mutableListOf<Nanny>()
                 for (document in querySnapshot) {
-                    val nanny = document.toObject(Nanny::class.java)
+                    val nanny = document.toObject(Nanny::class.java).apply {
+                        id = document.id  // Set the id property
+                    }
                     nannyList.add(nanny)
                 }
                 onSuccess(nannyList)
-            }
-            .addOnFailureListener { exception ->
+            }.addOnFailureListener { exception ->
                 onFailure(exception)
             }
     }

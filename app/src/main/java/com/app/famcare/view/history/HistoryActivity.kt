@@ -1,26 +1,24 @@
 package com.app.famcare.view.history
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.app.famcare.R
-import com.app.famcare.adapter.BookmarkAdapter
-import com.app.famcare.databinding.ActivityBookmarkBinding
-import com.app.famcare.databinding.ActivityHistoryBinding
-import com.app.famcare.view.chat.ChatActivity
-import com.app.famcare.view.detailhistory.DetailHistoryActivity
+import com.app.famcare.adapter.HistoryPagerAdapter
 import com.app.famcare.view.facilities.FacilitiesActivity
-import com.app.famcare.view.login.LoginActivity
+import com.app.famcare.view.historyimport.HistoryBDFragment
+import com.app.famcare.view.historyimport.HistoryBMFragment
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.profile.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class HistoryActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
@@ -30,11 +28,52 @@ class HistoryActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
-        val seeHistoryView = findViewById<CardView>(R.id.bookingHistoryView)
-        seeHistoryView.setOnClickListener {
-            val intent = Intent(this, DetailHistoryActivity::class.java)
-            startActivity(intent)
+        val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
+        val viewPager = findViewById<ViewPager2>(R.id.view_pager)
+
+        val adapter = HistoryPagerAdapter(this)
+        viewPager.adapter = adapter
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Daily"
+                1 -> "Monthly"
+                else -> "Undefined"
+            }
+        }.attach()
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                when (position) {
+                    0 -> {
+                        val fragment = HistoryBDFragment()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .commit()
+                    }
+                    1 -> {
+                        val fragment = HistoryBMFragment()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .commit()
+                    }
+                }
+            }
+        })
+
+        // Ambil informasi tentang tab yang harus dipilih dari Intent
+        val selectedTab = intent.getIntExtra("selectedTab", 0)
+
+        // Set tab yang sesuai berdasarkan informasi yang diterima
+        if (selectedTab == 1) {
+            // Pilih tab "Monthly"
+            viewPager.currentItem = 1
+        } else {
+            // Default: Pilih tab "Daily" atau tab pertama jika tidak ada informasi yang dikirimkan
+            viewPager.currentItem = 0
         }
+
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.page_2
@@ -47,12 +86,7 @@ class HistoryActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.page_2 -> {
-                    val intent = Intent(this, HistoryActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-
+                R.id.page_2 -> true // No action needed if already in HistoryActivity
                 R.id.page_3 -> {
                     val intent = Intent(this, FacilitiesActivity::class.java)
                     startActivity(intent)
@@ -68,7 +102,6 @@ class HistoryActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

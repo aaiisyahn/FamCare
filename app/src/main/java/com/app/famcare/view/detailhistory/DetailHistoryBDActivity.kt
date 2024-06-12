@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
 import com.app.famcare.R
 import com.app.famcare.view.chat.ChatActivity
 
-class DetailHistoryActivity : AppCompatActivity() {
+class DetailHistoryBDActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_history)

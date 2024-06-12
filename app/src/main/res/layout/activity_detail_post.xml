@@ -50,291 +50,273 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageViewNannyDP">
+                android:padding="16dp">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/imageViewNannyBookmark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/imageViewNannyBookmark"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imageViewNannyDP"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="16dp"
-                        android:orientation="vertical">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/imageViewNannyDP"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="nanny image"
-                            android:src="@drawable/nanny_placeholder"/>
-
-                        <ImageView
-                            android:id="@+id/iv_bookmark"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="40dp"
-                            android:layout_marginTop="-25dp"
-                            android:contentDescription="bookmark"
-                            android:src="@drawable/baseline_bookmark_24" />
-                    </LinearLayout>
+                        android:contentDescription="nanny image"
+                        android:src="@drawable/nanny_placeholder" />
 
                     <ImageView
-                        android:id="@+id/imageViewGenderDP"
+                        android:id="@+id/iv_bookmark"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_below="@id/imageViewNannyBookmark"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="8dp"
-                        android:contentDescription="gender"
-                        android:src="@drawable/ic_male"/>
+                        android:layout_gravity="center"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="-25dp"
+                        android:contentDescription="bookmark"
+                        android:src="@drawable/baseline_bookmark_24" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageViewGenderDP"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/imageViewNannyBookmark"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="gender"
+                    android:src="@drawable/ic_male" />
+
+                <TextView
+                    android:id="@+id/textViewNameDP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imageViewGenderDP"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="Nanny's Name" />
+
+                <TextView
+                    android:id="@+id/textViewAgeDP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewNameDP"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:text="24 years old" />
+
+                <RelativeLayout
+                    android:id="@+id/ratingLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewAgeDP"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageViewRate"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="type"
+                        android:src="@drawable/ic_rate" />
 
                     <TextView
-                        android:id="@+id/textViewNameDP"
+                        android:id="@+id/textViewRateDP"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/imageViewGenderDP"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@id/imageViewRate"
                         android:fontFamily="@font/montserratsemibold"
                         android:textColor="@android:color/black"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        tools:text="Nanny's Name"/>
+                        android:textSize="16sp"
+                        tools:text="4.0" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rateTypeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ratingLayout"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageViewType"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="type"
+                        android:src="@drawable/ic_calendar" />
 
                     <TextView
-                        android:id="@+id/textViewAgeDP"
+                        android:id="@+id/textViewTypeDP"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/textViewNameDP"
-                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@id/imageViewType"
+                        android:fontFamily="@font/montserratsemibold"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        tools:text="daily" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/experienceLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rateTypeLayout"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageViewExperience"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="experience"
+                        android:src="@drawable/ic_timespan" />
+
+                    <TextView
+                        android:id="@+id/textViewExperienceDP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:fontFamily="@font/montserratsemibold"
                         android:textColor="@android:color/black"
                         android:textSize="16sp"
-                        tools:text="24 years old" />
+                        tools:text="@string/years_experiences" />
+                </LinearLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/ratingLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/textViewAgeDP"
-                        android:layout_marginTop="6dp"
-                        android:gravity="center_horizontal">
+                <LinearLayout
+                    android:id="@+id/locationLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/experienceLayout"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/imageViewRate"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:contentDescription="type"
-                            android:src="@drawable/ic_rate" />
-
-                        <TextView
-                            android:id="@+id/textViewRateDP"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@id/imageViewRate"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            tools:text="4.0"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rateTypeLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/ratingLayout"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/imageViewType"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:contentDescription="type"
-                            android:src="@drawable/ic_calendar" />
-
-                        <TextView
-                            android:id="@+id/textViewTypeDP"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_toEndOf="@id/imageViewType"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            tools:text="daily"/>
-
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/experienceLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rateTypeLayout"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/imageViewExperience"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:contentDescription="experience"
-                            android:src="@drawable/ic_timespan" />
-
-                        <TextView
-                            android:id="@+id/textViewExperienceDP"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            tools:text="@string/years_experiences" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/locationLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/experienceLayout"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/imageViewLocation"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:contentDescription="location"
-                            android:src="@drawable/ic_location" />
-
-                        <TextView
-                            android:id="@+id/textViewLocationDP"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            tools:text="Jakarta" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/salaryLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/locationLayout"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/imageViewSalary"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:contentDescription="salary"
-                            android:src="@drawable/ic_salary" />
-
-                        <TextView
-                            android:id="@+id/textViewSalaryDP"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp"
-                            tools:text="@string/minimum_salary" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/skillLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/locationLayout"
-                        android:layout_marginTop="40dp"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/imageViewSkill"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:contentDescription="skill"
-                            android:src="@drawable/ic_skills" />
-
-                        <TextView
-                            android:id="@+id/textSkill"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:text="Skills Offered"
-                            android:textColor="@android:color/black"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imageViewLocation"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="location"
+                        android:src="@drawable/ic_location" />
 
                     <TextView
-                        android:id="@+id/textViewSkillsDP"
-                        android:layout_width="match_parent"
+                        android:id="@+id/textViewLocationDP"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/skillLayout"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="8dp"
                         android:fontFamily="@font/montserratsemibold"
                         android:textColor="@android:color/black"
                         android:textSize="16sp"
-                        tools:text="daily, cleaning, disability care" />
+                        tools:text="Jakarta" />
 
-                    <Button
-                        android:id="@+id/imageViewContact"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/salaryLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/locationLayout"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageViewSalary"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="salary"
+                        android:src="@drawable/ic_salary" />
+
+                    <TextView
+                        android:id="@+id/textViewSalaryDP"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/textViewSkillsDP"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="50dp"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginStart="8dp"
                         android:fontFamily="@font/montserratsemibold"
-                        android:text="Chat Nanny"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        tools:text="@string/minimum_salary" />
 
-                    <Button
-                        android:id="@+id/buttonContactNanny"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/skillLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/locationLayout"
+                    android:layout_marginTop="40dp"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/skillLayouting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/locationLayout"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageViewSkill"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="skill"
+                        android:src="@drawable/ic_skills" />
+
+                    <TextView
+                        android:id="@+id/textSkill"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/imageViewContact"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="15dp"
+                        android:layout_marginStart="8dp"
                         android:fontFamily="@font/montserratsemibold"
-                        android:text="Book Nanny"
-                        android:textSize="18sp" />
+                        android:text="Skills Offered"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                    <!-- This LinearLayout will hold the skill TextViews dynamically -->
+                    <LinearLayout
+                        android:id="@+id/skillListLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/buttonBookNanny"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/skillLayout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:text="Book Nanny"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

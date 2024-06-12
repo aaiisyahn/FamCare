@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.app.famcare.adapter.NannyAdapter
 import com.app.famcare.databinding.ActivityMainBinding
 import com.app.famcare.view.facilities.FacilitiesActivity
-import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.profile.ProfileActivity
 import com.app.famcare.view.main.FilterFragment
 import androidx.fragment.app.FragmentTransaction
+import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.repository.NannyRepository
+import com.app.famcare.view.detailpost.DetailPostActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
@@ -27,7 +28,12 @@ class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
         val view = binding.root
         setContentView(view)
 
-        adapter = NannyAdapter(this)
+        adapter = NannyAdapter(this) { nannyId ->
+            val intent = Intent(this, DetailPostActivity::class.java)
+            intent.putExtra("nannyId", nannyId)
+            startActivity(intent)
+        }
+
         binding.recyclerViewNanny.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerViewNanny.adapter = adapter
 
