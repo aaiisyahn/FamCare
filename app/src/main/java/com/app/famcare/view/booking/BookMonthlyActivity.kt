@@ -111,7 +111,7 @@ class BookMonthlyActivity : AppCompatActivity() {
             this,
             { view, year, month, dayOfMonth ->
                 val selectedDate = "$dayOfMonth/${month + 1}/$year"
-                outputStartDate.text = "Start Date         : $selectedDate"
+                outputStartDate.text = "Start Date                  : $selectedDate"
                 startDateEditText.setText(selectedDate)
 
                 // Hitung end date saat start date dipilih
@@ -139,7 +139,7 @@ class BookMonthlyActivity : AppCompatActivity() {
             calendar.time = startDate
             calendar.add(Calendar.DAY_OF_MONTH, 30 * selectedBookingDuration)
             endDate = sdf.format(calendar.time)
-            outputEndDate.text = "End Date           : $endDate"
+            outputEndDate.text = "End Date                   : $endDate"
         } catch (e: Exception) {
             e.printStackTrace()
         }

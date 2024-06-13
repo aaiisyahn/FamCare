@@ -13,7 +13,9 @@ import com.app.famcare.view.chat.ChatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import android.util.Log
+import android.util.TypedValue
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import com.app.famcare.view.booking.BookMonthlyActivity
 
 class DetailPostActivity : AppCompatActivity() {
@@ -98,10 +100,12 @@ class DetailPostActivity : AppCompatActivity() {
 
                         // Dynamically add skills as TextViews
                         nannyData.skills.forEach { skill ->
-                            val textView = TextView(this@DetailPostActivity)
-                            textView.text = "• $skill"
-                            textView.setTextColor(resources.getColor(android.R.color.black))
-                            textView.textSize = 16f
+                            val textView = TextView(this@DetailPostActivity).apply {
+                                text = "• $skill"
+                                setTextColor(resources.getColor(android.R.color.black))
+                                setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)  // Use SP unit
+                                typeface = ResourcesCompat.getFont(this@DetailPostActivity, R.font.montserrat)
+                            }
                             skillListLayout.addView(textView) // Add the TextView to skillListLayout
                         }
                     }

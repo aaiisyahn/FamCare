@@ -118,8 +118,8 @@
                                     android:gravity="center_vertical">
 
                                     <ImageView
-                                        android:layout_width="15dp"
-                                        android:layout_height="15dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
                                         android:src="@drawable/ic_calendar" />
 
                                     <TextView
@@ -130,29 +130,7 @@
                                         android:fontFamily="@font/montserratsemibold"
                                         android:text="daily"
                                         android:textColor="@color/black"
-                                        android:textSize="12sp" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:gravity="center_vertical">
-
-                                    <ImageView
-                                        android:layout_width="15dp"
-                                        android:layout_height="15dp"
-                                        android:src="@drawable/ic_salary" />
-
-                                    <TextView
-                                        android:id="@+id/text_salary"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="4dp"
-                                        android:fontFamily="@font/montserratsemibold"
-                                        android:text="Rp400.000,00/8 hours"
-                                        android:textColor="@color/black"
-                                        android:textSize="12sp" />
+                                        android:textSize="16sp" />
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
@@ -166,28 +144,6 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/workingHoursTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="15dp"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:textStyle="bold"
-                            android:text="Working Hours"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <Spinner
-                            android:id="@+id/workingHoursSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="20dp"
-                            android:background="@drawable/bg_spinner"
-                            android:spinnerMode="dropdown" />
-
-                        <TextView
                             android:id="@+id/selectTimeTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -197,7 +153,7 @@
                             android:textStyle="bold"
                             android:text="Booking Date"
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/bookingDateEditText"
@@ -211,7 +167,31 @@
                             android:fontFamily="@font/montserrat"
                             android:hint="  choose booking Date"
                             android:inputType="none"
-                            android:textSize="12sp" />
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/workingHoursTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:textStyle="bold"
+                            android:text="Working Hours"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <Spinner
+                            android:id="@+id/workingHoursSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="20dp"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/montserrat"
+                            android:background="@drawable/bg_spinner"
+                            android:spinnerMode="dropdown" />
 
                         <!-- Output Selected Working Hours -->
                         <TextView
@@ -224,7 +204,7 @@
                             android:textStyle="bold"
                             android:text="Working Hours   : "
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
 
                         <!-- Output Selected Booking Date -->
                         <TextView
@@ -238,57 +218,55 @@
                             android:textStyle="bold"
                             android:text="Booking Date      : "
                             android:textColor="@color/black"
-                            android:textSize="14sp" />
+                            android:textSize="16sp" />
 
-                    <LinearLayout
-                        android:id="@+id/skillLayouting"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/locationLayout"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textCost"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/skillLayouting"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="20dp"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:text="Total Cost             :"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:layout_below="@id/locationLayout"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:baselineAligned="true">
 
-                        <TextView
-                            android:id="@+id/outputCost"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="-15dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="0dp"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:text="Rp400.000,00"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/textCost"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="5dp"
+                                android:fontFamily="@font/montserratsemibold"
+                                android:text="Total Cost             :"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="top|start" />
+
+                            <TextView
+                                android:id="@+id/text_salary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserratsemibold"
+                                android:text="Rp400.000,00/8 hours"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <Button
                         android:id="@+id/buttonBookNanny"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="300dp"
+                        android:layout_height="60dp"
                         android:layout_below="@id/formBooking"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="100dp"
+                        android:layout_marginTop="60dp"
                         android:layout_marginBottom="15dp"
                         android:fontFamily="@font/montserratsemibold"
                         android:textStyle="bold"
                         android:text="Book Now"
-                        android:textSize="18sp" />
+                        android:textSize="20sp" />
 
                 </RelativeLayout>
 

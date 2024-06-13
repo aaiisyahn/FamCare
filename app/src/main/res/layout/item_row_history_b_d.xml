@@ -35,20 +35,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/montserrat"
+                    android:fontFamily="@font/montserratsemibold"
                     android:text="ID Booking:"
-                    android:textColor="#95A1A2"
-                    android:textSize="15sp" />
+                    android:textColor="@color/icon_active"
+                    android:textSize="16sp" />
                 <TextView
                     android:id="@+id/textViewID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/montserrat"
+                    android:fontFamily="@font/montserratsemibold"
                     android:text="A4352hydsas89"
-                    android:textColor="#95A1A2"
-                    android:textSize="15sp" />
+                    android:textColor="@color/icon_active"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <!-- TextView for Nanny's Name -->
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/montserrat"
+                    android:fontFamily="@font/montserratsemibold"
                     android:text="6/4/2024"
                     android:textSize="16sp" />
 
@@ -111,7 +111,7 @@
                     android:id="@+id/textViewTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
+                    android:fontFamily="@font/montserratsemibold"
                     android:text="14.00-22.00"
                     android:textSize="16sp" />
             </LinearLayout>

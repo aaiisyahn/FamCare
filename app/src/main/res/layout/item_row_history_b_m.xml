@@ -35,20 +35,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/montserrat"
+                    android:fontFamily="@font/montserratsemibold"
                     android:text="ID Booking:"
-                    android:textColor="#95A1A2"
-                    android:textSize="15sp" />
+                    android:textColor="@color/icon_active"
+                    android:textSize="16sp" />
                 <TextView
                     android:id="@+id/textViewID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/montserrat"
+                    android:fontFamily="@font/montserratsemibold"
                     android:text="A4352hydsas89"
-                    android:textColor="#95A1A2"
-                    android:textSize="15sp" />
+                    android:textColor="@color/icon_active"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <!-- TextView for Nanny's Name -->
@@ -93,7 +93,7 @@
                     android:id="@+id/textViewStartDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
+                    android:fontFamily="@font/montserratsemibold"
                     android:text="6/4/2024"
                     android:layout_marginEnd="6dp"
                     android:textSize="16sp" />
@@ -103,7 +103,7 @@
                     android:id="@+id/textSplit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
+                    android:fontFamily="@font/montserratsemibold"
                     android:text="-"
                     android:textSize="16sp" />
 
@@ -112,7 +112,7 @@
                     android:id="@+id/textViewEndDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat"
+                    android:fontFamily="@font/montserratsemibold"
                     android:text="6/4/2024"
                     android:layout_marginStart="6dp"
                     android:textSize="16sp" />
