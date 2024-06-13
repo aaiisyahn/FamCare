@@ -35,6 +35,15 @@
                     android:padding="8dp"
                     tools:listitem="@layout/item_row_history_b_m" />
 
+                <TextView
+                    android:id="@+id/emptyTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No bookings found for user"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:layout_marginTop="300dp"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

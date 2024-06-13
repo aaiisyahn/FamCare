@@ -35,20 +35,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/montserratsemibold"
+                    android:fontFamily="@font/montserrat"
                     android:text="ID Booking:"
-                    android:textColor="@color/icon_active"
-                    android:textSize="16sp" />
+                    android:textColor="@color/button"
+                    android:textSize="15sp" />
                 <TextView
                     android:id="@+id/textViewID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/montserratsemibold"
+                    android:fontFamily="@font/montserrat"
                     android:text="A4352hydsas89"
-                    android:textColor="@color/icon_active"
-                    android:textSize="16sp" />
+                    android:textColor="@color/button"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <!-- TextView for Nanny's Name -->
@@ -122,12 +122,12 @@
         <!-- ImageView for Chat Icon -->
         <ImageView
             android:id="@+id/chatIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="65dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="-17dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/ic_chat" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

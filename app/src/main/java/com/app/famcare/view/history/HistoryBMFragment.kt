@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,7 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: BookingAdapter
+    private lateinit var emptyTextView: TextView
     private var selectedBookingID: String = ""
 
     override fun onCreateView(
@@ -43,9 +45,16 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
         adapter = BookingAdapter(emptyList(), this)
         recyclerView.adapter = adapter
 
-        fetchDataFromFirestore()
+        emptyTextView = rootView.findViewById(R.id.emptyTextView)
 
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Call fetchDataFromFirestore after view is created
+        fetchDataFromFirestore()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -54,6 +63,7 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
                 requireActivity().onBackPressed()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -69,6 +79,9 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
                 if (bookIDs.isNotEmpty()) {
                     fetchMonthlyBookings(bookIDs)
                 } else {
+                    // Show empty message when no bookings found
+                    emptyTextView.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
                     Log.w(TAG, "No bookings found for user")
                 }
             } else {
@@ -85,26 +98,45 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
 
         // Fetch each booking by bookID for monthly type
         bookIDs.forEach { bookID ->
-            db.collection("BookingMonthly").document(bookID).get().addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    val nannyID = document.getString("nannyID") ?: ""
-                    val bookStartDate = document.getString("startDate") ?: ""
-                    val bookEndDate = document.getString("endDate") ?: ""
-                    db.collection("Nanny").document(nannyID).get()
-                        .addOnSuccessListener { nannyDoc ->
-                            val nannyName = nannyDoc.getString("name") ?: ""
-                            val bookingMonthly = BookingMonthly(bookID, nannyName, bookStartDate, bookEndDate, BookingType.MONTHLY) // Tambahkan parameter BookingType.MONTHLY
-                            bookingList.add(bookingMonthly)
+            db.collection("BookingMonthly").document(bookID).get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val nannyID = document.getString("nannyID") ?: ""
+                        val bookStartDate = document.getString("startDate") ?: ""
+                        val bookEndDate = document.getString("endDate") ?: ""
+                        db.collection("Nanny").document(nannyID).get()
+                            .addOnSuccessListener { nannyDoc ->
+                                val nannyName = nannyDoc.getString("name") ?: ""
+                                val bookingMonthly = BookingMonthly(
+                                    bookID,
+                                    nannyName,
+                                    bookStartDate,
+                                    bookEndDate,
+                                    BookingType.MONTHLY
+                                )
+                                bookingList.add(bookingMonthly)
 
-                            // Reverse the list to display in the required order
-                            adapter.setData(bookingList.reversed())
-                        }.addOnFailureListener { e ->
-                            Log.w(TAG, "Error getting nanny document", e)
-                        }
-                }
-            }.addOnFailureListener { e ->
+                                // Reverse the list to display in the required order
+                                adapter.setData(bookingList.reversed())
+
+                                // Hide empty text message
+                                emptyTextView.visibility = View.GONE
+                                recyclerView.visibility = View.VISIBLE
+                            }.addOnFailureListener { e ->
+                                Log.w(TAG, "Error getting nanny document", e)
+                            }
+                    } else {
+                        // Handle case where document does not exist (optional)
+                    }
+                }.addOnFailureListener { e ->
                 Log.w(TAG, "Error getting booking document: ", e)
             }
+        }
+
+        // Check if bookingList is empty after fetching
+        if (bookingList.isEmpty()) {
+            emptyTextView.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
         }
     }
 
