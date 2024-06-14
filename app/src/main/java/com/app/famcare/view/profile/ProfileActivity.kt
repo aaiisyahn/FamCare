@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -80,32 +81,32 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, EditProfileActivity::class.java)
             startActivity(intent)
         }
-        val settingsLayout: LinearLayout = binding.accountSettings
+        val settingsLayout: RelativeLayout = binding.accountSettings
         settingsLayout.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
-        val bookmarkLayout: LinearLayout = binding.bookmarkActivity
+        val bookmarkLayout: RelativeLayout = binding.bookmarkActivity
         bookmarkLayout.setOnClickListener {
             val intent = Intent(this, BookmarkActivity::class.java)
             startActivity(intent)
         }
-        val termsofserviceLayout: LinearLayout = binding.termsOfServices
+        val termsofserviceLayout: RelativeLayout = binding.termsOfServices
         termsofserviceLayout.setOnClickListener {
-            val intent = Intent(this, ChatActivity::class.java)
+            val intent = Intent(this, TermsOfServicesActivity::class.java)
             startActivity(intent)
         }
-        val privacypolicyLayout: LinearLayout = binding.privacyPolicy
+        val privacypolicyLayout: RelativeLayout = binding.privacyPolicy
         privacypolicyLayout.setOnClickListener {
             val intent = Intent(this, PrivacyPolicyActivity::class.java)
             startActivity(intent)
         }
-        val aboutLayout: LinearLayout = binding.aboutPage
+        val aboutLayout: RelativeLayout = binding.aboutPage
         aboutLayout.setOnClickListener {
             val intent = Intent(this, AboutActivity::class.java)
             startActivity(intent)
         }
-        val logoutCardView: LinearLayout = binding.logoutButton
+        val logoutCardView: RelativeLayout = binding.logoutButton
         logoutCardView.setOnClickListener {
             showLogoutConfirmationDialog()
         }

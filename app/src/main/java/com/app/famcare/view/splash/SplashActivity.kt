@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.app.famcare.R
 import com.app.famcare.view.login.LoginActivity
 import com.app.famcare.view.main.MainActivity
-import com.app.famcare.view.onboardinh.OnboardingActivity
+import com.app.famcare.view.onboarding.OnboardingActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {

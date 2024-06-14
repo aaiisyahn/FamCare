@@ -27,16 +27,18 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.MessageViewHolder>() {
         fun bind(message: ChatMessage) {
             GlobalScope.launch(Dispatchers.Main) {
                 val latestUserInfo = getLatestUserInfo(message.senderId)
-                if (latestUserInfo != null) {
-                    binding.tvMessenger.text = latestUserInfo.first ?: message.senderName
+                val displayName = latestUserInfo?.first ?: message.senderName
+                val profileImageUrl = latestUserInfo?.second
+
+                binding.tvMessenger.text = displayName
+                if (profileImageUrl != null) {
                     Glide.with(binding.ivMessenger.context)
-                        .load(latestUserInfo.second ?: message.senderPhotoUrl)
+                        .load(profileImageUrl)
                         .circleCrop()
                         .into(binding.ivMessenger)
                 } else {
-                    binding.tvMessenger.text = message.senderName
                     Glide.with(binding.ivMessenger.context)
-                        .load(message.senderPhotoUrl)
+                        .load(R.drawable.user)
                         .circleCrop()
                         .into(binding.ivMessenger)
                 }

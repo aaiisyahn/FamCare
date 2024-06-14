@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -148,9 +149,21 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
     }
 
     override fun onChatClick(bookingID: String) {
-        val intent = Intent(requireContext(), ChatActivity::class.java)
-        intent.putExtra("bookingID", bookingID)
-        startActivity(intent)
+        val db = FirebaseFirestore.getInstance()
+        db.collection("BookingMonthly").document(bookingID).get().addOnSuccessListener { document ->
+            if (document != null && document.exists()) {
+                val nannyID = document.getString("nannyID") ?: ""
+                if (nannyID.isNotEmpty()) {
+                    val intent = Intent(requireContext(), ChatActivity::class.java)
+                    intent.putExtra("nannyID", nannyID)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(requireContext(), "Nanny ID not found", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(requireContext(), "Failed to load booking", Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {

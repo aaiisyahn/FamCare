@@ -30,9 +30,7 @@ class LoginActivity : AppCompatActivity() {
 
         val isNewUser = intent.getBooleanExtra("isNewUser", false)
         if (isNewUser) {
-            // Log statement for debugging
             println("New user detected, scheduling verification popup")
-            // Schedule the popup to be shown after a short delay
             Handler(Looper.getMainLooper()).postDelayed({
                 showVerificationPopup()
             }, 500)

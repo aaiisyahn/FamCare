@@ -1,4 +1,4 @@
-package com.app.famcare.view.onboardinh
+package com.app.famcare.view.onboarding
 
 import android.content.Intent
 import android.os.Bundle
