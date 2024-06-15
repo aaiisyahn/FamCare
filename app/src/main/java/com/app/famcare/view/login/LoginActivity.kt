@@ -4,11 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.Button
-import android.widget.PopupWindow
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.app.famcare.R
 import com.app.famcare.databinding.ActivityLoginBinding
@@ -30,9 +27,9 @@ class LoginActivity : AppCompatActivity() {
 
         val isNewUser = intent.getBooleanExtra("isNewUser", false)
         if (isNewUser) {
-            println("New user detected, scheduling verification popup")
+            println("New user detected, scheduling verification dialog")
             Handler(Looper.getMainLooper()).postDelayed({
-                showVerificationPopup()
+                showVerificationDialog()
             }, 500)
         }
 
@@ -50,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
                             finish()
                         } else {
                             Toast.makeText(this, "Please verify your email first", Toast.LENGTH_SHORT).show()
+                            firebaseAuth.signOut() // Sign out the user if email is not verified
                         }
                     } else {
                         handleLoginError(task.exception)
@@ -91,19 +89,16 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showVerificationPopup() {
+    private fun showVerificationDialog() {
         runOnUiThread {
-            val inflater = LayoutInflater.from(this)
-            val popupView = inflater.inflate(R.layout.activity_verification_popup, null)
-
-            val popupWindow = PopupWindow(popupView, WRAP_CONTENT, WRAP_CONTENT, true)
-            popupWindow.showAtLocation(binding.root, android.view.Gravity.CENTER, 0, 0)
-
-            val dismissButton = popupView.findViewById<Button>(R.id.dismissButton)
-
-            dismissButton.setOnClickListener {
-                popupWindow.dismiss()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Email Verification")
+            builder.setMessage("Please verify your email address.")
+            builder.setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
             }
+            val dialog = builder.create()
+            dialog.show()
         }
     }
 }

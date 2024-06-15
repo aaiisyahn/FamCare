@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.onboarding.OnboardingActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="-50dp"
+        android:layout_gravity="center_horizontal"
+        app:srcCompat="@drawable/onboarding1" />
 
     <TextView
         android:id="@+id/titleWelcome"
@@ -12,109 +22,55 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserratsemibold"
         android:gravity="center"
-        android:text="Welcome"
+        android:text="Find the Best Caregivers"
         android:textColor="@color/black"
-        android:textSize="26sp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal2"
-        tools:alpha="100" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="456dp"
-        android:layout_height="246dp"
+        android:textSize="24sp"
         android:layout_marginTop="28dp"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleWelcome"
-        app:srcCompat="@drawable/onboardingpicture" />
+        android:layout_gravity="center_horizontal"
+        tools:alpha="100" />
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="370dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="60dp"
-        android:fontFamily="@font/montserratsemibold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Protect Your Loved Ones"
+        android:text="Easily select caregivers that match your preferences."
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
+        android:layout_gravity="center_horizontal"
         tools:alpha="100" />
-
-
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="165dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:backgroundTint="@color/icon_active"
         android:fontFamily="@font/montserratsemibold"
-        android:text="Log in"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="48dp"
+        android:text="Next"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
         tools:alpha="100" />
 
     <TextView
-        android:id="@+id/tvOr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/montserratsemibold"
-        android:gravity="center"
-        android:text="or"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        tools:alpha="100" />
-
-    <Button
         android:id="@+id/registerButton"
-        android:layout_width="165dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
         android:backgroundTint="@color/icon_active"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/montserratsemibold"
-        android:text="Register"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOr"
-        app:layout_constraintVertical_bias="0.024"
+        android:text="Skip Tour"
+        android:textColor="@color/dark_grey"
+        android:textSize="16sp"
         tools:alpha="100" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="64dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.54"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHorizontal2"
-        android:layout_width="wrap_content"
-        android:layout_height="64dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.14"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -41,6 +41,7 @@ class RegisterActivity : AppCompatActivity() {
                                 saveUserDataToFirestore(uid, fullName, email, phone)
                             }
                             sendEmailVerification()
+                            firebaseAuth.signOut() // Sign out the user after sending the verification email
                             val intent = Intent(this, LoginActivity::class.java)
                             intent.putExtra("isNewUser", true)
                             startActivity(intent)
@@ -94,5 +95,4 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
     }
-
 }

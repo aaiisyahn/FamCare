@@ -1,7 +1,6 @@
 package com.app.famcare.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.famcare.R
 import com.app.famcare.model.Nanny
 import com.app.famcare.repository.NannyRepository
-import com.app.famcare.view.detailpost.DetailPostActivity
 import com.bumptech.glide.Glide
 
 class NannyAdapter(
-    private val context: Context, private val onItemClick: (String) -> Unit
+    private val context: Context,
+    var layoutResource: Int,
+    private val onItemClick: (String) -> Unit
 ) : RecyclerView.Adapter<NannyAdapter.NannyViewHolder>() {
 
     private var nannyList: MutableList<Nanny> = mutableListOf()
@@ -33,8 +33,7 @@ class NannyAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NannyViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_row_nanny, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
         return NannyViewHolder(view)
     }
 
@@ -46,7 +45,7 @@ class NannyAdapter(
         holder.textViewRating.text = nanny.rate
 
         holder.itemView.setOnClickListener {
-            onItemClick(nanny.id) // Pass the nannyId to the lambda function
+            onItemClick(nanny.id)
         }
     }
 
@@ -72,5 +71,10 @@ class NannyAdapter(
         }, onFailure = { exception ->
             // Handle failure, e.g., show error message
         })
+    }
+
+    fun updateLayoutResource(newLayoutResource: Int) {
+        layoutResource = newLayoutResource
+        notifyDataSetChanged() // Refresh the adapter to use the new layout
     }
 }

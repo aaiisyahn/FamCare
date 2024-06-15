@@ -203,7 +203,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="Bookmark"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
 
 
                 </LinearLayout>
@@ -261,7 +261,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="Account Settings"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
 
 
                 </LinearLayout>
@@ -320,7 +320,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="Terms of Services"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
 
 
                 </LinearLayout>
@@ -377,7 +377,7 @@
                     android:fontFamily="@font/montserrat"
                     android:text="Privacy Policy"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
 
             </LinearLayout>
@@ -433,7 +433,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="About"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
 
 
                 </LinearLayout>
@@ -490,7 +490,7 @@
                         android:fontFamily="@font/montserrat"
                         android:text="Log Out"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="18sp" />
 
 
                 </LinearLayout>

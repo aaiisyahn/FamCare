@@ -114,15 +114,15 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun showLogoutConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("Apakah Anda yakin ingin keluar?")
-            .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, id ->
+        builder.setMessage("Are you sure you want to log out?")
+            .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
                 // User clicked OK button
                 firebaseAuth.signOut()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             })
-            .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
+            .setNegativeButton("No", DialogInterface.OnClickListener { dialog, id ->
                 // User cancelled the dialog
                 dialog.dismiss()
             })
