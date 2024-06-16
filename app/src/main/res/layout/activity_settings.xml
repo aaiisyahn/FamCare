@@ -7,6 +7,7 @@
     tools:context=".view.profile.SettingsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -35,7 +36,6 @@
 
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -46,43 +46,64 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/resetPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            android:gravity="center_horizontal">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:src="@drawable/ic_password" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/leftAlignedBookmark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/montserrat"
-                android:text="Reset Password"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="135dp"
-                android:src="@drawable/ic_arrow" />
-        </LinearLayout>
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="12dp"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_resetpassword" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Reset Password"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rightAlignedArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:gravity="end"
+                android:layout_marginEnd="12dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="arrow"
+                    android:src="@drawable/ic_arrow" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/passwordTextView"
             android:layout_width="match_parent"
@@ -124,7 +145,7 @@
         <Button
             android:id="@+id/resetButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_below="@id/phoneEditTextLayout"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"

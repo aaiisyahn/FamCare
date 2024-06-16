@@ -52,10 +52,16 @@ class ElderlyMapsActivity : AppCompatActivity() {
         binding = ActivityElderlyMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = ""
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.apply {
+            title = ""
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
 
         tvUserLocation = findViewById(R.id.tv_UserLocation)
         progressBar = findViewById(R.id.progressBar)
@@ -267,5 +273,9 @@ class ElderlyMapsActivity : AppCompatActivity() {
                 Log.d(TAG, "get failed with ", exception)
                 progressBar.visibility = View.GONE
             }
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

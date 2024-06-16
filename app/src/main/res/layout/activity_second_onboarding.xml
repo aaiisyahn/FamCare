@@ -38,7 +38,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Schedule care sessions and connect directly with your chosen caregivers."
+        android:text="Schedule care sessions and connect directly with your chosen caregivers"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_gravity="center_horizontal"

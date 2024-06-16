@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.app.famcare.R
-import com.app.famcare.view.login.LoginActivity
 import com.app.famcare.view.register.RegisterActivity
 
 
@@ -21,7 +20,7 @@ class SecondOnboardingActivity : AppCompatActivity() {
             startActivity(intent)
         }
         registerButton.setOnClickListener {
-            val intent = Intent(this@SecondOnboardingActivity, LoginActivity::class.java)
+            val intent = Intent(this@SecondOnboardingActivity, RegisterActivity::class.java)
             startActivity(intent)
         }
     }

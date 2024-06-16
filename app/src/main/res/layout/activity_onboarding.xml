@@ -38,7 +38,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Easily select caregivers that match your preferences."
+        android:text="Easily select caregivers that match your preferences"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_gravity="center_horizontal"
