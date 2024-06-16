@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment
 import com.app.famcare.R
 
 class FilterFragment : DialogFragment() {
-
     interface FilterListener {
         fun onFilterApplied(filterCriteria: Map<String, Any>)
     }
@@ -114,6 +113,8 @@ class FilterFragment : DialogFragment() {
             setCurrentFilters(emptyMap()) // Clear the current filter criteria
             dismiss() // Dismiss the dialog after reset
         }
+
+        restoreFilterState(view)
     }
 
     private fun resetFilters(view: View) {
@@ -137,4 +138,32 @@ class FilterFragment : DialogFragment() {
         buttonDisabilityCare.isChecked = false
         buttonExperience.isChecked = false
     }
+
+    private fun restoreFilterState(view: View) {
+        val buttonNanny = view.findViewById<ToggleButton>(R.id.buttonNanny)
+        val buttonManny = view.findViewById<ToggleButton>(R.id.buttonManny)
+        val buttonDaily = view.findViewById<ToggleButton>(R.id.buttonDaily)
+        val buttonMonthly = view.findViewById<ToggleButton>(R.id.buttonMonthly)
+        val buttonJabodetabek = view.findViewById<ToggleButton>(R.id.buttonJabodetabek)
+        val buttonElderlyCare = view.findViewById<ToggleButton>(R.id.buttonElderlyCare)
+        val buttonChildCare = view.findViewById<ToggleButton>(R.id.buttonChildCare)
+        val buttonDisabilityCare = view.findViewById<ToggleButton>(R.id.buttonDisabilityCare)
+        val buttonExperience = view.findViewById<ToggleButton>(R.id.buttonExperience)
+
+        currentFilters?.let { filters ->
+            buttonNanny.isChecked = filters["gender"] == "female"
+            buttonManny.isChecked = filters["gender"] == "male"
+            buttonDaily.isChecked = filters["type"] == "daily"
+            buttonMonthly.isChecked = filters["type"] == "monthly"
+            buttonJabodetabek.isChecked = (filters["location"] as? List<String>)?.containsAll(
+                listOf("Jakarta", "Bogor", "Depok", "Tanggerang", "Bekasi")
+            ) ?: false
+            buttonElderlyCare.isChecked = filters["skills"] == "Elderly Care"
+            buttonChildCare.isChecked = filters["skills"] == "Child Care"
+            buttonDisabilityCare.isChecked = filters["skills"] == "Disability Care"
+            buttonExperience.isChecked = filters["experience"] == "> 5 years"
+        }
+    }
+
+
 }

@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserratsemibold"
-                    android:text="Booking's Detail"
+                    android:text="Booking's Details"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
@@ -67,10 +67,45 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp">
 
+                    <LinearLayout
+                        android:id="@+id/idText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="start"
+                        android:orientation="horizontal">
+
+                        <!-- TextView for Booking ID -->
+                        <TextView
+                            android:id="@+id/textID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:text="ID Booking:"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textViewID"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:text="A4352hydsas89"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
                     <androidx.cardview.widget.CardView
                         android:id="@+id/profileNanny"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/idText"
                         android:layout_margin="16dp"
                         app:cardBackgroundColor="@color/main"
                         app:cardCornerRadius="30dp"
@@ -118,8 +153,8 @@
                                     android:gravity="center_vertical">
 
                                     <ImageView
-                                        android:layout_width="15dp"
-                                        android:layout_height="15dp"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
                                         android:src="@drawable/ic_calendar" />
 
                                     <TextView
@@ -130,32 +165,10 @@
                                         android:fontFamily="@font/montserratsemibold"
                                         android:text="daily"
                                         android:textColor="@color/black"
-                                        android:textSize="12sp" />
+                                        android:textSize="16sp" />
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:gravity="center_vertical">
-
-                                    <ImageView
-                                        android:layout_width="15dp"
-                                        android:layout_height="15dp"
-                                        android:src="@drawable/ic_salary" />
-
-                                    <TextView
-                                        android:id="@+id/text_phone"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="4dp"
-                                        android:fontFamily="@font/montserratsemibold"
-                                        android:text="Rp 400.000,00/8 hours"
-                                        android:textColor="@color/black"
-                                        android:textSize="12sp" />
-                                </LinearLayout>
                             </LinearLayout>
-
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -173,93 +186,100 @@
                             android:gravity="start"
                             android:orientation="horizontal">
 
-                            <!-- TextView for Booking ID -->
                             <TextView
-                                android:id="@+id/textID"
+                                android:id="@+id/outputBookingDate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="15dp"
                                 android:fontFamily="@font/montserrat"
-                                android:text="ID Booking:"
-                                android:textColor="#95A1A2"
-                                android:textSize="15sp" />
+                                android:text="Booking Date      : "
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:id="@+id/viewBookDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="6/12/2024"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                        <!-- Output Selected Booking Date -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="start"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/textViewID"
+                                android:id="@+id/outputWorkingHours"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:layout_marginBottom="8dp"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="15dp"
                                 android:fontFamily="@font/montserrat"
-                                android:text="A4352hydsas89"
-                                android:textColor="#95A1A2"
-                                android:textSize="15sp" />
+                                android:text="Working Hours   : "
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:id="@+id/viewBookHours"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="6.00 - 12.00"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/outputWorkingHours"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/skillLayouting"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="30dp"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:text="Working Hours   : 14.00 - 22.00 "
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/outputBookingDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
                             android:layout_marginTop="15dp"
-                            android:layout_marginEnd="20dp"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:text="Booking Date      : 6/4/2024"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:layout_below="@id/locationLayout"
+                            android:baselineAligned="true"
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/outputSalary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginEnd="20dp"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:text="Total Cost             : Rp 400.000,00"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/textCost"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="5dp"
+                                android:fontFamily="@font/montserrat"
+                                android:gravity="top"
+                                android:text="Total Cost             :"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/text_salary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat"
+                                android:text="Rp400.000,00/8 hours"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/buttonChatNanny"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/buttonCancelBook"
+                        android:layout_width="300dp"
+                        android:layout_height="60dp"
                         android:layout_below="@id/formBooking"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="100dp"
+                        android:layout_marginTop="60dp"
                         android:layout_marginBottom="15dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:text="Chat Nanny"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/buttonBookNanny"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/buttonChatNanny"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="15dp"
-                        android:backgroundTint="@color/red"
+                        android:backgroundTint="#B22222"
                         android:fontFamily="@font/montserratsemibold"
                         android:text="Cancel Book"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>

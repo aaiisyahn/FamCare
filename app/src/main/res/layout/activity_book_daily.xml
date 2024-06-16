@@ -194,6 +194,9 @@
                             android:spinnerMode="dropdown" />
 
                         <!-- Output Selected Working Hours -->
+
+                        <!-- Output Selected Booking Date -->
+
                         <TextView
                             android:id="@+id/outputWorkingHours"
                             android:layout_width="wrap_content"
@@ -201,12 +204,11 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="15dp"
                             android:fontFamily="@font/montserratsemibold"
-                            android:textStyle="bold"
                             android:text="Working Hours   : "
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
-                        <!-- Output Selected Booking Date -->
                         <TextView
                             android:id="@+id/outputBookingDate"
                             android:layout_width="wrap_content"
@@ -234,7 +236,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
-                                android:layout_marginTop="15dp"
                                 android:layout_marginEnd="5dp"
                                 android:fontFamily="@font/montserratsemibold"
                                 android:text="Total Cost             :"

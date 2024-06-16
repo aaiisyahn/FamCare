@@ -139,11 +139,11 @@
 
                     <ImageView
                         android:id="@+id/iv_bookmark"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="53dp"
+                        android:layout_height="53dp"
                         android:layout_gravity="center"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="-25dp"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginTop="-35dp"
                         android:contentDescription="bookmark"
                         android:src="@drawable/baseline_bookmark_24" />
                 </LinearLayout>

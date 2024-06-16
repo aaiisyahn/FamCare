@@ -38,7 +38,7 @@ class NannyRepository {
                 "type" -> query = query.whereEqualTo("type", value)
                 "location" -> query = query.whereIn("location", value as List<String>)
                 "skills" -> query = query.whereArrayContains("skills", value)
-                "experience" -> query = query.whereGreaterThanOrEqualTo("experience", value as Int)
+                "experience" -> query = query.whereEqualTo("experience", value)
             }
         }
 

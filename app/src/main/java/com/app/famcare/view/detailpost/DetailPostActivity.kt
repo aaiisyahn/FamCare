@@ -2,39 +2,42 @@ package com.app.famcare.view.detailpost
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import com.app.famcare.R
-import com.app.famcare.model.Nanny
-import com.app.famcare.databinding.ActivityDetailPostBinding
-import com.app.famcare.view.booking.BookDailyActivity
-import com.app.famcare.view.chat.ChatActivity
-import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FirebaseFirestore
 import android.util.Log
-import android.util.TypedValue
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.app.famcare.R
+import com.app.famcare.databinding.ActivityDetailPostBinding
+import com.app.famcare.model.Nanny
+import com.app.famcare.view.booking.BookDailyActivity
 import com.app.famcare.view.booking.BookMonthlyActivity
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 class DetailPostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailPostBinding
     private lateinit var nannyId: String
+    private lateinit var userId: String
     private var nanny: Nanny? = null
+    private var isBookmarked: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Mendapatkan id Nanny dari intent
-        nannyId = intent.getStringExtra("nannyId") ?: run {
-            Toast.makeText(this, "No nanny ID provided", Toast.LENGTH_SHORT).show()
-            finish()
-            return
-        }
+        nannyId = intent.getStringExtra("nannyId")
+            ?: throw IllegalArgumentException("Nanny ID must be provided")
+
+        // Mendapatkan userID pengguna yang sedang login
+        userId = FirebaseAuth.getInstance().currentUser?.uid
+            ?: throw IllegalStateException("User must be logged in to view this page")
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
@@ -45,28 +48,18 @@ class DetailPostActivity : AppCompatActivity() {
 
         loadNannyDataFromFirestore()
 
+        binding.buttonBookNanny.setOnClickListener {
+            navigateToBookingActivity()
+        }
+
+        // Set click listener for bookmark icon
+        binding.ivBookmark.setOnClickListener {
+            toggleBookmark() // Toggle bookmark status
+        }
+
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
-
-        val bookNannyButton = findViewById<Button>(R.id.buttonBookNanny)
-        bookNannyButton.setOnClickListener {
-            // Kirim data Nanny yang dipilih ke BookDailyActivity atau BookMonthlyActivity
-            val intent = when (nanny?.type) {
-                "daily" -> Intent(this, BookDailyActivity::class.java)
-                "monthly" -> Intent(this, BookMonthlyActivity::class.java)
-                else -> {
-                    Toast.makeText(this, "Invalid nanny type", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-            }
-
-            intent.putExtra("nannyId", nannyId)
-            intent.putExtra("activityName", this::class.java.simpleName) // Untuk mengetahui activity asal
-            startActivity(intent)
-        }
-
-
     }
 
     private fun loadNannyDataFromFirestore() {
@@ -78,10 +71,21 @@ class DetailPostActivity : AppCompatActivity() {
                 nanny = document.toObject(Nanny::class.java)
 
                 nanny?.let { nannyData ->
+                    // Check if nanny is bookmarked by current user
+                    isBookmarked = document.get("bookmarkedBy.$userId") != null
+                    // Set button text based on nanny's gender
+                    val buttonBookNanny = binding.buttonBookNanny
+                    buttonBookNanny.text = if (nannyData.gender == "male") {
+                        "Book Manny"
+                    } else {
+                        "Book Nanny"
+                    }
+
                     with(binding) {
-                        // Menggunakan Glide untuk memuat gambar dari URL
-                        Glide.with(this@DetailPostActivity).load(nannyData.pict)
-                            .placeholder(R.drawable.placeholder_image).into(imageViewNannyDP)
+                        Glide.with(this@DetailPostActivity)
+                            .load(nannyData.pict)
+                            .placeholder(R.drawable.placeholder_image)
+                            .into(imageViewNannyDP)
 
                         imageViewGenderDP.setImageResource(
                             if (nannyData.gender == "male") R.drawable.ic_male else R.drawable.ic_female
@@ -95,32 +99,99 @@ class DetailPostActivity : AppCompatActivity() {
                         textViewLocationDP.text = nannyData.location
                         textViewSalaryDP.text = nannyData.salary
 
-                        // Clear existing views in skillListLayout
                         skillListLayout.removeAllViews()
-
-                        // Dynamically add skills as TextViews
                         nannyData.skills.forEach { skill ->
                             val textView = TextView(this@DetailPostActivity).apply {
                                 text = "• $skill"
-                                setTextColor(resources.getColor(android.R.color.black))
-                                setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)  // Use SP unit
-                                typeface = ResourcesCompat.getFont(this@DetailPostActivity, R.font.montserrat)
+                                setTextColor(
+                                    ContextCompat.getColor(
+                                        this@DetailPostActivity, android.R.color.black
+                                    )
+                                )
+                                textSize = 17f
+                                typeface = ResourcesCompat.getFont(
+                                    this@DetailPostActivity, R.font.montserrat
+                                )
                             }
-                            skillListLayout.addView(textView) // Add the TextView to skillListLayout
+                            skillListLayout.addView(textView)
                         }
+
+                        updateBookmarkIcon() // Update bookmark icon after loading data
                     }
                 } ?: run {
                     Log.e("DetailPostActivity", "Nanny object is null")
                     Toast.makeText(this, "Failed to load nanny details", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Log.e("DetailPostActivity", "Document does not exist")
+                Log.e("DetailPostActivity", "Document does not exist or is null")
                 Toast.makeText(this, "Nanny data not found", Toast.LENGTH_SHORT).show()
             }
         }.addOnFailureListener { exception ->
-            Log.e("DetailPostActivity", "Error getting document: ", exception)
+            Log.e("DetailPostActivity", "Error getting document", exception)
             Toast.makeText(this, "Failed to load nanny data", Toast.LENGTH_SHORT).show()
         }
+    }
+
+
+    private fun toggleBookmark() {
+        val db = FirebaseFirestore.getInstance()
+        val bookmarkRef = db.collection("Bookmarks").document(nannyId)
+
+        // Check if the nanny is already bookmarked
+        if (isBookmarked) {
+            // Remove bookmark
+            bookmarkRef.delete().addOnSuccessListener {
+                isBookmarked = false
+                updateBookmarkIcon() // Update icon on UI
+                Toast.makeText(this, "Bookmark removed", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener { e ->
+                Log.e("DetailPostActivity", "Error removing bookmark", e)
+                Toast.makeText(this, "Failed to remove bookmark", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            // Add bookmark
+            val bookmarkData = hashMapOf(
+                "userId" to userId,
+                "nannyId" to nannyId,
+                "name" to nanny?.name,
+                "type" to nanny?.type,
+                "rate" to nanny?.rate,
+                // Add other necessary fields
+            )
+
+            bookmarkRef.set(bookmarkData).addOnSuccessListener {
+                isBookmarked = true
+                updateBookmarkIcon() // Update icon on UI
+                Toast.makeText(this, "Bookmark added", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener { e ->
+                Log.e("DetailPostActivity", "Error adding bookmark", e)
+                Toast.makeText(this, "Failed to add bookmark", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun updateBookmarkIcon() {
+        val bookmarkIcon = binding.ivBookmark
+        if (isBookmarked) {
+            bookmarkIcon.setImageResource(R.drawable.baseline_bookmark_24)
+        } else {
+            bookmarkIcon.setImageResource(R.drawable.outline_bookmark_24)
+        }
+    }
+
+    private fun navigateToBookingActivity() {
+        val intent = when (nanny?.type) {
+            "daily" -> Intent(this, BookDailyActivity::class.java)
+            "monthly" -> Intent(this, BookMonthlyActivity::class.java)
+            else -> {
+                Toast.makeText(this, "Invalid nanny type", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+
+        intent.putExtra("nannyId", nannyId)
+        intent.putExtra("activityName", this::class.java.simpleName)
+        startActivity(intent)
     }
 
     override fun onSupportNavigateUp(): Boolean {

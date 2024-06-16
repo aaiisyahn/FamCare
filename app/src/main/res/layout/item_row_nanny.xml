@@ -54,7 +54,7 @@
                 android:id="@+id/textViewRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserratsemibold"
+                android:fontFamily="@font/montserrat"
                 android:gravity="center_vertical"
                 android:text="4.5"
                 android:textColor="@android:color/black"

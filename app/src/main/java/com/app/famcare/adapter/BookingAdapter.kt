@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.famcare.R
 import com.app.famcare.model.BookingDaily
 import com.app.famcare.model.BookingMonthly
+import com.app.famcare.model.BookingMonthlyHistory
 import com.app.famcare.model.BookingType
 
 class BookingAdapter(
@@ -27,13 +28,16 @@ class BookingAdapter(
                     .inflate(R.layout.item_row_history_b_d, parent, false)
                 DailyViewHolder(view)
             }
-
             MONTHLY_VIEW_TYPE -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_row_history_b_m, parent, false)
                 MonthlyViewHolder(view)
             }
-
+            MONTHLY_HISTORY_VIEW_TYPE -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_row_history_b_m, parent, false) // Use a suitable layout for BookingMonthlyHistory if needed
+                MonthlyHistoryViewHolder(view)
+            }
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -45,10 +49,13 @@ class BookingAdapter(
                 val bookingDaily = booking as BookingDaily
                 holder.bind(bookingDaily)
             }
-
             is MonthlyViewHolder -> {
                 val bookingMonthly = booking as BookingMonthly
                 holder.bind(bookingMonthly)
+            }
+            is MonthlyHistoryViewHolder -> {
+                val bookingMonthlyHistory = booking as BookingMonthlyHistory
+                holder.bind(bookingMonthlyHistory)
             }
         }
     }
@@ -61,6 +68,7 @@ class BookingAdapter(
         return when (bookingList[position]) {
             is BookingDaily -> DAILY_VIEW_TYPE
             is BookingMonthly -> MONTHLY_VIEW_TYPE
+            is BookingMonthlyHistory -> MONTHLY_HISTORY_VIEW_TYPE
             else -> throw IllegalArgumentException("Invalid booking type")
         }
     }
@@ -85,7 +93,6 @@ class BookingAdapter(
                 }
             }
 
-            // Click listener for the chat icon
             chatIcon.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -115,7 +122,35 @@ class BookingAdapter(
                 }
             }
 
-            // Click listener for the chat icon
+            chatIcon.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onChatClick(booking.bookID)
+                }
+            }
+        }
+    }
+
+    inner class MonthlyHistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val textViewID: TextView = itemView.findViewById(R.id.textViewID)
+        private val textViewName: TextView = itemView.findViewById(R.id.textViewName)
+        private val textViewStartDate: TextView = itemView.findViewById(R.id.textViewStartDate)
+        private val textViewEndDate: TextView = itemView.findViewById(R.id.textViewEndDate)
+        private val chatIcon: ImageView = itemView.findViewById(R.id.chatIcon)
+
+        fun bind(booking: BookingMonthlyHistory) {
+            textViewID.text = booking.bookID
+            textViewName.text = booking.nannyName
+            textViewStartDate.text = booking.startDate
+            textViewEndDate.text = booking.endDate
+
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(booking.bookID)
+                }
+            }
+
             chatIcon.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -133,5 +168,6 @@ class BookingAdapter(
     companion object {
         private const val DAILY_VIEW_TYPE = 1
         private const val MONTHLY_VIEW_TYPE = 2
+        private const val MONTHLY_HISTORY_VIEW_TYPE = 3
     }
 }

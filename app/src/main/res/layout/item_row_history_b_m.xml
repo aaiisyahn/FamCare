@@ -37,7 +37,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/montserrat"
                     android:text="ID Booking:"
-                    android:textColor="@color/button"
+                    android:textColor="@color/black"
                     android:textSize="15sp" />
                 <TextView
                     android:id="@+id/textViewID"
@@ -47,7 +47,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/montserrat"
                     android:text="A4352hydsas89"
-                    android:textColor="@color/button"
+                    android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
 

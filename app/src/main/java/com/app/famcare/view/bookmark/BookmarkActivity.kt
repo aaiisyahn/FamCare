@@ -1,46 +1,147 @@
 package com.app.famcare.view.bookmark
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.app.famcare.R
 import com.app.famcare.adapter.BookmarkAdapter
 import com.app.famcare.databinding.ActivityBookmarkBinding
-import com.app.famcare.view.facilities.FacilitiesActivity
-import com.app.famcare.view.main.MainActivity
-import com.app.famcare.view.profile.ProfileActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.app.famcare.model.Nanny
+import com.app.famcare.view.detailpost.DetailPostActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-class BookmarkActivity : AppCompatActivity() {
+class BookmarkActivity : AppCompatActivity(), BookmarkAdapter.OnBookmarkItemClickListener {
+
     private lateinit var binding: ActivityBookmarkBinding
     private lateinit var adapter: BookmarkAdapter
+    private val bookmarkedNannies = mutableListOf<Nanny>()
+    private lateinit var userId: String // Declare userId as a class-level variable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBookmarkBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        adapter = BookmarkAdapter(this)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.apply {
+            title = ""
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
+        // Initialize userId from Firebase Authentication
+        userId = FirebaseAuth.getInstance().currentUser?.uid
+            ?: throw IllegalStateException("User must be logged in to view this page")
+
+        adapter = BookmarkAdapter(
+            this, bookmarkedNannies, this
+        ) // Pass the list and click listener to adapter
         binding.recyclerView.layoutManager = GridLayoutManager(this, 1)
         binding.recyclerView.adapter = adapter
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = ""
+        // Load bookmarked nannies from Firestore
+        loadBookmarkedNannies()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
+    private fun loadBookmarkedNannies() {
+        val db = FirebaseFirestore.getInstance()
+        val bookmarkRef = db.collection("Bookmarks").whereEqualTo("userId", userId)
+
+        bookmarkRef.get().addOnSuccessListener { documents ->
+            bookmarkedNannies.clear() // Clear previous data
+
+            for (document in documents) {
+                val nannyId = document.getString("nannyId") ?: continue
+
+                db.collection("Nanny").document(nannyId).get().addOnSuccessListener { nannyDoc ->
+                    if (nannyDoc != null && nannyDoc.exists()) {
+                        val nanny = nannyDoc.toObject(Nanny::class.java)
+                        nanny?.let {
+                            it.id = nannyId
+                            it.isBookmarked = true
+                            bookmarkedNannies.add(it)
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+                }.addOnFailureListener { exception ->
+                    exception.printStackTrace()
+                    Toast.makeText(
+                        this@BookmarkActivity, "Failed to load nanny details", Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
-            else -> super.onOptionsItemSelected(item)
+        }.addOnFailureListener { exception ->
+            exception.printStackTrace()
+            Toast.makeText(
+                this@BookmarkActivity, "Failed to load bookmarked nannies", Toast.LENGTH_SHORT
+            ).show()
         }
     }
+
+    override fun onBookmarkItemClick(nanny: Nanny) {
+        // Navigate to DetailPostActivity when card view is clicked
+        val intent = Intent(this, DetailPostActivity::class.java)
+        intent.putExtra("nannyId", nanny.id) // Pass nannyId to detail activity
+        startActivity(intent)
+    }
+
+    override fun onBookmarkIconClick(nanny: Nanny) {
+        val db = FirebaseFirestore.getInstance()
+        val bookmarkRef = db.collection("Bookmarks").document("${userId}_${nanny.id}")
+
+        if (nanny.isBookmarked) {
+            // Remove bookmark
+            bookmarkRef.delete().addOnSuccessListener {
+                // Successfully removed from Firestore
+                removeNannyFromList(nanny) // Remove from local list
+                adapter.notifyDataSetChanged() // Update adapter
+                Toast.makeText(this@BookmarkActivity, "Bookmark removed", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener { e ->
+                e.printStackTrace()
+                Toast.makeText(
+                    this@BookmarkActivity, "Failed to remove bookmark", Toast.LENGTH_SHORT
+                ).show()
+            }
+        } else {
+            // Add bookmark (if needed)
+            val bookmarkData = hashMapOf(
+                "userId" to userId,
+                "nannyId" to nanny.id,
+                "name" to nanny.name,
+                "type" to nanny.type,
+                "rate" to nanny.rate,
+                // Add other necessary fields
+            )
+
+            bookmarkRef.set(bookmarkData).addOnSuccessListener {
+                nanny.isBookmarked = true
+                bookmarkedNannies.add(nanny) // Add to local list
+                adapter.notifyDataSetChanged() // Update adapter
+                Toast.makeText(this@BookmarkActivity, "Bookmark added", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener { e ->
+                e.printStackTrace()
+                Toast.makeText(
+                    this@BookmarkActivity, "Failed to add bookmark", Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun removeNannyFromList(nanny: Nanny) {
+        val iterator = bookmarkedNannies.iterator()
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item.id == nanny.id) {
+                iterator.remove()
+                break
+            }
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.app.famcare.view.history
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,8 @@ import com.app.famcare.view.profile.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import android.view.LayoutInflater
+import android.widget.TextView
 
 class HistoryActivity : AppCompatActivity() {
 

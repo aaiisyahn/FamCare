@@ -98,6 +98,9 @@
             android:name=".view.detailhistory.DetailHistoryBDActivity"
             android:exported="false" />
         <activity
+            android:name=".view.detailhistory.DetailHistoryBMActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.main.MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />

@@ -14,6 +14,9 @@ import com.app.famcare.view.facilities.FacilitiesActivity
 import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.profile.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
 
@@ -21,6 +24,9 @@ class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
     private lateinit var adapter: NannyAdapter
     private val nannyRepository = NannyRepository()
     private var isGrid = true
+    private lateinit var tvName: TextView
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +35,18 @@ class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
         setContentView(view)
 
         setupRecyclerView(isGrid)
+
+        tvName = findViewById(R.id.tv_name)
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+
+        // Check if user is logged in
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            loadUserName(currentUser.uid)
+        } else {
+            tvName.text = "Guest"
+        }
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.page_1
@@ -68,6 +86,22 @@ class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
             isGrid = !isGrid
             setupRecyclerView(isGrid)
         }
+    }
+
+    private fun loadUserName(userId: String) {
+        val userRef = firestore.collection("User").document(userId)
+        userRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val fullName = document.getString("fullName")
+                    tvName.text = "${fullName ?: "No Name"}!" // Tambahkan tanda seru di sini
+                } else {
+                    tvName.text = "No Document!"
+                }
+            }
+            .addOnFailureListener { exception ->
+                tvName.text = "Error: ${exception.message}!"
+            }
     }
 
     private fun fetchData() {

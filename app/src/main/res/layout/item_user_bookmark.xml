@@ -46,7 +46,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="2dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/textViewName"
             app:srcCompat="@drawable/ic_rate" />
@@ -60,7 +60,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/montserratsemibold"
             android:text="Nanny Name"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,8 +68,8 @@
             android:id="@+id/textViewRating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/montserrat"
             android:text="4.5"
             android:textSize="16sp"
@@ -82,8 +82,8 @@
             android:id="@+id/textViewCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="0dp"
             android:text="monthly"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -92,9 +92,9 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewRating" />
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:id="@+id/iv_bookmark"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"

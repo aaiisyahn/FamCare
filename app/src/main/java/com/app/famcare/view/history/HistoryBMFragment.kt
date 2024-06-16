@@ -9,15 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.famcare.R
 import com.app.famcare.adapter.BookingAdapter
-import com.app.famcare.model.BookingMonthly
+import com.app.famcare.model.BookingMonthlyHistory
 import com.app.famcare.model.BookingType
 import com.app.famcare.view.chat.ChatActivity
-import com.app.famcare.view.detailhistory.DetailHistoryBDActivity
+import com.app.famcare.view.detailhistory.DetailHistoryBMActivity
 import com.app.famcare.view.facilities.FacilitiesActivity
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.profile.ProfileActivity
@@ -33,9 +35,7 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
     private var selectedBookingID: String = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_history_b_m, container, false)
 
@@ -95,7 +95,7 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
 
     private fun fetchMonthlyBookings(bookIDs: List<String>) {
         val db = FirebaseFirestore.getInstance()
-        val bookingList = mutableListOf<BookingMonthly>()
+        val bookingList = mutableListOf<BookingMonthlyHistory>()
 
         // Fetch each booking by bookID for monthly type
         bookIDs.forEach { bookID ->
@@ -105,17 +105,20 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
                         val nannyID = document.getString("nannyID") ?: ""
                         val bookStartDate = document.getString("startDate") ?: ""
                         val bookEndDate = document.getString("endDate") ?: ""
+                        val totalCost = document.getString("totalCost") ?: ""
                         db.collection("Nanny").document(nannyID).get()
                             .addOnSuccessListener { nannyDoc ->
                                 val nannyName = nannyDoc.getString("name") ?: ""
-                                val bookingMonthly = BookingMonthly(
+                                val bookingMonthlyHistory = BookingMonthlyHistory(
                                     bookID,
                                     nannyName,
                                     bookStartDate,
                                     bookEndDate,
-                                    BookingType.MONTHLY
+                                    BookingType.MONTHLY,
+                                    nannyID,
+                                    totalCost
                                 )
-                                bookingList.add(bookingMonthly)
+                                bookingList.add(bookingMonthlyHistory)
 
                                 // Reverse the list to display in the required order
                                 adapter.setData(bookingList.reversed())
@@ -130,8 +133,8 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
                         // Handle case where document does not exist (optional)
                     }
                 }.addOnFailureListener { e ->
-                Log.w(TAG, "Error getting booking document: ", e)
-            }
+                    Log.w(TAG, "Error getting booking document: ", e)
+                }
         }
 
         // Check if bookingList is empty after fetching
@@ -143,7 +146,7 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
 
     override fun onItemClick(bookingID: String) {
         selectedBookingID = bookingID
-        val intent = Intent(requireContext(), DetailHistoryBDActivity::class.java)
+        val intent = Intent(requireContext(), DetailHistoryBMActivity::class.java)
         intent.putExtra("bookingID", selectedBookingID)
         startActivity(intent)
     }
@@ -158,7 +161,8 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
                     intent.putExtra("nannyID", nannyID)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(requireContext(), "Nanny ID not found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Nanny ID not found", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }.addOnFailureListener { exception ->

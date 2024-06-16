@@ -7,15 +7,9 @@
     <string name="desc_app">FamCare is your go-to solution for finding trustworthy caregivers for your little ones and elderly family members. Our app simplifies the process of connecting with qualified nannies who are ready to provide top-notch care. Whether youre a parent in search of a reliable nanny for your toddler or an individual seeking compassionate assistance for an elderly loved one, FamCare has you covered. With a user-friendly interface, users can easily browse through profiles of skilled and vetted caregivers, complete with reviews and ratings from other users. What sets FamCare apart is its innovative use of geolocation through integrated maps. Users can pinpoint nearby daycares and senior care facilities, making it convenient to explore options in their immediate vicinity. FamCare: Connecting Families with Caregivers, effortlessly.</string>
     <string name="title_activity_book_daily">BookDailyActivity</string>
     <string-array name="working_hours_array">
-        <item>06:00 - 14:00</item>
-        <item>08:00 - 16:00</item>
-        <item>10:00 - 18:00</item>
-        <item>12:00 - 20:00</item>
-        <item>14:00 - 22:00</item>
-        <item>16:00 - 24:00</item>
-        <item>18:00 - 02:00</item>
-        <item>20:00 - 04:00</item>
-        <item>22:00 - 06:00</item>
+        <item>07:00 - 11:00</item>
+        <item>13:00 - 17:00</item>
+        <item>19:00 - 23:00</item>
     </string-array>
     <string-array name="booking_duration">
         <item>1</item>

@@ -75,7 +75,7 @@ class BookMonthlyActivity : AppCompatActivity() {
                     parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long
                 ) {
                     selectedBookingDuration = parent?.getItemAtPosition(position).toString().toInt()
-                    outputBookingDuration.text = "Booking Duration   : $selectedBookingDuration"
+                    outputBookingDuration.text = "Booking Duration  : $selectedBookingDuration"
 
                     // Hitung end date jika start date sudah dipilih
                     if (outputStartDate.text.isNotEmpty()) {
@@ -109,9 +109,14 @@ class BookMonthlyActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         val datePickerDialog = DatePickerDialog(
             this,
-            { view, year, month, dayOfMonth ->
-                val selectedDate = "$dayOfMonth/${month + 1}/$year"
-                outputStartDate.text = "Start Date                  : $selectedDate"
+            { _, year, month, dayOfMonth ->
+                val selectedCalendar = Calendar.getInstance()
+                selectedCalendar.set(year, month, dayOfMonth)
+
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val selectedDate = sdf.format(selectedCalendar.time)
+
+                outputStartDate.text = "Start Date                 : $selectedDate"
                 startDateEditText.setText(selectedDate)
 
                 // Hitung end date saat start date dipilih
