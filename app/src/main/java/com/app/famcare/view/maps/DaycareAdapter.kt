@@ -30,7 +30,11 @@ class DaycareAdapter(private var daycares: List<Daycare>, private val itemClickL
         val daycare = daycares[position]
         holder.nameTextView.text = daycare.name
         holder.locationTextView.text = daycare.location
-        holder.distanceTextView.text = "${daycare.distanceFromUser} km"
+        holder.distanceTextView.text = if (daycare.distanceFromUser == 0.0) {
+            "-"
+        } else {
+            "${daycare.distanceFromUser} km"
+        }
 
         Glide.with(holder.itemView.context)
             .load(daycare.photoURL)

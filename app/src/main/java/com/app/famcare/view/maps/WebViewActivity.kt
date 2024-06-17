@@ -5,14 +5,25 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.app.famcare.R
+import com.app.famcare.databinding.ActivityWebViewBinding
 
 class WebViewActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityWebViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_web_view)
+        binding = ActivityWebViewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val webView: WebView = findViewById(R.id.webView)
+        // Setup Toolbar
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = ""
+        }
+
+        // Setup WebView
+        val webView: WebView = binding.webView
         webView.webViewClient = WebViewClient()
         webView.settings.javaScriptEnabled = true
 
@@ -20,5 +31,10 @@ class WebViewActivity : AppCompatActivity() {
         if (websiteURL != null) {
             webView.loadUrl(websiteURL)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

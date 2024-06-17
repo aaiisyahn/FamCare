@@ -237,7 +237,7 @@ class DaycareMapsActivity : AppCompatActivity() {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                 enableMyLocation()
             } else {
-                tvUserLocation.text = "-"
+                tvUserLocation.text = "Location not enabled"
                 loadDaycareDataWithoutUserLocation()
             }
         }

@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var tvName: TextView
     private lateinit var listOption: ImageView // Added for list option
-
     private lateinit var adapter: NannyAdapter
     private val nannyRepository = NannyRepository()
     private var currentQueryText: String = ""

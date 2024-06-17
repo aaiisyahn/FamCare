@@ -24,7 +24,6 @@ class FacilitiesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
@@ -54,9 +53,7 @@ class FacilitiesActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.page_3 -> {
-                    true
-                }
+                R.id.page_3 -> true
 
                 R.id.page_4 -> {
                     val intent = Intent(this, ProfileActivity::class.java)
@@ -69,13 +66,5 @@ class FacilitiesActivity : AppCompatActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+
 }

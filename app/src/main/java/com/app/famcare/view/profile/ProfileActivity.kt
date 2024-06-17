@@ -15,6 +15,8 @@ import com.app.famcare.R
 import com.app.famcare.databinding.ActivityProfileBinding
 import com.app.famcare.view.bookmark.BookmarkActivity
 import com.app.famcare.view.chat.ChatActivity
+import com.app.famcare.view.facilities.FacilitiesActivity
+import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.login.LoginActivity
 import com.app.famcare.view.main.MainActivity
 import com.app.famcare.view.maps.DaycareMapsActivity
@@ -42,7 +44,7 @@ class ProfileActivity : AppCompatActivity() {
 
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
         val bottomNavigation: BottomNavigationView = binding.bottomNavigation
@@ -57,13 +59,13 @@ class ProfileActivity : AppCompatActivity() {
                 }
 
                 R.id.page_2 -> {
-                    val intent = Intent(this, BookmarkActivity::class.java)
+                    val intent = Intent(this, HistoryActivity::class.java)
                     startActivity(intent)
                     true
                 }
 
                 R.id.page_3 -> {
-                    val intent = Intent(this, DaycareMapsActivity::class.java)
+                    val intent = Intent(this, FacilitiesActivity::class.java)
                     startActivity(intent)
                     true
                 }
@@ -132,16 +134,6 @@ class ProfileActivity : AppCompatActivity() {
         loadUserDataFromFirestore()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     private fun loadUserDataFromFirestore() {
         val currentUserUid = firebaseAuth.currentUser?.uid

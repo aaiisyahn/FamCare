@@ -75,5 +75,6 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.codesgood:justifiedtextview:1.1.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("androidx.preference:preference-ktx:1.1.1")
 
 }
