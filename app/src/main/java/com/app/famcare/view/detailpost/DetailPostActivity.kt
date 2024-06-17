@@ -35,7 +35,6 @@ class DetailPostActivity : AppCompatActivity() {
         nannyId = intent.getStringExtra("nannyId")
             ?: throw IllegalArgumentException("Nanny ID must be provided")
 
-        // Mendapatkan userID pengguna yang sedang login
         userId = FirebaseAuth.getInstance().currentUser?.uid
             ?: throw IllegalStateException("User must be logged in to view this page")
 
@@ -52,7 +51,6 @@ class DetailPostActivity : AppCompatActivity() {
             navigateToBookingActivity()
         }
 
-        // Set click listener for bookmark icon
         binding.ivBookmark.setOnClickListener {
             toggleBookmark() // Toggle bookmark status
         }
@@ -71,7 +69,6 @@ class DetailPostActivity : AppCompatActivity() {
                 nanny = document.toObject(Nanny::class.java)
 
                 nanny?.let { nannyData ->
-                    // Check if nanny is bookmarked by current user
                     isBookmarked = document.get("bookmarkedBy.$userId") != null
                     // Set button text based on nanny's gender
                     val buttonBookNanny = binding.buttonBookNanny
@@ -82,10 +79,8 @@ class DetailPostActivity : AppCompatActivity() {
                     }
 
                     with(binding) {
-                        Glide.with(this@DetailPostActivity)
-                            .load(nannyData.pict)
-                            .placeholder(R.drawable.placeholder_image)
-                            .into(imageViewNannyDP)
+                        Glide.with(this@DetailPostActivity).load(nannyData.pict)
+                            .placeholder(R.drawable.placeholder_image).into(imageViewNannyDP)
 
                         imageViewGenderDP.setImageResource(
                             if (nannyData.gender == "male") R.drawable.ic_male else R.drawable.ic_female
@@ -116,7 +111,7 @@ class DetailPostActivity : AppCompatActivity() {
                             skillListLayout.addView(textView)
                         }
 
-                        updateBookmarkIcon() // Update bookmark icon after loading data
+                        updateBookmarkIcon()
                     }
                 } ?: run {
                     Log.e("DetailPostActivity", "Nanny object is null")
@@ -137,31 +132,28 @@ class DetailPostActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val bookmarkRef = db.collection("Bookmarks").document(nannyId)
 
-        // Check if the nanny is already bookmarked
         if (isBookmarked) {
             // Remove bookmark
             bookmarkRef.delete().addOnSuccessListener {
                 isBookmarked = false
-                updateBookmarkIcon() // Update icon on UI
+                updateBookmarkIcon()
                 Toast.makeText(this, "Bookmark removed", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener { e ->
                 Log.e("DetailPostActivity", "Error removing bookmark", e)
                 Toast.makeText(this, "Failed to remove bookmark", Toast.LENGTH_SHORT).show()
             }
         } else {
-            // Add bookmark
             val bookmarkData = hashMapOf(
                 "userId" to userId,
                 "nannyId" to nannyId,
                 "name" to nanny?.name,
                 "type" to nanny?.type,
                 "rate" to nanny?.rate,
-                // Add other necessary fields
             )
 
             bookmarkRef.set(bookmarkData).addOnSuccessListener {
                 isBookmarked = true
-                updateBookmarkIcon() // Update icon on UI
+                updateBookmarkIcon()
                 Toast.makeText(this, "Bookmark added", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener { e ->
                 Log.e("DetailPostActivity", "Error adding bookmark", e)

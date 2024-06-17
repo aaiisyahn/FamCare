@@ -59,7 +59,6 @@ class NannyAdapter(
             nannyList.addAll(nannies)
             notifyDataSetChanged()
         }, onFailure = { exception ->
-            // Handle failure, e.g., show error message
         })
     }
 
@@ -70,7 +69,6 @@ class NannyAdapter(
             notifyDataSetChanged()
             onFilterApplied() // Panggil callback ketika filter selesai
         }, onFailure = { exception ->
-            // Handle failure, e.g., show error message
         })
     }
 

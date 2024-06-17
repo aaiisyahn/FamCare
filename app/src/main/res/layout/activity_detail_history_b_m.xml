@@ -51,6 +51,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewHistoryBD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -58,6 +59,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageViewNanny">
@@ -226,6 +228,7 @@
                                 android:text="Start Date                  : "
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
+
                             <TextView
                                 android:id="@+id/viewStartDate"
                                 android:layout_width="wrap_content"
@@ -254,6 +257,7 @@
                                 android:text="End Date                    : "
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
+
                             <TextView
                                 android:id="@+id/viewEndDate"
                                 android:layout_width="wrap_content"
@@ -269,8 +273,9 @@
                             android:id="@+id/skillLayouting"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
                             android:layout_below="@id/locationLayout"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="20dp"
                             android:baselineAligned="true"
                             android:orientation="horizontal">
 
@@ -298,23 +303,25 @@
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/buttonCancelBook"
-                        android:layout_width="300dp"
-                        android:layout_height="60dp"
-                        android:layout_below="@id/formBooking"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="60dp"
-                        android:layout_marginBottom="15dp"
-                        android:backgroundTint="#B22222"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:text="Cancel Book"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/buttonCancelBook"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/cardViewHistoryBM"
+                android:layout_gravity="center"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="#B22222"
+                android:fontFamily="@font/montserratsemibold"
+                android:text="Cancel Book"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

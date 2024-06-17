@@ -14,24 +14,25 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import com.app.famcare.R
 import com.app.famcare.model.BookingDailyHistory
-import com.app.famcare.view.chat.ChatActivity
+import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.historyimport.HistoryBDFragment
-import com.google.firebase.auth.FirebaseAuth
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.concurrent.TimeUnit
+import java.util.Locale
 
 class DetailHistoryBDActivity : AppCompatActivity() {
+
     private lateinit var bookingID: String
     private lateinit var nannyID: String
     private lateinit var imageProfile: ImageView
     private lateinit var textName: TextView
     private lateinit var textEmail: TextView
-    private lateinit var viewBookHours: TextView
     private lateinit var viewBookDate: TextView
+    private lateinit var viewBookingDuration: TextView
+    private lateinit var viewStartTime: TextView
+    private lateinit var viewEndTime: TextView
     private lateinit var textSalary: TextView
     private lateinit var textViewID: TextView
 
@@ -47,8 +48,10 @@ class DetailHistoryBDActivity : AppCompatActivity() {
         imageProfile = findViewById(R.id.image_profile)
         textName = findViewById(R.id.text_name)
         textEmail = findViewById(R.id.text_email)
-        viewBookHours = findViewById(R.id.viewBookHours)
         viewBookDate = findViewById(R.id.viewBookDate)
+        viewBookingDuration = findViewById(R.id.viewBookingDuration)
+        viewStartTime = findViewById(R.id.viewStartTime)
+        viewEndTime = findViewById(R.id.viewEndTime)
         textSalary = findViewById(R.id.text_salary)
         textViewID = findViewById(R.id.textViewID)
 
@@ -82,15 +85,16 @@ class DetailHistoryBDActivity : AppCompatActivity() {
             if (document != null && document.exists()) {
                 val booking = document.toObject(BookingDailyHistory::class.java)
                 booking?.let {
-                    textViewID.text = bookingID // Set textViewID dengan bookingID
+                    textViewID.text = bookingID
                     textName.text = it.nannyName
                     textEmail.text = it.type.name.toLowerCase(Locale.ROOT)
                     viewBookDate.text = it.bookDate
-                    viewBookHours.text = it.bookHours
-                    textSalary.text = it.totalCost
+                    viewBookingDuration.text = "${it.bookDuration} Hours"
+                    viewStartTime.text = it.bookHours
+                    viewEndTime.text = it.endHours
+                    textSalary.text = it.salary
                     nannyID = it.nannyID
 
-                    // Load nanny profile picture and salary from Nanny collection
                     loadNannyData(it.nannyID)
                 }
             } else {
@@ -141,12 +145,9 @@ class DetailHistoryBDActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val currentUserID = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        // Hapus bookingID dari bookIDs di koleksi User
         db.collection("User").document(currentUserID)
             .update("bookIDs", FieldValue.arrayRemove(bookingID)).addOnSuccessListener {
-                // Hapus dokumen dari koleksi BookingDaily
                 db.collection("BookingDaily").document(bookingID).delete().addOnSuccessListener {
-                    // Tampilkan dialog booking berhasil dibatalkan
                     showSuccessDialog()
                 }.addOnFailureListener { e ->
                     Log.w(TAG, "Error deleting booking document", e)
@@ -164,10 +165,10 @@ class DetailHistoryBDActivity : AppCompatActivity() {
         builder.setMessage("Your booking has been cancelled successfully.")
         builder.setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int ->
             dialogInterface.dismiss()
-            // Redirect to HistoryBDFragment
-            val intent = Intent(this, HistoryBDFragment::class.java)
+            val intent = Intent(this, HistoryActivity::class.java)
+            intent.putExtra("selectedTab", 0)
             startActivity(intent)
-            finish()  // Finish DetailHistoryBDActivity
+            finish()
         }
         builder.show()
     }

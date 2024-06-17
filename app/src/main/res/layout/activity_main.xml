@@ -108,28 +108,19 @@
 
                 <!-- Filter ImageView -->
                 <ImageView
-                    android:id="@+id/imageViewFilter"
+                    android:id="@+id/imageViewSearch"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="16dp"
-                    android:layout_toStartOf="@id/imageViewSearch"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="Filter"
-                    android:src="@drawable/ic_filter" />
-
-                <!-- Search ImageView -->
-                <ImageView
-                    android:id="@+id/imageViewSearch"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
+                    android:adjustViewBounds="true"
                     android:contentDescription="Search"
                     android:src="@drawable/ic_search" />
+
+
 
             </RelativeLayout>
 
@@ -183,6 +174,18 @@
                     android:layout_marginLeft="12dp"
                     android:contentDescription="arrow"
                     android:src="@drawable/ic_list" />
+                <ImageView
+                    android:id="@+id/imageViewFilter"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="Filter"
+                    android:src="@drawable/ic_filter" />
 
             </LinearLayout>
 

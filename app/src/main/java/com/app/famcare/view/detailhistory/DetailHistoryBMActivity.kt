@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import com.app.famcare.R
 import com.app.famcare.model.BookingMonthlyHistory
 import com.app.famcare.view.chat.ChatActivity
+import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.historyimport.HistoryBMFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.bumptech.glide.Glide
@@ -84,7 +85,7 @@ class DetailHistoryBMActivity : AppCompatActivity() {
             if (document != null && document.exists()) {
                 val booking = document.toObject(BookingMonthlyHistory::class.java)
                 booking?.let {
-                    textViewID.text = bookingID // Set textViewID dengan bookingID
+                    textViewID.text = bookingID
                     textName.text = it.nannyName
                     textEmail.text = it.type.name.toLowerCase(Locale.ROOT)
                     viewStartDate.text = it.startDate
@@ -92,10 +93,8 @@ class DetailHistoryBMActivity : AppCompatActivity() {
                     textSalary.text = it.totalCost
                     nannyID = it.nannyID
 
-                    // Calculate and display booking duration
                     viewBookingDuration.text = calculateBookingDuration(it.startDate, it.endDate)
 
-                    // Load nanny profile picture and salary from Nanny collection
                     loadNannyData(it.nannyID)
                 }
             } else {
@@ -161,17 +160,14 @@ class DetailHistoryBMActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         val currentUserID = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        // Hapus bookingID dari bookIDs di koleksi User
         db.collection("User").document(currentUserID)
             .update("bookIDs", FieldValue.arrayRemove(bookingID)).addOnSuccessListener {
-                // Hapus dokumen dari koleksi BookingMonthly
                 db.collection("BookingMonthly").document(bookingID).delete().addOnSuccessListener {
-                        // Tampilkan dialog booking berhasil dibatalkan
-                        showSuccessDialog()
-                    }.addOnFailureListener { e ->
-                        Log.w(TAG, "Error deleting booking document", e)
-                        Toast.makeText(this, "Failed to cancel booking", Toast.LENGTH_SHORT).show()
-                    }
+                    showSuccessDialog()
+                }.addOnFailureListener { e ->
+                    Log.w(TAG, "Error deleting booking document", e)
+                    Toast.makeText(this, "Failed to cancel booking", Toast.LENGTH_SHORT).show()
+                }
             }.addOnFailureListener { e ->
                 Log.w(TAG, "Error updating user document", e)
                 Toast.makeText(this, "Failed to update user data", Toast.LENGTH_SHORT).show()
@@ -184,10 +180,10 @@ class DetailHistoryBMActivity : AppCompatActivity() {
         builder.setMessage("Your booking has been cancelled successfully.")
         builder.setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int ->
             dialogInterface.dismiss()
-            // Redirect to HistoryBMFragment
-            val intent = Intent(this, HistoryBMFragment::class.java)
+            val intent = Intent(this, HistoryActivity::class.java)
+            intent.putExtra("selectedTab", 1)
             startActivity(intent)
-            finish()  // Finish DetailHistoryBMActivity
+            finish()
         }
         builder.show()
     }

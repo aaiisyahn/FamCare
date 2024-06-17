@@ -2,31 +2,46 @@ package com.app.famcare.view.booking
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.app.famcare.R
-import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.model.Nanny
+import com.app.famcare.view.history.HistoryActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 class BookDailyActivity : AppCompatActivity() {
-
     private lateinit var bookingDateEditText: EditText
-    private lateinit var outputWorkingHours: TextView
+    private lateinit var bookingDurationSpinner: Spinner
+    private lateinit var startHourEditText: EditText
     private lateinit var outputBookingDate: TextView
-    private lateinit var nannyId: String
+    private lateinit var outputBookingDuration: TextView
+    private lateinit var outputStartHour: TextView
+    private lateinit var outputEndHour: TextView
+    private lateinit var buttonBookNanny: Button
     private lateinit var auth: FirebaseAuth
-    private lateinit var workingHoursSpinner: Spinner
+    private lateinit var nannyId: String
+    private lateinit var db: FirebaseFirestore
+    private lateinit var bookedHours: MutableSet<String>
+    private var isDateSelected = false
+    private var isStartHourSelected = false
+    private var selectedDate: String = ""
+    private var selectedDuration: String = ""
+    private var selectedStartHour: String = ""
+    private var selectedEndHour: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,51 +53,76 @@ class BookDailyActivity : AppCompatActivity() {
         supportActionBar?.title = ""
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        // Mendapatkan nannyId dari intent
         nannyId = intent.getStringExtra("nannyId") ?: ""
 
-        // Memuat data Nanny dari Firestore
         loadNannyDataFromFirestore(nannyId)
 
-        // Inisialisasi UI
-        workingHoursSpinner = findViewById(R.id.workingHoursSpinner)
         bookingDateEditText = findViewById(R.id.bookingDateEditText)
-        outputWorkingHours = findViewById(R.id.outputWorkingHours)
+        bookingDurationSpinner = findViewById(R.id.bookingDurationSpinner)
+        startHourEditText = findViewById(R.id.startHourEditText)
         outputBookingDate = findViewById(R.id.outputBookingDate)
+        outputBookingDuration = findViewById(R.id.outputBookingDuration)
+        outputStartHour = findViewById(R.id.outputStartHour)
+        outputEndHour = findViewById(R.id.outputEndHour)
+        buttonBookNanny = findViewById(R.id.buttonBookNanny)
 
         bookingDateEditText.setOnClickListener {
             showDatePickerDialog()
         }
 
-        workingHoursSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long
-            ) {
-                val selectedWorkingHours = parent?.getItemAtPosition(position).toString()
-                outputWorkingHours.text = "Working Hours   : $selectedWorkingHours"
+        val durationAdapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.working_hours_duration,
+            android.R.layout.simple_spinner_item
+        )
+        durationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        bookingDurationSpinner.adapter = durationAdapter
+
+        bookingDurationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedDuration = parent?.getItemAtPosition(position).toString()
+                outputBookingDuration.text = "Booking Duration   : $selectedDuration hours"
+                if (selectedStartHour.isNotEmpty()) {
+                    calculateEndHour(selectedDuration.substringBefore(" ").toInt())
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle nothing selected if needed
             }
         }
 
-        val buttonBookNanny = findViewById<Button>(R.id.buttonBookNanny)
+        startHourEditText.setOnClickListener {
+            if (selectedDate.isEmpty()) {
+                Toast.makeText(this, "Please select date first", Toast.LENGTH_SHORT).show()
+            } else {
+                showStartTimePickerDialog()
+            }
+        }
+
         buttonBookNanny.setOnClickListener {
-            bookNanny()
-        }
-
-        // Removed the call to disableBookedHours() from here
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
+            if (validateInputs()) {
+                // Periksa apakah sudah ada booking untuk nanny ini pada tanggal yang dipilih
+                db.collection("BookingDaily")
+                    .whereEqualTo("nannyID", nannyId)
+                    .whereEqualTo("bookDate", selectedDate)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        if (!documents.isEmpty) {
+                            // Jika ada booking, tampilkan pesan bahwa nanny sudah tidak tersedia
+                            showBookingExistsDialog()
+                        } else {
+                            // Jika tidak ada booking, simpan data booking ke Firestore
+                            saveBookingToFirestore()
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error getting documents", e)
+                        Toast.makeText(this, "Failed to check existing bookings", Toast.LENGTH_SHORT).show()
+                    }
             }
-
-            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -91,147 +131,209 @@ class BookDailyActivity : AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(
             this,
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                val selectedDate = "$dayOfMonth/${month + 1}/$year"
-                outputBookingDate.text = "Booking Date      : $selectedDate"
+                selectedDate = "$dayOfMonth/${month + 1}/$year"
+                outputBookingDate.text = "Booking Date           : $selectedDate"
                 bookingDateEditText.setText(selectedDate)
-                // Disable booked hours for the selected date
-                disableBookedHours(selectedDate) // Pass selectedDate here
+                resetOutputTimes() // Reset tampilan jam mulai dan jam selesai
+
+                // Periksa apakah sudah ada booking untuk nanny ini pada tanggal yang dipilih
+                db.collection("BookingDaily")
+                    .whereEqualTo("nannyID", nannyId)
+                    .whereEqualTo("bookDate", selectedDate)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        if (!documents.isEmpty) {
+                            // Jika ada booking, tampilkan pesan bahwa nanny sudah tidak tersedia
+                            showBookingExistsDialog()
+                        }
+                        // Tidak perlu else karena jika tidak ada booking, kita lanjutkan ke input berikutnya
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error getting documents", e)
+                        Toast.makeText(this, "Failed to check existing bookings", Toast.LENGTH_SHORT).show()
+                    }
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
         )
 
-        // Set batasan minimal pemilihan tanggal ke tanggal hari ini + 1
         calendar.add(Calendar.DAY_OF_MONTH, 1)
         datePickerDialog.datePicker.minDate = calendar.timeInMillis
 
         datePickerDialog.show()
     }
 
-    private fun disableBookedHours(selectedDate: String) { // Add selectedDate parameter
-        val user = auth.currentUser
-        val userId = user?.uid ?: return
+    private fun showStartTimePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
 
-        val db = FirebaseFirestore.getInstance()
-        db.collection("BookingDaily").whereEqualTo("userID", userId)
-            .whereEqualTo("nannyID", nannyId)
-            .whereEqualTo("bookDate", selectedDate) // Use selectedDate here
-            .get().addOnSuccessListener { documents ->
-                val bookedHours = mutableSetOf<String>()
-                for (document in documents) {
-                    val bookHours = document.getString("bookHours")
-                    bookHours?.let {
-                        bookedHours.add(it)
+        val timePickerDialog = TimePickerDialog(
+            this,
+            { _, selectedHour, selectedMinute ->
+                val selectedTime = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute)
+                val endTimeCalendar = Calendar.getInstance()
+                endTimeCalendar.set(Calendar.HOUR_OF_DAY, selectedHour)
+                endTimeCalendar.set(Calendar.MINUTE, selectedMinute)
+                endTimeCalendar.add(Calendar.HOUR_OF_DAY, selectedDuration.substringBefore(" ").toInt())
+                val endTime = endTimeCalendar.get(Calendar.HOUR_OF_DAY)
+
+                if (selectedHour < 5 || selectedHour > 18 || (selectedHour == 18 && selectedMinute > 0)) {
+                    // Jika waktu mulai tidak valid
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("Invalid Time")
+                    builder.setMessage("You cannot book at this time as the end time will exceed the working hours limit of 8:00 PM. Please select an earlier start time.")
+                    builder.setPositiveButton("OK") { dialog, _ ->
+                        dialog.dismiss()
+                        showStartTimePickerDialog() // Menampilkan kembali dialog jika waktu tidak valid
                     }
-                }
-                // Setup Spinner with booked hours disabled
-                setupWorkingHoursSpinner(bookedHours)
-            }.addOnFailureListener { e ->
-                Log.w(TAG, "Error getting documents: ", e)
-            }
-    }
-
-    private fun setupWorkingHoursSpinner(bookedHours: Set<String>) {
-        val workingHoursArray = resources.getStringArray(R.array.working_hours_array)
-        val adapter = object :
-            ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, workingHoursArray) {
-            override fun isEnabled(position: Int): Boolean {
-                return !bookedHours.contains(getItem(position))
-            }
-
-            override fun getDropDownView(
-                position: Int, convertView: android.view.View?, parent: android.view.ViewGroup
-            ): android.view.View {
-                val view = super.getDropDownView(position, convertView, parent)
-                val textView = view as TextView
-                if (bookedHours.contains(getItem(position))) {
-                    textView.setTextColor(resources.getColor(android.R.color.darker_gray))
+                    builder.show()
                 } else {
-                    textView.setTextColor(resources.getColor(android.R.color.black))
+                    selectedStartHour = selectedTime
+                    startHourEditText.setText(selectedTime)
+                    outputStartHour.text = "Start Time                 : $selectedStartHour"
+                    calculateEndHour(selectedDuration.substringBefore(" ").toInt())
                 }
-                return view
-            }
-        }
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        workingHoursSpinner.adapter = adapter
+            },
+            hour,
+            minute,
+            true
+        )
+
+        timePickerDialog.setTitle("Select Start Time")
+        timePickerDialog.show()
     }
 
-    private fun bookNanny() {
-        val selectedDate = bookingDateEditText.text.toString()
-        val selectedWorkingHours = outputWorkingHours.text.toString().substringAfter(":").trim()
+    private fun calculateEndHour(durationHours: Int) {
+        val format = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val calendar = Calendar.getInstance()
 
+        try {
+            calendar.time = format.parse(selectedStartHour) ?: Date()
+            calendar.add(Calendar.HOUR_OF_DAY, durationHours)
+            val endTime = calendar.get(Calendar.HOUR_OF_DAY)
+            val endMinute = calendar.get(Calendar.MINUTE)
+
+            if (endTime >= 20 && endMinute > 0) {
+                // Jika waktu selesai melewati 20:00
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Invalid Time")
+                builder.setMessage("You cannot book at this time as the end time will exceed the working hours limit of 20.00. Please select an earlier start time.")
+                builder.setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                    // Reset waktu
+                    selectedStartHour = ""
+                    selectedEndHour = ""
+                    startHourEditText.setText("")
+                    outputStartHour.text = "Start Time                  :"
+                    outputEndHour.text = "End Time                   :"
+                }
+                builder.show()
+            } else {
+                selectedEndHour = format.format(calendar.time)
+                outputEndHour.text = "End Time                   : $selectedEndHour"
+            }
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Error calculating end hour", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun validateInputs(): Boolean {
+        if (selectedDate.isEmpty()) {
+            Toast.makeText(this, "Please select date", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (selectedDuration.isEmpty()) {
+            Toast.makeText(this, "Please select booking duration", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (selectedStartHour.isEmpty()) {
+            Toast.makeText(this, "Please select start hour", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+    private fun saveBookingToFirestore() {
         val user = auth.currentUser
         val userId = user?.uid ?: ""
 
-        val db = FirebaseFirestore.getInstance()
+        // Data untuk disimpan ke Firestore
+        val booking = hashMapOf(
+            "userID" to userId,
+            "nannyID" to nannyId,
+            "bookDate" to selectedDate,
+            "bookHours" to selectedStartHour,
+            "endHours" to selectedEndHour,
+            "bookDuration" to selectedDuration,
+            "totalCost" to "Rp400.000,00/8 hours"
+        )
 
-        // Ensure that both date and working hours are selected
-        if (selectedDate.isNotEmpty() && selectedWorkingHours.isNotEmpty()) {
-            // Query untuk memeriksa apakah ada booking yang bentrok
-            db.collection("BookingDaily").whereEqualTo("nannyID", nannyId)
-                .whereEqualTo("bookHours", selectedWorkingHours)
-                .whereEqualTo("bookDate", selectedDate).get().addOnSuccessListener { documents ->
-                    if (documents.isEmpty) {
-                        // Tidak ada booking yang bentrok, tambahkan booking baru
-                        val booking = hashMapOf(
-                            "userID" to userId,
-                            "nannyID" to nannyId,
-                            "bookHours" to selectedWorkingHours,
-                            "bookDate" to selectedDate,
-                            "totalCost" to "Rp400.000,00/8 hours"
-                        )
+        // Periksa apakah sudah ada booking untuk nanny ini pada tanggal yang dipilih
+        db.collection("BookingDaily")
+            .whereEqualTo("nannyID", nannyId)
+            .whereEqualTo("bookDate", selectedDate)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    // Jika ada booking, tampilkan pesan bahwa nanny sudah tidak tersedia
+                    showBookingExistsDialog()
+                } else {
+                    // Jika tidak ada booking, simpan data booking ke Firestore
+                    db.collection("BookingDaily").add(booking)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
 
-                        // Tambahkan data booking ke Firestore
-                        db.collection("BookingDaily").add(booking)
-                            .addOnSuccessListener { documentReference ->
-                                Log.d(
-                                    TAG, "DocumentSnapshot added with ID: ${documentReference.id}"
-                                )
+                            // Update bookID di nanny document
+                            val nannyRef = db.collection("Nanny").document(nannyId)
+                            nannyRef.update("bookID", documentReference.id)
+                                .addOnSuccessListener {
+                                    Log.d(TAG, "bookID updated successfully")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.w(TAG, "Error updating bookID", e)
+                                }
 
-                                // Update field bookID di dokumen Nanny
-                                val nannyRef = db.collection("Nanny").document(nannyId)
-                                nannyRef.update("bookID", documentReference.id)
-                                    .addOnSuccessListener {
-                                        Log.d(TAG, "bookID updated successfully")
-                                    }.addOnFailureListener { e ->
-                                        Log.w(TAG, "Error updating bookID", e)
-                                    }
-
-                                // Tambahkan bookID ke array bookIDs di dokumen User menggunakan arrayUnion
-                                val userRef = db.collection("User").document(userId)
-                                userRef.update(
-                                    "bookIDs", FieldValue.arrayUnion(documentReference.id)
-                                ).addOnSuccessListener {
-                                        Log.d(TAG, "bookID added to user document successfully")
-                                    }.addOnFailureListener { e ->
-                                        Log.w(TAG, "Error updating user document with bookID", e)
-                                    }
-
-                                // Tampilkan dialog sukses booking
+                            // Update bookIDs di user document
+                            val userRef = db.collection("User").document(userId)
+                            userRef.update(
+                                "bookIDs", FieldValue.arrayUnion(documentReference.id)
+                            ).addOnSuccessListener {
+                                Log.d(TAG, "bookID added to user document successfully")
                                 showSuccessDialog()
                             }.addOnFailureListener { e ->
-                                Log.w(TAG, "Error adding document", e)
-                                Toast.makeText(this, "Failed to book nanny", Toast.LENGTH_SHORT)
-                                    .show()
+                                Log.w(TAG, "Error updating user document with bookID", e)
                             }
-                    } else {
-                        // Ada booking yang bentrok, tampilkan pesan error
-                        Toast.makeText(
-                            this,
-                            "This nanny is already booked for the selected hours on the selected date.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }.addOnFailureListener { e ->
-                    Log.w(TAG, "Error checking booking conflicts", e)
-                    Toast.makeText(this, "Failed to check booking conflicts", Toast.LENGTH_SHORT)
-                        .show()
+                        }
+                        .addOnFailureListener { e ->
+                            Log.w(TAG, "Error adding document", e)
+                            Toast.makeText(this, "Failed to book nanny", Toast.LENGTH_SHORT).show()
+                        }
                 }
-        } else {
-            // Show error message if date or working hours are not selected
-            Toast.makeText(this, "Please select date and working hours", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error getting documents", e)
+                Toast.makeText(this, "Failed to check existing bookings", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun showBookingExistsDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Nanny Not Available")
+        builder.setMessage("This nanny is already booked on the selected date. Please choose another date.")
+        builder.setPositiveButton("OK") { dialogInterface: DialogInterface, i: Int ->
+            dialogInterface.dismiss()
         }
+        builder.show()
+    }
+
+    private fun resetOutputTimes() {
+        outputStartHour.text = "Start Hour                 :"
+        outputEndHour.text = "End Time                  :"
+        selectedStartHour = ""
+        selectedEndHour = ""
     }
 
     private fun showSuccessDialog() {
@@ -247,7 +349,6 @@ class BookDailyActivity : AppCompatActivity() {
     }
 
     private fun loadNannyDataFromFirestore(nannyId: String) {
-        val db = FirebaseFirestore.getInstance()
         val docRef = db.collection("Nanny").document(nannyId)
 
         docRef.get().addOnSuccessListener { document ->
@@ -257,17 +358,14 @@ class BookDailyActivity : AppCompatActivity() {
                     displayNannyInformation(nannyData)
                 }
             } else {
-                // Handle jika dokumen tidak ditemukan
                 Log.d(TAG, "No such document")
             }
         }.addOnFailureListener { exception ->
-            // Handle kesalahan saat mengambil data dari Firestore
             Log.d(TAG, "get failed with ", exception)
         }
     }
 
     private fun displayNannyInformation(nanny: Nanny) {
-        // Tampilkan informasi Nanny di layout
         val nameTextView = findViewById<TextView>(R.id.text_name)
         val typeTextView = findViewById<TextView>(R.id.text_email)
         val salaryTextView = findViewById<TextView>(R.id.text_salary)
@@ -277,7 +375,6 @@ class BookDailyActivity : AppCompatActivity() {
         typeTextView.text = nanny.type
         salaryTextView.text = nanny.salary
 
-        // Muat gambar Nanny ke ImageView menggunakan Glide
         Glide.with(this).load(nanny.pict).placeholder(R.drawable.nanny_placeholder)
             .error(R.drawable.placeholder_image).into(profileImageView)
     }

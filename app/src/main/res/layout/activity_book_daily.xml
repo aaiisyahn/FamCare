@@ -144,7 +144,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/selectTimeTextView"
+                            android:id="@+id/bookingDateTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
@@ -170,19 +170,19 @@
                             android:textSize="16sp" />
 
                         <TextView
-                            android:id="@+id/workingHoursTextView"
+                            android:id="@+id/bookingDurationTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="15dp"
                             android:fontFamily="@font/montserratsemibold"
                             android:textStyle="bold"
-                            android:text="Working Hours"
+                            android:text="Booking Duration (Hours)"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <Spinner
-                            android:id="@+id/workingHoursSpinner"
+                            android:id="@+id/bookingDurationSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_marginStart="20dp"
@@ -193,22 +193,36 @@
                             android:background="@drawable/bg_spinner"
                             android:spinnerMode="dropdown" />
 
-                        <!-- Output Selected Working Hours -->
-
-                        <!-- Output Selected Booking Date -->
-
                         <TextView
-                            android:id="@+id/outputWorkingHours"
+                            android:id="@+id/startHourTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="15dp"
                             android:fontFamily="@font/montserratsemibold"
-                            android:text="Working Hours   : "
+                            android:text="Select Start Hour"
                             android:textColor="@color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
+                        <EditText
+                            android:id="@+id/startHourEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="20dp"
+                            android:background="@drawable/bg_spinner"
+                            android:focusable="false"
+                            android:fontFamily="@font/montserrat"
+                            android:hint="  choose start booking time"
+                            android:inputType="none"
+                            android:textSize="16sp" />
+
+
+                        <!-- Output Selected Working Hours -->
+
+                        <!-- Output Selected Booking Date -->
                         <TextView
                             android:id="@+id/outputBookingDate"
                             android:layout_width="wrap_content"
@@ -218,16 +232,54 @@
                             android:layout_marginEnd="20dp"
                             android:fontFamily="@font/montserratsemibold"
                             android:textStyle="bold"
-                            android:text="Booking Date      : "
+                            android:text="Booking Date           : "
                             android:textColor="@color/black"
                             android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/outputBookingDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:text="Booking Duration   : "
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/outputStartHour"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="20dp"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:text="Start Hour                  : "
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/outputEndHour"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="20dp"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:text="End Time                    : "
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:id="@+id/skillLayouting"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/locationLayout"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="10dp"
                             android:orientation="horizontal"
                             android:baselineAligned="true">
 
@@ -238,7 +290,7 @@
                                 android:layout_marginStart="20dp"
                                 android:layout_marginEnd="5dp"
                                 android:fontFamily="@font/montserratsemibold"
-                                android:text="Total Cost             :"
+                                android:text="Cost                             :"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
                                 android:textStyle="bold"

@@ -77,14 +77,16 @@ class BookingAdapter(
         private val textViewID: TextView = itemView.findViewById(R.id.textViewID)
         private val textViewName: TextView = itemView.findViewById(R.id.textViewName)
         private val textViewDate: TextView = itemView.findViewById(R.id.textViewDate)
-        private val textViewTime: TextView = itemView.findViewById(R.id.textViewTime)
+        private val textViewBookHours: TextView = itemView.findViewById(R.id.textViewBookHours)
+        private val textViewEndHours: TextView = itemView.findViewById(R.id.textViewEndHours)
         private val chatIcon: ImageView = itemView.findViewById(R.id.chatIcon)
 
         fun bind(booking: BookingDaily) {
             textViewID.text = booking.bookID
             textViewName.text = booking.nannyName
             textViewDate.text = booking.bookDate
-            textViewTime.text = booking.bookHours
+            textViewBookHours.text = booking.bookHours
+            textViewEndHours.text = booking.endHours
 
             itemView.setOnClickListener {
                 val position = adapterPosition

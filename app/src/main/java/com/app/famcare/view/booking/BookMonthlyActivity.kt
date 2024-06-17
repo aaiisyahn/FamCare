@@ -2,7 +2,7 @@ package com.app.famcare.view.booking
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.ContentValues.TAG
+import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -12,8 +12,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.app.famcare.R
-import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.model.Nanny
+import com.app.famcare.view.history.HistoryActivity
+import com.app.famcare.view.historyimport.HistoryBMFragment
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -22,7 +23,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class BookMonthlyActivity : AppCompatActivity() {
-
     private lateinit var startDateEditText: EditText
     private lateinit var outputBookingDuration: TextView
     private lateinit var outputStartDate: TextView
@@ -107,31 +107,189 @@ class BookMonthlyActivity : AppCompatActivity() {
 
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
-        val datePickerDialog = DatePickerDialog(
-            this,
-            { _, year, month, dayOfMonth ->
-                val selectedCalendar = Calendar.getInstance()
-                selectedCalendar.set(year, month, dayOfMonth)
 
+        fetchBookedDates { bookedDatesRanges ->
+            val datePickerDialog = DatePickerDialog(
+                this,
+                { _, year, month, dayOfMonth ->
+                    val selectedCalendar = Calendar.getInstance()
+                    selectedCalendar.set(year, month, dayOfMonth)
+
+                    val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    val selectedDate = sdf.format(selectedCalendar.time)
+
+                    if (isDateBooked(selectedCalendar.time, bookedDatesRanges)) {
+                        showDateAlreadyBookedDialog()
+                    } else {
+                        outputStartDate.text = "Start Date                 : $selectedDate"
+                        startDateEditText.setText(selectedDate)
+
+                        // Calculate end date when start date is selected
+                        calculateEndDate()
+                    }
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+
+            // Set minimum selectable date to tomorrow
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+            datePickerDialog.datePicker.minDate = calendar.timeInMillis
+
+            datePickerDialog.show()
+        }
+    }
+
+    private fun showDateAlreadyBookedDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Date Already Booked")
+            .setMessage("This date is already booked. Please select another date.")
+            .setPositiveButton("OK") { dialog, which ->
+                // Dismiss dialog if needed
+            }
+            .show()
+    }
+
+    private fun fetchBookedDates(callback: (List<Pair<Date, Date>>) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val bookingsRef = db.collection("BookingMonthly")
+
+        bookingsRef.whereEqualTo("nannyID", nannyId)
+            .get()
+            .addOnSuccessListener { documents ->
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val selectedDate = sdf.format(selectedCalendar.time)
+                val bookedDatesRanges = mutableListOf<Pair<Date, Date>>()
+                for (document in documents) {
+                    val existingStartDate = document.getString("startDate") ?: ""
+                    val existingEndDate = document.getString("endDate") ?: ""
+                    val existingStartDateDate = sdf.parse(existingStartDate)
+                    val existingEndDateDate = sdf.parse(existingEndDate)
+                    bookedDatesRanges.add(existingStartDateDate to existingEndDateDate)
+                }
+                callback(bookedDatesRanges)
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents: ", exception)
+                callback(emptyList())
+            }
+    }
 
-                outputStartDate.text = "Start Date                 : $selectedDate"
-                startDateEditText.setText(selectedDate)
+    private fun isDateBooked(date: Date, bookedDatesRanges: List<Pair<Date, Date>>): Boolean {
+        for ((startDate, endDate) in bookedDatesRanges) {
+            // Check if the date falls within the booked range, inclusive of startDate and endDate
+            if (!date.before(startDate) && !date.after(endDate)) {
+                return true
+            }
+        }
+        return false
+    }
 
-                // Hitung end date saat start date dipilih
-                calculateEndDate()
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        )
+    private fun checkForExistingBookings(startDate: String, endDate: String, callback: (Boolean) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
-        // Set batasan minimal pemilihan tanggal ke tanggal hari ini + 1
-        calendar.add(Calendar.DAY_OF_MONTH, 1)
-        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+        try {
+            val newStartDate = sdf.parse(startDate)
+            val newEndDate = sdf.parse(endDate)
 
-        datePickerDialog.show()
+            val bookingsRef = db.collection("BookingMonthly")
+            bookingsRef.whereEqualTo("nannyID", nannyId)
+                .get()
+                .addOnSuccessListener { documents ->
+                    var isAvailable = true
+                    for (document in documents) {
+                        val existingStartDateStr = document.getString("startDate") ?: ""
+                        val existingEndDateStr = document.getString("endDate") ?: ""
+                        val existingStartDate = sdf.parse(existingStartDateStr)
+                        val existingEndDate = sdf.parse(existingEndDateStr)
+
+                        // Check if the new booking overlaps with existing bookings
+                        if (newEndDate != existingStartDate && !newStartDate.equals(existingEndDate) && newStartDate.before(existingEndDate) && newEndDate.after(existingStartDate)) {
+                            isAvailable = false
+                            break
+                        }
+                    }
+                    callback(isAvailable)
+                }
+                .addOnFailureListener { exception ->
+                    Log.w(TAG, "Error getting documents: ", exception)
+                    callback(false)
+                }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error parsing dates", e)
+            callback(false)
+        }
+    }
+
+    private fun bookNanny() {
+        val selectedStartDate = startDateEditText.text.toString()
+        val selectedEndDate = endDate  // Pastikan endDate sudah dihitung dan diset sebelumnya
+
+        // Check for existing bookings before proceeding with the new booking
+        checkForExistingBookings(selectedStartDate, selectedEndDate) { isAvailable ->
+            if (isAvailable) {
+                // Proceed with the booking
+                val progressDialog = ProgressDialog(this)
+                progressDialog.setMessage("Booking nanny...")
+                progressDialog.show()
+
+                // Construct the booking object
+                val user = auth.currentUser
+                val userId = user?.uid ?: ""
+
+                val booking = hashMapOf(
+                    "userID" to userId,
+                    "nannyID" to nannyId,
+                    "bookingDuration" to selectedBookingDuration.toString(),
+                    "startDate" to selectedStartDate,
+                    "endDate" to selectedEndDate,
+                    "totalCost" to "Rp400.000,00/8 hours"
+                )
+
+                val db = FirebaseFirestore.getInstance()
+
+                // Add booking to Firestore
+                db.collection("BookingMonthly").add(booking)
+                    .addOnSuccessListener { documentReference ->
+                        Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+
+                        // Update field bookID di dokumen Nanny
+                        val nannyRef = db.collection("Nanny").document(nannyId)
+                        nannyRef.update("bookID", documentReference.id)
+                            .addOnSuccessListener {
+                                Log.d(TAG, "bookID updated successfully")
+                            }.addOnFailureListener { e ->
+                                Log.w(TAG, "Error updating bookID", e)
+                            }
+
+                        // Tambahkan bookID ke array bookIDs di dokumen User menggunakan arrayUnion
+                        val userRef = db.collection("User").document(userId)
+                        userRef.update("bookIDs", FieldValue.arrayUnion(documentReference.id))
+                            .addOnSuccessListener {
+                                Log.d(TAG, "bookID added to user document successfully")
+                            }.addOnFailureListener { e ->
+                                Log.w(TAG, "Error updating user document with bookID", e)
+                            }
+
+                        progressDialog.dismiss()
+                        // Tampilkan dialog sukses booking
+                        showSuccessDialog()
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w(TAG, "Error adding document", e)
+                        progressDialog.dismiss()
+                        Toast.makeText(this, "Failed to book nanny", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                // Tampilkan pesan bahwa tanggal sudah dibooking
+                Toast.makeText(
+                    this,
+                    "The selected date range is already booked for this nanny.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun calculateEndDate() {
@@ -147,54 +305,6 @@ class BookMonthlyActivity : AppCompatActivity() {
             outputEndDate.text = "End Date                   : $endDate"
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-    }
-
-    private fun bookNanny() {
-        val selectedDate = startDateEditText.text.toString()
-        val selectedBookingDuration =
-            outputBookingDuration.text.toString().substringAfter(":").trim()
-
-        val user = auth.currentUser
-        val userId = user?.uid ?: ""
-
-        val booking = hashMapOf(
-            "userID" to userId,
-            "nannyID" to nannyId,
-            "bookingDuration" to selectedBookingDuration,
-            "startDate" to selectedDate,
-            "endDate" to endDate,
-            "totalCost" to "Rp400.000,00/8 hours"
-        )
-
-        val db = FirebaseFirestore.getInstance()
-
-        // Tambahkan data booking ke Firestore
-        db.collection("BookingMonthly").add(booking).addOnSuccessListener { documentReference ->
-            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-
-            // Update field bookID di dokumen Nanny
-            val nannyRef = db.collection("Nanny").document(nannyId)
-            nannyRef.update("bookID", documentReference.id).addOnSuccessListener {
-                Log.d(TAG, "bookID updated successfully")
-            }.addOnFailureListener { e ->
-                Log.w(TAG, "Error updating bookID", e)
-            }
-
-            // Tambahkan bookID ke array bookIDs di dokumen User menggunakan arrayUnion
-            val userRef = db.collection("User").document(userId)
-            userRef.update("bookIDs", FieldValue.arrayUnion(documentReference.id))
-                .addOnSuccessListener {
-                    Log.d(TAG, "bookID added to user document successfully")
-                }.addOnFailureListener { e ->
-                    Log.w(TAG, "Error updating user document with bookID", e)
-                }
-
-            // Tampilkan dialog sukses booking
-            showSuccessDialog()
-        }.addOnFailureListener { e ->
-            Log.w(TAG, "Error adding document", e)
-            Toast.makeText(this, "Failed to book nanny", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -250,4 +360,5 @@ class BookMonthlyActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "BookMonthlyActivity"
     }
+
 }

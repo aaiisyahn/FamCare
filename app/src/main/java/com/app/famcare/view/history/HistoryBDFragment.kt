@@ -31,16 +31,13 @@ class HistoryBDFragment : Fragment(), BookingAdapter.OnItemClickListener {
     private var selectedBookingID: String = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_history_b_d, container, false)
 
         recyclerView = rootView.findViewById(R.id.recyclerViewHistory)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Initialize adapter with empty list and this as the listener
         adapter = BookingAdapter(emptyList(), this)
         recyclerView.adapter = adapter
 
@@ -55,6 +52,7 @@ class HistoryBDFragment : Fragment(), BookingAdapter.OnItemClickListener {
                 requireActivity().onBackPressed()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -63,7 +61,6 @@ class HistoryBDFragment : Fragment(), BookingAdapter.OnItemClickListener {
         val currentUserID = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         val db = FirebaseFirestore.getInstance()
 
-        // First, get the user document to retrieve bookIDs
         db.collection("User").document(currentUserID).get().addOnSuccessListener { document ->
             if (document != null && document.exists()) {
                 val bookIDs = document.get("bookIDs") as? List<String> ?: emptyList()
@@ -84,20 +81,21 @@ class HistoryBDFragment : Fragment(), BookingAdapter.OnItemClickListener {
         val db = FirebaseFirestore.getInstance()
         val bookingList = mutableListOf<BookingDaily>()
 
-        // Fetch each booking by bookID
         bookIDs.forEach { bookID ->
             db.collection("BookingDaily").document(bookID).get().addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     val nannyID = document.getString("nannyID") ?: ""
                     val bookDate = document.getString("bookDate") ?: ""
                     val bookHours = document.getString("bookHours") ?: ""
+                    val endHours = document.getString("endHours") ?: ""
                     db.collection("Nanny").document(nannyID).get()
                         .addOnSuccessListener { nannyDoc ->
                             val nannyName = nannyDoc.getString("name") ?: ""
-                            val bookingDaily = BookingDaily(bookID, nannyName, bookDate, bookHours, BookingType.DAILY)
+                            val bookingDaily = BookingDaily(
+                                bookID, nannyName, bookDate, bookHours, endHours, BookingType.DAILY
+                            )
                             bookingList.add(bookingDaily)
 
-                            // Reverse the list to display in the required order
                             adapter.setData(bookingList.reversed())
                         }.addOnFailureListener { e ->
                             Log.w(TAG, "Error getting nanny document", e)
@@ -116,7 +114,6 @@ class HistoryBDFragment : Fragment(), BookingAdapter.OnItemClickListener {
         startActivity(intent)
     }
 
-
     override fun onChatClick(bookingID: String) {
         val db = FirebaseFirestore.getInstance()
         db.collection("BookingDaily").document(bookingID).get().addOnSuccessListener { document ->
@@ -127,7 +124,8 @@ class HistoryBDFragment : Fragment(), BookingAdapter.OnItemClickListener {
                     intent.putExtra("nannyID", nannyID)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(requireContext(), "Nanny ID not found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Nanny ID not found", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }.addOnFailureListener { exception ->

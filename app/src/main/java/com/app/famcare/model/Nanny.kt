@@ -15,9 +15,9 @@ data class Nanny(
     val skills: List<String> = listOf(),
     val type: String = "",
     val pict: String = "",
-    val contact: String = "", // Tambah properti contact
-    val imageUrl: String = "", // Tambah properti imageUrl
-    var isBookmarked: Boolean = false // Tambahkan field untuk menandai bookmark
+    val contact: String = "",
+    val imageUrl: String = "",
+    var isBookmarked: Boolean = false
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         id = parcel.readString() ?: "",
@@ -31,9 +31,9 @@ data class Nanny(
         skills = parcel.createStringArrayList() ?: listOf(),
         type = parcel.readString() ?: "",
         pict = parcel.readString() ?: "",
-        contact = parcel.readString() ?: "", // Baca properti contact dari parcel
+        contact = parcel.readString() ?: "",
         imageUrl = parcel.readString() ?: "",
-        isBookmarked = parcel.readByte() != 0.toByte() // Baca properti imageUrl dari parcel
+        isBookmarked = parcel.readByte() != 0.toByte()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -48,9 +48,9 @@ data class Nanny(
         parcel.writeStringList(skills)
         parcel.writeString(type)
         parcel.writeString(pict)
-        parcel.writeString(contact) // Tulis properti contact ke parcel
+        parcel.writeString(contact)
         parcel.writeString(imageUrl)
-        parcel.writeByte(if (isBookmarked) 1 else 0) // Tulis properti imageUrl ke parcel
+        parcel.writeByte(if (isBookmarked) 1 else 0)
     }
 
     override fun describeContents(): Int {

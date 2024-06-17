@@ -52,28 +52,23 @@ class HistoryActivity : AppCompatActivity() {
                     0 -> {
                         val fragment = HistoryBDFragment()
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, fragment)
-                            .commit()
+                            .replace(R.id.fragment_container, fragment).commit()
                     }
+
                     1 -> {
                         val fragment = HistoryBMFragment()
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, fragment)
-                            .commit()
+                            .replace(R.id.fragment_container, fragment).commit()
                     }
                 }
             }
         })
 
-        // Ambil informasi tentang tab yang harus dipilih dari Intent
         val selectedTab = intent.getIntExtra("selectedTab", 0)
 
-        // Set tab yang sesuai berdasarkan informasi yang diterima
         if (selectedTab == 1) {
-            // Pilih tab "Monthly"
             viewPager.currentItem = 1
         } else {
-            // Default: Pilih tab "Daily" atau tab pertama jika tidak ada informasi yang dikirimkan
             viewPager.currentItem = 0
         }
 
@@ -88,6 +83,7 @@ class HistoryActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+
                 R.id.page_2 -> true
                 R.id.page_3 -> {
                     val intent = Intent(this, FacilitiesActivity::class.java)

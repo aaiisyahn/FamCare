@@ -51,6 +51,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewHistoryBD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -58,6 +59,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageViewNanny">
@@ -193,9 +195,10 @@
                                 android:layout_marginStart="20dp"
                                 android:layout_marginTop="15dp"
                                 android:fontFamily="@font/montserrat"
-                                android:text="Booking Date      : "
+                                android:text="Booking Date           : "
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
+
                             <TextView
                                 android:id="@+id/viewBookDate"
                                 android:layout_width="wrap_content"
@@ -206,6 +209,36 @@
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="start"
+                            android:orientation="horizontal">
+                            <!-- Output Selected Working Hours -->
+                            <TextView
+                                android:id="@+id/outputBookingDuration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="Booking Duration   : "
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/viewBookingDuration"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="2 Hours"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
                         <!-- Output Selected Booking Date -->
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -215,32 +248,64 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/outputWorkingHours"
+                                android:id="@+id/outputStartTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="20dp"
                                 android:layout_marginTop="15dp"
                                 android:fontFamily="@font/montserrat"
-                                android:text="Working Hours   : "
+                                android:text="Start Time                 : "
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
+
                             <TextView
-                                android:id="@+id/viewBookHours"
+                                android:id="@+id/viewStartTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
                                 android:fontFamily="@font/montserrat"
-                                android:text="6.00 - 12.00"
+                                android:text="17.00"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
                         <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="start"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/outputEndTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="End Time                   : "
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/viewEndTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="2 Months"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                        <!-- Output Selected Booking Date -->
+
+                        <LinearLayout
                             android:id="@+id/skillLayouting"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
                             android:layout_below="@id/locationLayout"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="20dp"
                             android:baselineAligned="true"
                             android:orientation="horizontal">
 
@@ -252,7 +317,7 @@
                                 android:layout_marginEnd="5dp"
                                 android:fontFamily="@font/montserrat"
                                 android:gravity="top"
-                                android:text="Total Cost             :"
+                                android:text="Cost                            :"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
 
@@ -268,23 +333,25 @@
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/buttonCancelBook"
-                        android:layout_width="300dp"
-                        android:layout_height="60dp"
-                        android:layout_below="@id/formBooking"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="60dp"
-                        android:layout_marginBottom="15dp"
-                        android:backgroundTint="#B22222"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:text="Cancel Book"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/buttonCancelBook"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/cardViewHistoryBD"
+                android:layout_gravity="center"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="#B22222"
+                android:fontFamily="@font/montserratsemibold"
+                android:text="Cancel Book"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import android.app.ProgressDialog
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -28,11 +30,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: BookingAdapter
     private lateinit var emptyTextView: TextView
     private var selectedBookingID: String = ""
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -42,7 +44,6 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
         recyclerView = rootView.findViewById(R.id.recyclerViewHistoryBM)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Initialize adapter with empty list and this as the listener
         adapter = BookingAdapter(emptyList(), this)
         recyclerView.adapter = adapter
 
@@ -54,8 +55,8 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Call fetchDataFromFirestore after view is created
         fetchDataFromFirestore()
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -73,7 +74,6 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
         val currentUserID = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         val db = FirebaseFirestore.getInstance()
 
-        // Get the user document to retrieve bookIDs for monthly type
         db.collection("User").document(currentUserID).get().addOnSuccessListener { document ->
             if (document != null && document.exists()) {
                 val bookIDs = document.get("bookIDs") as? List<String> ?: emptyList()
@@ -97,7 +97,6 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
         val db = FirebaseFirestore.getInstance()
         val bookingList = mutableListOf<BookingMonthlyHistory>()
 
-        // Fetch each booking by bookID for monthly type
         bookIDs.forEach { bookID ->
             db.collection("BookingMonthly").document(bookID).get()
                 .addOnSuccessListener { document ->
@@ -120,24 +119,20 @@ class HistoryBMFragment : Fragment(), BookingAdapter.OnItemClickListener {
                                 )
                                 bookingList.add(bookingMonthlyHistory)
 
-                                // Reverse the list to display in the required order
                                 adapter.setData(bookingList.reversed())
 
-                                // Hide empty text message
                                 emptyTextView.visibility = View.GONE
                                 recyclerView.visibility = View.VISIBLE
                             }.addOnFailureListener { e ->
                                 Log.w(TAG, "Error getting nanny document", e)
                             }
                     } else {
-                        // Handle case where document does not exist (optional)
                     }
                 }.addOnFailureListener { e ->
                     Log.w(TAG, "Error getting booking document: ", e)
                 }
         }
 
-        // Check if bookingList is empty after fetching
         if (bookingList.isEmpty()) {
             emptyTextView.visibility = View.VISIBLE
             recyclerView.visibility = View.GONE

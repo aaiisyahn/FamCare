@@ -17,7 +17,7 @@ class BookmarkActivity : AppCompatActivity(), BookmarkAdapter.OnBookmarkItemClic
     private lateinit var binding: ActivityBookmarkBinding
     private lateinit var adapter: BookmarkAdapter
     private val bookmarkedNannies = mutableListOf<Nanny>()
-    private lateinit var userId: String // Declare userId as a class-level variable
+    private lateinit var userId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,17 +35,15 @@ class BookmarkActivity : AppCompatActivity(), BookmarkAdapter.OnBookmarkItemClic
             onBackPressed()
         }
 
-        // Initialize userId from Firebase Authentication
         userId = FirebaseAuth.getInstance().currentUser?.uid
             ?: throw IllegalStateException("User must be logged in to view this page")
 
         adapter = BookmarkAdapter(
             this, bookmarkedNannies, this
-        ) // Pass the list and click listener to adapter
+        )
         binding.recyclerView.layoutManager = GridLayoutManager(this, 1)
         binding.recyclerView.adapter = adapter
 
-        // Load bookmarked nannies from Firestore
         loadBookmarkedNannies()
     }
 
@@ -54,7 +52,7 @@ class BookmarkActivity : AppCompatActivity(), BookmarkAdapter.OnBookmarkItemClic
         val bookmarkRef = db.collection("Bookmarks").whereEqualTo("userId", userId)
 
         bookmarkRef.get().addOnSuccessListener { documents ->
-            bookmarkedNannies.clear() // Clear previous data
+            bookmarkedNannies.clear()
 
             for (document in documents) {
                 val nannyId = document.getString("nannyId") ?: continue
@@ -85,9 +83,8 @@ class BookmarkActivity : AppCompatActivity(), BookmarkAdapter.OnBookmarkItemClic
     }
 
     override fun onBookmarkItemClick(nanny: Nanny) {
-        // Navigate to DetailPostActivity when card view is clicked
         val intent = Intent(this, DetailPostActivity::class.java)
-        intent.putExtra("nannyId", nanny.id) // Pass nannyId to detail activity
+        intent.putExtra("nannyId", nanny.id)
         startActivity(intent)
     }
 
@@ -96,11 +93,9 @@ class BookmarkActivity : AppCompatActivity(), BookmarkAdapter.OnBookmarkItemClic
         val bookmarkRef = db.collection("Bookmarks").document("${userId}_${nanny.id}")
 
         if (nanny.isBookmarked) {
-            // Remove bookmark
             bookmarkRef.delete().addOnSuccessListener {
-                // Successfully removed from Firestore
-                removeNannyFromList(nanny) // Remove from local list
-                adapter.notifyDataSetChanged() // Update adapter
+                removeNannyFromList(nanny)
+                adapter.notifyDataSetChanged()
                 Toast.makeText(this@BookmarkActivity, "Bookmark removed", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener { e ->
                 e.printStackTrace()
@@ -109,20 +104,18 @@ class BookmarkActivity : AppCompatActivity(), BookmarkAdapter.OnBookmarkItemClic
                 ).show()
             }
         } else {
-            // Add bookmark (if needed)
             val bookmarkData = hashMapOf(
                 "userId" to userId,
                 "nannyId" to nanny.id,
                 "name" to nanny.name,
                 "type" to nanny.type,
                 "rate" to nanny.rate,
-                // Add other necessary fields
             )
 
             bookmarkRef.set(bookmarkData).addOnSuccessListener {
                 nanny.isBookmarked = true
-                bookmarkedNannies.add(nanny) // Add to local list
-                adapter.notifyDataSetChanged() // Update adapter
+                bookmarkedNannies.add(nanny)
+                adapter.notifyDataSetChanged()
                 Toast.makeText(this@BookmarkActivity, "Bookmark added", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener { e ->
                 e.printStackTrace()
