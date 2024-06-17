@@ -2,99 +2,134 @@ package com.app.famcare.view.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.app.famcare.R
 import com.app.famcare.adapter.NannyAdapter
-import com.app.famcare.databinding.ActivityMainBinding
 import com.app.famcare.repository.NannyRepository
 import com.app.famcare.view.detailpost.DetailPostActivity
 import com.app.famcare.view.facilities.FacilitiesActivity
 import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.profile.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
+    private lateinit var editTextSearch: EditText
+    private lateinit var imageViewSearch: ImageView
+    private lateinit var imageViewFilter: ImageView
+    private lateinit var recyclerViewNanny: RecyclerView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var tvEmptyData: TextView
+    private lateinit var ivEmptyData: ImageView
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var tvName: TextView
+    private lateinit var listOption: ImageView // Added for list option
 
-    private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: NannyAdapter
     private val nannyRepository = NannyRepository()
-    private var isGrid = true
-    private lateinit var tvName: TextView
-    private lateinit var auth: FirebaseAuth
-    private lateinit var firestore: FirebaseFirestore
+    private var currentQueryText: String = ""
+    private var isGrid: Boolean = true // Default layout is grid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(R.layout.activity_main)
 
-        setupRecyclerView(isGrid)
-
-        tvName = findViewById(R.id.tv_name)
-        auth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
+        setupViews()
 
         // Check if user is logged in
+        val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
+        tvName = findViewById(R.id.tv_name)
+        val firestore = FirebaseFirestore.getInstance()
+
         if (currentUser != null) {
             loadUserName(currentUser.uid)
         } else {
             tvName.text = "Guest"
         }
 
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigation.selectedItemId = R.id.page_1
-
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
+        // Initialize bottom navigation
+        bottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.page_1
+        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.page_1 -> true
                 R.id.page_2 -> {
-                    val intent = Intent(this, HistoryActivity::class.java)
-                    startActivity(intent)
+                    startActivity(Intent(this, HistoryActivity::class.java))
                     true
                 }
+
                 R.id.page_3 -> {
-                    val intent = Intent(this, FacilitiesActivity::class.java)
-                    startActivity(intent)
+                    startActivity(Intent(this, FacilitiesActivity::class.java))
                     true
                 }
+
                 R.id.page_4 -> {
-                    val intent = Intent(this, ProfileActivity::class.java)
-                    startActivity(intent)
+                    startActivity(Intent(this, ProfileActivity::class.java))
                     true
                 }
+
                 else -> false
             }
         }
 
-        // Fetch data when the activity starts
+        // Setup initial RecyclerView
+        setupRecyclerView(isGrid)
         fetchData()
 
-        binding.imageViewFilter.setOnClickListener {
+        imageViewFilter.setOnClickListener {
             val filterFragment = FilterFragment()
             filterFragment.setFilterListener(this)
             filterFragment.show(supportFragmentManager, "FilterFragment")
         }
 
-        binding.listOption.setOnClickListener {
-            isGrid = !isGrid
-            setupRecyclerView(isGrid)
+        // Handle search button click
+        imageViewSearch.setOnClickListener {
+            performSearch()
         }
+
+        // Handle list option click
+        listOption.setOnClickListener {
+            toggleRecyclerViewLayout()
+        }
+
+        // Handle text changes in search EditText
+        editTextSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val queryText = s.toString().trim()
+                if (queryText.isEmpty()) {
+                    currentQueryText = ""
+                    fetchData()
+                } else {
+                    currentQueryText = queryText
+                    performSearch()
+                }
+            }
+        })
     }
 
     private fun loadUserName(userId: String) {
-        val userRef = firestore.collection("User").document(userId)
+        val userRef = FirebaseFirestore.getInstance().collection("User").document(userId)
         userRef.get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     val fullName = document.getString("fullName")
-                    tvName.text = "${fullName ?: "No Name"}!" // Tambahkan tanda seru di sini
+                    tvName.text = "${fullName ?: "No Name"}!" // Add exclamation mark here
                 } else {
                     tvName.text = "No Document!"
                 }
@@ -104,8 +139,15 @@ class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
             }
     }
 
-    private fun fetchData() {
-        adapter.fetchData()
+    private fun setupViews() {
+        editTextSearch = findViewById(R.id.editTextSearch)
+        imageViewSearch = findViewById(R.id.imageViewSearch)
+        imageViewFilter = findViewById(R.id.imageViewFilter)
+        recyclerViewNanny = findViewById(R.id.recyclerViewNanny)
+        progressBar = findViewById(R.id.loadingIndicator)
+        tvEmptyData = findViewById(R.id.tvEmptyData)
+        ivEmptyData = findViewById(R.id.ivEmptyData)
+        listOption = findViewById(R.id.listOption) // Initialize listOption
     }
 
     private fun setupRecyclerView(isGrid: Boolean) {
@@ -114,33 +156,114 @@ class MainActivity : AppCompatActivity(), FilterFragment.FilterListener {
         } else {
             LinearLayoutManager(this)
         }
-        binding.recyclerViewNanny.layoutManager = layoutManager
+        recyclerViewNanny.layoutManager = layoutManager
 
         // Update the icon based on the current layout
-        binding.listOption.setImageResource(if (isGrid) R.drawable.ic_list else R.drawable.ic_grid)
+        listOption.setImageResource(if (isGrid) R.drawable.ic_list else R.drawable.ic_grid)
 
+        // Determine the layout resource based on the layout type
         val layoutResource = if (isGrid) {
             R.layout.item_row_nanny
         } else {
             R.layout.item_list_nanny
         }
 
-        // Initialize adapter with new layoutResource if necessary
+        // Initialize adapter if not already initialized or layout has changed
         if (!::adapter.isInitialized || adapter.layoutResource != layoutResource) {
             adapter = NannyAdapter(this, layoutResource) { nannyId ->
                 val intent = Intent(this, DetailPostActivity::class.java)
                 intent.putExtra("nannyId", nannyId)
                 startActivity(intent)
             }
-            binding.recyclerViewNanny.adapter = adapter
+            recyclerViewNanny.adapter = adapter
         } else {
             adapter.updateLayoutResource(layoutResource)
         }
+    }
 
-        fetchData()
+    private fun fetchData() {
+        progressBar.visibility = View.VISIBLE
+        tvEmptyData.visibility = View.GONE
+        ivEmptyData.visibility = View.GONE
+
+        nannyRepository.getNannies(
+            onSuccess = { nannies ->
+                progressBar.visibility = View.GONE
+                adapter.updateNannyList(nannies)
+                checkAdapterEmpty()
+            },
+            onFailure = { exception ->
+                progressBar.visibility = View.GONE
+                // Handle failure, e.g., show error message
+            }
+        )
+    }
+
+    private fun performSearch() {
+        val query = editTextSearch.text.toString().trim()
+        if (query.isEmpty()) {
+            currentQueryText = ""
+            fetchData()
+        } else {
+            currentQueryText = query
+            progressBar.visibility = View.VISIBLE
+            tvEmptyData.visibility = View.GONE
+
+            nannyRepository.searchNannies(
+                query,
+                onSuccess = { nannies ->
+                    progressBar.visibility = View.GONE
+                    if (nannies.isEmpty()) {
+                        tvEmptyData.visibility = View.VISIBLE
+                        ivEmptyData.visibility = View.VISIBLE
+                        recyclerViewNanny.visibility = View.GONE
+                    } else {
+                        tvEmptyData.visibility = View.GONE
+                        ivEmptyData.visibility = View.GONE
+                        recyclerViewNanny.visibility = View.VISIBLE
+                        adapter.updateNannyList(nannies)
+                    }
+                },
+                onFailure = { exception ->
+                    progressBar.visibility = View.GONE
+                    // Handle failure, e.g., show error message
+                }
+            )
+        }
+    }
+
+    private fun toggleRecyclerViewLayout() {
+        isGrid = !isGrid
+        setupRecyclerView(isGrid)
+        // Refresh the adapter to ensure the data is displayed correctly after changing layout
+        if (currentQueryText.isNotEmpty()) {
+            performSearch()
+        } else {
+            fetchData()
+        }
     }
 
     override fun onFilterApplied(filterCriteria: Map<String, Any>) {
-        adapter.applyFilter(filterCriteria)
+        if (filterCriteria.isEmpty()) {
+            // Jika filter kosong, panggil fetchData() untuk menampilkan semua data
+            fetchData()
+        } else {
+            // Jika ada filter, terapkan filter dengan adapter dan periksa keadaan adapter
+            adapter.applyFilter(filterCriteria) {
+                checkAdapterEmpty()
+            }
+        }
+    }
+
+    private fun checkAdapterEmpty() {
+        if (adapter.isEmpty()) {
+            tvEmptyData.visibility = View.VISIBLE
+            ivEmptyData.visibility = View.VISIBLE
+            recyclerViewNanny.visibility = View.GONE
+        } else {
+            tvEmptyData.visibility = View.GONE
+            ivEmptyData.visibility = View.GONE
+            recyclerViewNanny.visibility = View.VISIBLE
+        }
     }
 }

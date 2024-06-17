@@ -11,9 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Welcome CardView -->
         <androidx.cardview.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/welcomeLayout"
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -35,7 +34,7 @@
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/welcoming"
-                    android:contentDescription="welkam"/>
+                    android:contentDescription="welcome_background"/>
 
                 <!-- Black Shadow with Opacity -->
                 <View
@@ -74,17 +73,15 @@
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
-
         <!-- Search Bar Layout -->
         <androidx.cardview.widget.CardView
             android:id="@+id/SearchBarLayout"
             android:layout_width="match_parent"
-            android:layout_below="@id/welcomeLayout"
             android:layout_height="wrap_content"
+            android:layout_below="@id/welcomeLayout"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-
             android:clipToPadding="true"
             app:cardCornerRadius="12dp">
 
@@ -109,18 +106,19 @@
                     android:singleLine="true"
                     android:textColorHint="@android:color/darker_gray" />
 
+                <!-- Filter ImageView -->
                 <ImageView
                     android:id="@+id/imageViewFilter"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="2dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_toStartOf="@id/imageViewSearch"
                     android:adjustViewBounds="true"
                     android:contentDescription="Filter"
                     android:src="@drawable/ic_filter" />
 
-
+                <!-- Search ImageView -->
                 <ImageView
                     android:id="@+id/imageViewSearch"
                     android:layout_width="24dp"
@@ -137,6 +135,7 @@
 
         </androidx.cardview.widget.CardView>
 
+        <!-- Bookmark Activity Layout -->
         <RelativeLayout
             android:id="@+id/bookmarkActivity"
             android:layout_width="match_parent"
@@ -176,7 +175,7 @@
                 android:layout_marginEnd="12dp"
                 android:orientation="horizontal">
 
-
+                <!-- List Option ImageView -->
                 <ImageView
                     android:id="@+id/listOption"
                     android:layout_width="30dp"
@@ -189,18 +188,62 @@
 
         </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewNanny"
+        <!-- Recycler View Layout -->
+        <FrameLayout
+            android:id="@+id/recyclerFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/bookmarkActivity"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="56dp"
-            android:padding="8dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:listitem="@layout/item_row_nanny" />
+            android:padding="8dp">
 
+            <ProgressBar
+                android:id="@+id/loadingIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:gravity="center">
+
+                <ImageViewEMPY
+                    android:id="@+id/ivEmptyData"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_leaf"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tvEmptyData"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Sorry, no nannies/mannies found"
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewNanny"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/bookmarkActivity"
+                android:layout_marginTop="0dp"
+                android:padding="8dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_row_nanny" />
+        </FrameLayout>
+
+        <!-- Fragment Layout -->
         <FrameLayout
             android:id="@+id/fragmentLayout"
             android:layout_width="match_parent"
@@ -208,6 +251,7 @@
 
     </RelativeLayout>
 
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"

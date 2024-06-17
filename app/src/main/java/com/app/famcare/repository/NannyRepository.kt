@@ -12,17 +12,17 @@ class NannyRepository {
         onSuccess: (List<Nanny>) -> Unit, onFailure: (Exception) -> Unit
     ) {
         db.collection("Nanny").get().addOnSuccessListener { querySnapshot ->
-                val nannyList = mutableListOf<Nanny>()
-                for (document in querySnapshot) {
-                    val nanny = document.toObject(Nanny::class.java).apply {
-                        id = document.id  // Set the id property
-                    }
-                    nannyList.add(nanny)
+            val nannyList = mutableListOf<Nanny>()
+            for (document in querySnapshot) {
+                val nanny = document.toObject(Nanny::class.java).apply {
+                    id = document.id  // Set the id property
                 }
-                onSuccess(nannyList)
-            }.addOnFailureListener { exception ->
-                onFailure(exception)
+                nannyList.add(nanny)
             }
+            onSuccess(nannyList)
+        }.addOnFailureListener { exception ->
+            onFailure(exception)
+        }
     }
 
     fun getNannies(
@@ -43,15 +43,49 @@ class NannyRepository {
         }
 
         query.get().addOnSuccessListener { querySnapshot ->
-                val nannyList = mutableListOf<Nanny>()
+            val nannyList = mutableListOf<Nanny>()
+            for (document in querySnapshot) {
+                val nanny = document.toObject(Nanny::class.java).apply {
+                    id = document.id  // Set the id property
+                }
+                nannyList.add(nanny)
+            }
+            onSuccess(nannyList)
+        }.addOnFailureListener { exception ->
+            onFailure(exception)
+        }
+    }
+
+    fun searchNannies(
+        queryText: String,
+        onSuccess: (List<Nanny>) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val lowercaseQueryText = queryText.lowercase()
+        db.collection("Nanny")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val result = mutableListOf<Nanny>()
                 for (document in querySnapshot) {
                     val nanny = document.toObject(Nanny::class.java).apply {
                         id = document.id  // Set the id property
                     }
-                    nannyList.add(nanny)
+                    if (nanny.age.lowercase().contains(lowercaseQueryText) ||
+                        nanny.experience.lowercase().contains(lowercaseQueryText) ||
+                        nanny.gender.lowercase().contains(lowercaseQueryText) ||
+                        nanny.location.lowercase().contains(lowercaseQueryText) ||
+                        nanny.name.lowercase().contains(lowercaseQueryText) ||
+                        nanny.rate.lowercase().contains(lowercaseQueryText) ||
+                        nanny.salary.lowercase().contains(lowercaseQueryText) ||
+                        nanny.type.lowercase().contains(lowercaseQueryText) ||
+                        nanny.skills.any { it.lowercase().contains(lowercaseQueryText) }
+                    ) {
+                        result.add(nanny)
+                    }
                 }
-                onSuccess(nannyList)
-            }.addOnFailureListener { exception ->
+                onSuccess(result)
+            }
+            .addOnFailureListener { exception ->
                 onFailure(exception)
             }
     }

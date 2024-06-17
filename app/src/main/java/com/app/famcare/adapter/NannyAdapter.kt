@@ -63,18 +63,37 @@ class NannyAdapter(
         })
     }
 
-    fun applyFilter(filterCriteria: Map<String, Any>) {
+    fun applyFilter(filterCriteria: Map<String, Any>, onFilterApplied: () -> Unit) {
         nannyRepository.getNannies(filterCriteria, onSuccess = { filteredNannies ->
             nannyList.clear()
             nannyList.addAll(filteredNannies)
             notifyDataSetChanged()
+            onFilterApplied() // Panggil callback ketika filter selesai
         }, onFailure = { exception ->
             // Handle failure, e.g., show error message
         })
     }
 
+
+
+    fun updateNannyList(newNannyList: List<Nanny>) {
+        nannyList.clear()
+        nannyList.addAll(newNannyList)
+        notifyDataSetChanged()
+    }
+
     fun updateLayoutResource(newLayoutResource: Int) {
         layoutResource = newLayoutResource
-        notifyDataSetChanged() // Refresh the adapter to use the new layout
+        notifyDataSetChanged()
     }
+
+    fun isListLayout(): Boolean {
+        return layoutResource == R.layout.item_list_nanny
+    }// Di dalam NannyAdapter.kt
+
+    fun isEmpty(): Boolean {
+        return nannyList.isEmpty()
+    }
+
+
 }

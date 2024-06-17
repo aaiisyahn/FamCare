@@ -6,8 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.app.famcare.R
-import com.app.famcare.view.register.RegisterActivity
-
+import com.app.famcare.view.login.LoginActivity
 
 class SecondOnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +19,7 @@ class SecondOnboardingActivity : AppCompatActivity() {
             startActivity(intent)
         }
         registerButton.setOnClickListener {
-            val intent = Intent(this@SecondOnboardingActivity, RegisterActivity::class.java)
+            val intent = Intent(this@SecondOnboardingActivity, LoginActivity::class.java)
             startActivity(intent)
         }
     }

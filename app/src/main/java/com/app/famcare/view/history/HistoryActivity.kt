@@ -88,8 +88,7 @@ class HistoryActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
-
-                R.id.page_2 -> true // No action needed if already in HistoryActivity
+                R.id.page_2 -> true
                 R.id.page_3 -> {
                     val intent = Intent(this, FacilitiesActivity::class.java)
                     startActivity(intent)

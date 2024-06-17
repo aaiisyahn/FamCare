@@ -68,9 +68,7 @@ class ProfileActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.page_4 -> {
-                    true
-                }
+                R.id.page_4 -> true
 
                 else -> false
             }

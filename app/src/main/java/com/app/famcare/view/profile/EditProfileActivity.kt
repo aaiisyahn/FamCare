@@ -31,7 +31,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class EditProfileActivity : AppCompatActivity() {
-
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var binding: ActivityEditProfileBinding
@@ -73,7 +72,8 @@ class EditProfileActivity : AppCompatActivity() {
                 binding.saveChangesProgressBar.visibility = View.VISIBLE
                 uploadImageToFirebaseStorage()
             } else {
-                Toast.makeText(this, "Please fill all fields and select gender", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill all fields and select gender", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -102,7 +102,8 @@ class EditProfileActivity : AppCompatActivity() {
             year, month, day
         )
 
-        datePickerDialog.datePicker.maxDate = calendar.timeInMillis - 3L * 365 * 24 * 60 * 60 * 1000 // 3 years in milliseconds
+        datePickerDialog.datePicker.maxDate =
+            calendar.timeInMillis - 3L * 365 * 24 * 60 * 60 * 1000 // 3 years in milliseconds
         datePickerDialog.show()
     }
 
@@ -280,6 +281,7 @@ class EditProfileActivity : AppCompatActivity() {
                 onBackPressed()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
