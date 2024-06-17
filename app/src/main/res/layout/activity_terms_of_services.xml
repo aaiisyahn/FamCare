@@ -75,7 +75,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:fontFamily="@font/montserratsemibold"
-                        android:paddingTop="8dp"
                         android:text="Terms of Services"
                         android:textColor="@android:color/black"
                         android:textSize="20sp"
@@ -105,7 +104,7 @@
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/montserrat"
                             android:text="FamCare is your go-to solution for finding trustworthy caregivers for your little ones and elderly family members."
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -114,7 +113,7 @@
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/montserrat"
                             android:text="Our app simplifies the process of connecting with qualified nannies who are ready to provide top-notch care. Whether you're a parent in search of a reliable nanny for your toddler or an individual seeking compassionate assistance for an elderly loved one, FamCare has you covered."
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -122,7 +121,7 @@
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/montserrat"
                             android:text="With a user-friendly interface, users can easily browse through profiles of skilled and vetted caregivers, complete with reviews and ratings from other users."
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -130,7 +129,7 @@
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/montserrat"
                             android:text="What sets FamCare apart is its innovative use of geolocation through integrated maps. Users can pinpoint nearby daycares and senior care facilities, making it convenient to explore options in their immediate vicinity."
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -138,7 +137,7 @@
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/montserrat"
                             android:text="1. Acceptance of Terms\nBy using FamCare, you agree to be bound by these Terms of Service, our Privacy Policy, and any other terms and conditions referenced herein."
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -147,7 +146,7 @@
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/montserrat"
                             android:text="2. Use of the Service\nFamCare provides a platform for connecting caregivers with families in need of care services. The service is intended for personal, non-commercial use."
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -156,8 +155,7 @@
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/montserrat"
                             android:text="3. User Accounts\nUsers may create accounts to access additional features of the service. You are responsible for maintaining the confidentiality of your account credentials."
-                            android:textSize="16sp" />
-
+                            android:textSize="18sp" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -165,7 +163,7 @@
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/montserrat"
                             android:text="4. Content\nUsers may submit content such as reviews and ratings. By submitting content, you grant FamCare the right to use, modify, and display the content in connection with the service."
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -174,7 +172,7 @@
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/montserrat"
                             android:text="5. Limitation of Liability\nFamCare is not liable for any damages or losses arising from the use of the service. Users use the service at their own risk."
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -183,7 +181,7 @@
                             android:layout_marginBottom="16dp"
                             android:fontFamily="@font/montserrat"
                             android:text="6. Contact Us\nIf you have any questions or concerns about these Terms of Service, please contact us at support@famcare.com."
-                            android:textSize="16sp" />
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 

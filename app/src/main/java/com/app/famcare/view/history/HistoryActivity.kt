@@ -28,7 +28,6 @@ class HistoryActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
@@ -102,14 +101,4 @@ class HistoryActivity : AppCompatActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 }
