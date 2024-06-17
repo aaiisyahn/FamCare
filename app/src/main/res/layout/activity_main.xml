@@ -211,7 +211,7 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center">
 
-                <ImageViewEMPY
+                <ImageView
                     android:id="@+id/ivEmptyData"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
