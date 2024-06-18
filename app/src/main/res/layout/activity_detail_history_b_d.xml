@@ -78,7 +78,6 @@
                         android:gravity="start"
                         android:orientation="horizontal">
 
-                        <!-- TextView for Booking ID -->
                         <TextView
                             android:id="@+id/textID"
                             android:layout_width="wrap_content"
@@ -216,7 +215,6 @@
                             android:layout_marginTop="8dp"
                             android:gravity="start"
                             android:orientation="horizontal">
-                            <!-- Output Selected Working Hours -->
                             <TextView
                                 android:id="@+id/outputBookingDuration"
                                 android:layout_width="wrap_content"
@@ -239,7 +237,6 @@
                                 android:textSize="16sp" />
                         </LinearLayout>
 
-                        <!-- Output Selected Booking Date -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -297,7 +294,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
                         </LinearLayout>
-                        <!-- Output Selected Booking Date -->
 
                         <LinearLayout
                             android:id="@+id/skillLayouting"
@@ -344,7 +340,7 @@
                 android:layout_below="@+id/cardViewHistoryBD"
                 android:layout_gravity="center"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="15dp"
                 android:backgroundTint="#B22222"

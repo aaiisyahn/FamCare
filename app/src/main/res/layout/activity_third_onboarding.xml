@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".view.onboarding.ThirdOnboardingActivity">
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -20,43 +19,45 @@
         android:id="@+id/titleWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="28dp"
         android:fontFamily="@font/montserratsemibold"
         android:gravity="center"
         android:text="Welcome to FamCare"
         android:textColor="@color/black"
         android:textSize="24sp"
-        android:layout_marginTop="28dp"
-        android:layout_gravity="center_horizontal"
         tools:alpha="100" />
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:fontFamily="@font/montserrat"
         android:gravity="center"
         android:text="Protect your Loved Ones with Us"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:layout_gravity="center_horizontal"
         tools:alpha="100" />
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:backgroundTint="@color/icon_active"
         android:fontFamily="@font/montserratsemibold"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="48dp"
         android:text="Getting Started"
         android:textSize="20sp"
-        android:layout_gravity="center_horizontal"
         tools:alpha="100" />
-
 
 
 </LinearLayout>

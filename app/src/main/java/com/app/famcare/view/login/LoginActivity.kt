@@ -26,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
 
-        // Pengaturan listener untuk tombol Login
         binding.loginButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
@@ -42,11 +41,9 @@ class LoginActivity : AppCompatActivity() {
                                 finish()
                             } else {
                                 Toast.makeText(
-                                    this,
-                                    "Please verify your email first",
-                                    Toast.LENGTH_SHORT
+                                    this, "Please verify your email first", Toast.LENGTH_SHORT
                                 ).show()
-                                firebaseAuth.signOut() // Sign out the user if email is not verified
+                                firebaseAuth.signOut()
                             }
                         } else {
                             handleLoginError(task.exception)
@@ -58,19 +55,16 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // Pengaturan listener untuk tombol Register
         binding.bottom2TextViews.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
 
-        // Pengaturan listener untuk tombol Forgot Password
         binding.tvForgotPassword.setOnClickListener {
             showForgotPasswordPopup()
         }
     }
 
-    // Fungsi untuk menangani error saat login
     private fun handleLoginError(exception: Exception?) {
         when (exception) {
             is FirebaseAuthInvalidUserException -> {
@@ -90,40 +84,30 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showForgotPasswordPopup() {
         val dialogView = layoutInflater.inflate(R.layout.popup_reset_password, null)
-        val builder = AlertDialog.Builder(this)
-            .setView(dialogView)
+        val builder = AlertDialog.Builder(this).setView(dialogView)
 
         val dialog = builder.create()
         dialog.show()
 
-        // Mendapatkan referensi ke komponen-komponen dalam popup
         val emailEditText = dialogView.findViewById<EmailEditText>(R.id.emailEditText)
         val resetPasswordButton = dialogView.findViewById<Button>(R.id.resetPasswordButton)
         val bottom2TextViews = dialogView.findViewById<TextView>(R.id.bottom2TextViews)
 
-        // Pengaturan listener untuk tombol "Submit" di dalam popup
         resetPasswordButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
 
-            // Validasi email terdaftar di Firestore sebelum mengirim reset password
             val firestore = FirebaseFirestore.getInstance()
             val usersCollection = firestore.collection("User")
-            usersCollection.whereEqualTo("email", email)
-                .get()
+            usersCollection.whereEqualTo("email", email).get()
                 .addOnSuccessListener { querySnapshot ->
                     if (!querySnapshot.isEmpty) {
-                        // Email terdaftar, kirim email reset password
                         firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                // Tampilkan AlertDialog setelah berhasil mengirim email
-                                val alertDialog = AlertDialog.Builder(this)
-                                    .setTitle("Email Sent")
+                                val alertDialog = AlertDialog.Builder(this).setTitle("Email Sent")
                                     .setMessage("Password reset email sent to $email")
                                     .setPositiveButton("OK") { _, _ ->
                                         dialog.dismiss()
-                                    }
-                                    .setCancelable(false)
-                                    .create()
+                                    }.setCancelable(false).create()
                                 alertDialog.show()
                             } else {
                                 Toast.makeText(
@@ -134,34 +118,24 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        // Email tidak terdaftar, tampilkan AlertDialog
-                        val alertDialog = AlertDialog.Builder(this)
-                            .setTitle("Email Not Registered")
+                        val alertDialog = AlertDialog.Builder(this).setTitle("Email Not Registered")
                             .setMessage("The entered email is not registered. Please check your email or register a new account.")
                             .setPositiveButton("OK") { _, _ ->
-                                // Clear email field and dismiss dialog
                                 emailEditText.text?.clear()
                                 dialog.dismiss()
-                            }
-                            .setCancelable(false)
-                            .create()
+                            }.setCancelable(false).create()
                         alertDialog.show()
                     }
-                }
-                .addOnFailureListener { e ->
+                }.addOnFailureListener { e ->
                     Toast.makeText(
-                        this,
-                        "Failed to check email validity: ${e.message}",
-                        Toast.LENGTH_SHORT
+                        this, "Failed to check email validity: ${e.message}", Toast.LENGTH_SHORT
                     ).show()
                 }
         }
 
-        // Pengaturan listener untuk tombol "Back to Login" di dalam popup
         bottom2TextViews.setOnClickListener {
             dialog.dismiss()
         }
     }
 
 }
-

@@ -62,7 +62,6 @@
                     android:layout_marginTop="6dp"
                     android:gravity="center_horizontal">
 
-                    <!-- Left aligned rating -->
                     <LinearLayout
                         android:id="@+id/leftAlignedRating"
                         android:layout_width="wrap_content"
@@ -90,14 +89,13 @@
                             tools:text="4.0" />
                     </LinearLayout>
 
-                    <!-- Right aligned type -->
                     <LinearLayout
                         android:id="@+id/rightAlignedType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:gravity="end"
                         android:layout_marginEnd="8dp"
+                        android:gravity="end"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -167,7 +165,7 @@
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/montserratsemibold"
                     android:textColor="@android:color/black"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     tools:text="Nanny's Name" />
 
@@ -299,7 +297,6 @@
 
                     </LinearLayout>
 
-                    <!-- This LinearLayout will hold the skill TextViews dynamically -->
                     <LinearLayout
                         android:id="@+id/skillListLayout"
                         android:layout_width="match_parent"
@@ -311,15 +308,18 @@
 
                 <Button
                     android:id="@+id/buttonBookNanny"
-                    android:layout_width="350dp"
-                    android:layout_height="75dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
                     android:layout_below="@id/skillLayout"
                     android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="32dp"
                     android:layout_marginTop="35dp"
+                    android:layout_marginEnd="32dp"
                     android:layout_marginBottom="15dp"
                     android:fontFamily="@font/montserratsemibold"
                     android:text="Book Nanny"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </RelativeLayout>

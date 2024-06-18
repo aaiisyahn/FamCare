@@ -33,18 +33,14 @@ class FilterFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        // Set the dialog width to 3/4 of the screen width and ensure margin on the left
         val displayMetrics = resources.displayMetrics
         val width = (displayMetrics.widthPixels * 0.90).toInt()
         val height = ViewGroup.LayoutParams.MATCH_PARENT
 
-        // Calculate the left margin (25% of the screen width)
         val leftMargin = (displayMetrics.widthPixels * 0.10).toInt()
 
-        // Set the width and height of the dialog
         dialog?.window?.setLayout(width, height)
 
-        // Set the margin on the left
         val layoutParams = dialog?.window?.attributes
         layoutParams?.x = leftMargin
         dialog?.window?.attributes = layoutParams
@@ -54,7 +50,7 @@ class FilterFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_FRAME, R.style.DialogTheme) // Use the new theme
+        setStyle(STYLE_NO_FRAME, R.style.DialogTheme)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,7 +68,6 @@ class FilterFragment : DialogFragment() {
         val buttonDisabilityCare = view.findViewById<ToggleButton>(R.id.buttonDisabilityCare)
         val buttonExperience = view.findViewById<ToggleButton>(R.id.buttonExperience)
 
-        // Restore the state of the filters
         currentFilters?.let { filters ->
             buttonNanny.isChecked = filters["gender"] == "female"
             buttonManny.isChecked = filters["gender"] == "male"
@@ -101,17 +96,16 @@ class FilterFragment : DialogFragment() {
             if (buttonExperience.isChecked) filterCriteria["experience"] = "> 5 years"
 
             filterListener?.onFilterApplied(filterCriteria)
-            setCurrentFilters(filterCriteria) // Save the current filter criteria
+            setCurrentFilters(filterCriteria)
 
             dismiss()
         }
 
         buttonReset.setOnClickListener {
-            // Reset all filters and send an empty filter criteria to show all nannies
             resetFilters(view)
             filterListener?.onFilterApplied(emptyMap())
-            setCurrentFilters(emptyMap()) // Clear the current filter criteria
-            dismiss() // Dismiss the dialog after reset
+            setCurrentFilters(emptyMap())
+            dismiss()
         }
 
         restoreFilterState(view)
@@ -164,6 +158,5 @@ class FilterFragment : DialogFragment() {
             buttonExperience.isChecked = filters["experience"] == "> 5 years"
         }
     }
-
 
 }

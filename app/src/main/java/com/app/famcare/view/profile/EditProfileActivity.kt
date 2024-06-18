@@ -9,7 +9,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
@@ -54,8 +53,10 @@ class EditProfileActivity : AppCompatActivity() {
         binding.profileImageView.setImageResource(R.drawable.user)
 
         binding.editProfileImage.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
             ) {
                 openGallery()
             } else {
@@ -92,25 +93,20 @@ class EditProfileActivity : AppCompatActivity() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
-            this,
-            { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
+            this, { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(selectedYear, selectedMonth, selectedDay)
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.US)
                 binding.selectedDateTextView.text = dateFormat.format(selectedDate.time)
-            },
-            year, month, day
+            }, year, month, day
         )
 
-        datePickerDialog.datePicker.maxDate =
-            calendar.timeInMillis - 3L * 365 * 24 * 60 * 60 * 1000 // 3 years in milliseconds
+        datePickerDialog.datePicker.maxDate = calendar.timeInMillis - 3L * 365 * 24 * 60 * 60 * 1000
         datePickerDialog.show()
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_CODE && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -139,8 +135,7 @@ class EditProfileActivity : AppCompatActivity() {
         val currentUserUid = firebaseAuth.currentUser?.uid
 
         if (currentUserUid != null) {
-            firestore.collection("User").document(currentUserUid)
-                .get()
+            firestore.collection("User").document(currentUserUid).get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         val name = document.getString("fullName")
@@ -166,15 +161,12 @@ class EditProfileActivity : AppCompatActivity() {
 
                         val imageUrl = document.getString("profileImageUrl")
                         if (imageUrl != null && imageUrl.isNotEmpty()) {
-                            Glide.with(this)
-                                .load(imageUrl)
-                                .into(binding.profileImageView)
+                            Glide.with(this).load(imageUrl).into(binding.profileImageView)
                         }
 
                     }
 
-                }
-                .addOnFailureListener { exception ->
+                }.addOnFailureListener { exception ->
                     Toast.makeText(this, "Failed to load user data", Toast.LENGTH_SHORT).show()
                 }
         }
@@ -231,14 +223,12 @@ class EditProfileActivity : AppCompatActivity() {
                 userData["profileImageUrl"] = imageUrl
             }
 
-            firestore.collection("User").document(currentUserUid)
-                .update(userData)
+            firestore.collection("User").document(currentUserUid).update(userData)
                 .addOnSuccessListener {
                     binding.saveChangesProgressBar.visibility = View.GONE
                     Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show()
                     finish()
-                }
-                .addOnFailureListener { exception ->
+                }.addOnFailureListener { exception ->
                     Toast.makeText(this, "Error updating profile", Toast.LENGTH_SHORT).show()
                     binding.saveChangesProgressBar.visibility = View.GONE
                 }

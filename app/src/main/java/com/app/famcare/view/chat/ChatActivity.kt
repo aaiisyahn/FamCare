@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.famcare.databinding.ActivityChatBinding
 import com.bumptech.glide.Glide
@@ -37,15 +36,13 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize Firebase instances
-        val database = FirebaseDatabase.getInstance("https://famcare-mobprog-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        val database =
+            FirebaseDatabase.getInstance("https://famcare-mobprog-default-rtdb.asia-southeast1.firebasedatabase.app/")
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        // Initialize Database Reference
         messageReference = database.getReference("messages")
 
-        // Initialize RecyclerView
         adapter = ChatAdapter()
         binding.messageRecyclerView.adapter = adapter
         binding.messageRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -54,10 +51,8 @@ class ChatActivity : AppCompatActivity() {
             sendMessage()
         }
 
-        // Load current user's display name and photo URL from Firestore
         loadCurrentUserNameAndPhotoUrl()
 
-        // Load chat messages from Firebase
         loadMessages()
 
         nannyId = intent.getStringExtra("nannyID")
@@ -65,10 +60,9 @@ class ChatActivity : AppCompatActivity() {
             loadNannyDetails(nannyId!!)
         } else {
             Toast.makeText(this, "Nanny ID is missing", Toast.LENGTH_SHORT).show()
-            finish() // Close activity if nannyID is missing
+            finish()
         }
 
-        // Handle back navigation
         binding.ivBack.setOnClickListener {
             onBackPressed()
         }
@@ -88,13 +82,13 @@ class ChatActivity : AppCompatActivity() {
                 }
 
                 if (nannyPhotoUrl != null) {
-                    Glide.with(this@ChatActivity)
-                        .load(nannyPhotoUrl)
-                        .circleCrop()
+                    Glide.with(this@ChatActivity).load(nannyPhotoUrl).circleCrop()
                         .into(binding.ivNannyPhoto)
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@ChatActivity, "Failed to load nanny details", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@ChatActivity, "Failed to load nanny details", Toast.LENGTH_SHORT
+                ).show()
                 Log.e(TAG, "Failed to load nanny details: ${e.message}")
             }
         }
@@ -107,10 +101,13 @@ class ChatActivity : AppCompatActivity() {
         if (currentUserId != null) {
             GlobalScope.launch(Dispatchers.Main) {
                 try {
-                    val document = firestore.collection("User").document(currentUserId!!).get().await()
+                    val document =
+                        firestore.collection("User").document(currentUserId!!).get().await()
                     currentUserName = document.getString("fullName")
                     currentUserPhotoUrl = document.getString("profileImageUrl")
-                    Log.d(TAG, "Current user name: $currentUserName, photo URL: $currentUserPhotoUrl")
+                    Log.d(
+                        TAG, "Current user name: $currentUserName, photo URL: $currentUserPhotoUrl"
+                    )
                 } catch (exception: Exception) {
                     Log.e(TAG, "Failed to fetch user data: ${exception.message}")
                 }
@@ -122,8 +119,7 @@ class ChatActivity : AppCompatActivity() {
         messageReference.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val message = snapshot.getValue(ChatMessage::class.java)
-                if (message != null && ((message.senderId == currentUserId && message.receiverId == nannyId) ||
-                            (message.senderId == nannyId && message.receiverId == currentUserId))) {
+                if (message != null && ((message.senderId == currentUserId && message.receiverId == nannyId) || (message.senderId == nannyId && message.receiverId == currentUserId))) {
                     GlobalScope.launch(Dispatchers.Main) {
                         val latestUserInfo = getLatestUserInfo(message.senderId)
                         if (latestUserInfo != null) {
@@ -143,7 +139,8 @@ class ChatActivity : AppCompatActivity() {
             override fun onChildRemoved(snapshot: DataSnapshot) {}
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@ChatActivity, "Failed to load messages", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ChatActivity, "Failed to load messages", Toast.LENGTH_SHORT)
+                    .show()
                 Log.e(TAG, "Failed to load messages: ${error.message}")
             }
         })
@@ -179,18 +176,15 @@ class ChatActivity : AppCompatActivity() {
                 receiverId = nannyId!!
             )
 
-            // Log before sending message
             Log.d(TAG, "Trying to send message: $message")
 
-            messageReference.push().setValue(message)
-                .addOnSuccessListener {
-                    binding.messageEditText.text.clear()
-                    Log.d(TAG, "Message sent successfully: $messageText")
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show()
-                    Log.e(TAG, "Failed to send message: ${exception.message}")
-                }
+            messageReference.push().setValue(message).addOnSuccessListener {
+                binding.messageEditText.text.clear()
+                Log.d(TAG, "Message sent successfully: $messageText")
+            }.addOnFailureListener { exception ->
+                Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "Failed to send message: ${exception.message}")
+            }
         } else {
             Toast.makeText(this, "Please enter a message", Toast.LENGTH_SHORT).show()
         }
@@ -198,7 +192,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun formatDate(timestamp: Long): String {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
-        dateFormat.timeZone = TimeZone.getDefault() // Set the time zone to the default time zone of the device
+        dateFormat.timeZone = TimeZone.getDefault()
         return dateFormat.format(Date(timestamp))
     }
 
@@ -208,8 +202,6 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        // Handle back navigation here, e.g., finish() or navigate to previous fragment
-        // If this activity is called from a fragment, you might need to navigate back to that fragment
         finish()
     }
 }

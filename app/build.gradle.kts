@@ -16,7 +16,6 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        // Tambahkan namespace di sini
         namespace = "com.app.famcare"
     }
 
@@ -39,7 +38,6 @@ android {
         viewBinding = true
     }
 
-    // Aktifkan View Binding di sini
     buildFeatures {
         viewBinding = true
     }
@@ -64,7 +62,6 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("jp.wasabeef:glide-transformations:4.3.0")
-    //location tracker
     implementation("com.google.android.gms:play-services-maps:18.0.0")
     implementation("com.google.android.gms:play-services-location:18.0.0")
     implementation("com.google.firebase:firebase-storage-ktx:21.0.0")

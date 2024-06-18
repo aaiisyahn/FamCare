@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:layout_margin="4dp"
-    android:elevation="4dp"
+    android:elevation="8dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp">
 
@@ -19,8 +19,8 @@
             android:id="@+id/bookingInfoLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -29,7 +29,6 @@
                 android:gravity="start"
                 android:orientation="horizontal">
 
-                <!-- TextView for Booking ID -->
                 <TextView
                     android:id="@+id/textID"
                     android:layout_width="wrap_content"
@@ -39,6 +38,7 @@
                     android:text="ID Booking:"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
+
                 <TextView
                     android:id="@+id/textViewID"
                     android:layout_width="wrap_content"
@@ -51,7 +51,6 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <!-- TextView for Nanny's Name -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,7 +71,6 @@
 
             </LinearLayout>
 
-            <!-- Horizontal LinearLayout for Date and Time -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,7 +78,6 @@
                 android:gravity="start"
                 android:orientation="horizontal">
 
-                <!-- ImageView for Calendar Icon -->
                 <ImageView
                     android:id="@+id/calendarImageView"
                     android:layout_width="20dp"
@@ -88,7 +85,6 @@
                     android:layout_marginEnd="4dp"
                     android:src="@drawable/ic_calendar" />
 
-                <!-- TextView for Booking Date -->
                 <TextView
                     android:id="@+id/textViewDate"
                     android:layout_width="wrap_content"
@@ -98,7 +94,6 @@
                     android:text="6/4/2024"
                     android:textSize="16sp" />
 
-                <!-- ImageView for Clock Icon -->
                 <ImageView
                     android:id="@+id/clockImageView"
                     android:layout_width="20dp"
@@ -106,15 +101,15 @@
                     android:layout_marginEnd="4dp"
                     android:src="@drawable/ic_clock" />
 
-                <!-- TextView for Working Hours -->
                 <TextView
                     android:id="@+id/textViewBookHours"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
                     android:fontFamily="@font/montserratsemibold"
                     android:text="14.00"
-                    android:layout_marginEnd="4dp"
                     android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/textViewSplit"
                     android:layout_width="wrap_content"
@@ -122,13 +117,14 @@
                     android:fontFamily="@font/montserratsemibold"
                     android:text="-"
                     android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/textViewEndHours"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:fontFamily="@font/montserratsemibold"
                     android:text="22.00"
-                    android:layout_marginStart="4dp"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>

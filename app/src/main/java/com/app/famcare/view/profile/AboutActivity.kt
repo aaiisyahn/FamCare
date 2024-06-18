@@ -3,13 +3,8 @@ package com.app.famcare.view.profile
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.app.famcare.R
-import android.content.Intent
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
-import com.app.famcare.view.bookmark.BookmarkActivity
-import com.app.famcare.view.main.MainActivity
-
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AboutActivity : AppCompatActivity() {
 

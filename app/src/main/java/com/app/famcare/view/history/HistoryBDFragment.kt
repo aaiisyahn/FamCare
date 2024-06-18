@@ -1,5 +1,6 @@
 package com.app.famcare.view.historyimport
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,10 +18,6 @@ import com.app.famcare.model.BookingDaily
 import com.app.famcare.model.BookingType
 import com.app.famcare.view.chat.ChatActivity
 import com.app.famcare.view.detailhistory.DetailHistoryBDActivity
-import com.app.famcare.view.facilities.FacilitiesActivity
-import com.app.famcare.view.main.MainActivity
-import com.app.famcare.view.profile.ProfileActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -58,6 +55,10 @@ class HistoryBDFragment : Fragment(), BookingAdapter.OnItemClickListener {
     }
 
     private fun fetchDataFromFirestore() {
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Loading data...")
+        progressDialog.show()
+
         val currentUserID = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         val db = FirebaseFirestore.getInstance()
 
@@ -65,15 +66,19 @@ class HistoryBDFragment : Fragment(), BookingAdapter.OnItemClickListener {
             if (document != null && document.exists()) {
                 val bookIDs = document.get("bookIDs") as? List<String> ?: emptyList()
                 if (bookIDs.isNotEmpty()) {
+                    progressDialog.dismiss()
                     fetchBookings(bookIDs)
                 } else {
                     Log.w(TAG, "No bookings found for user")
+                    progressDialog.dismiss()
                 }
             } else {
                 Log.w(TAG, "User document does not exist")
+                progressDialog.dismiss()
             }
         }.addOnFailureListener { exception ->
             Log.w(TAG, "Error getting user document: ", exception)
+            progressDialog.dismiss()
         }
     }
 

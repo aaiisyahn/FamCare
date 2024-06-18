@@ -15,7 +15,7 @@ class NannyRepository {
             val nannyList = mutableListOf<Nanny>()
             for (document in querySnapshot) {
                 val nanny = document.toObject(Nanny::class.java).apply {
-                    id = document.id  // Set the id property
+                    id = document.id
                 }
                 nannyList.add(nanny)
             }
@@ -46,7 +46,7 @@ class NannyRepository {
             val nannyList = mutableListOf<Nanny>()
             for (document in querySnapshot) {
                 val nanny = document.toObject(Nanny::class.java).apply {
-                    id = document.id  // Set the id property
+                    id = document.id
                 }
                 nannyList.add(nanny)
             }
@@ -57,36 +57,33 @@ class NannyRepository {
     }
 
     fun searchNannies(
-        queryText: String,
-        onSuccess: (List<Nanny>) -> Unit,
-        onFailure: (Exception) -> Unit
+        queryText: String, onSuccess: (List<Nanny>) -> Unit, onFailure: (Exception) -> Unit
     ) {
         val lowercaseQueryText = queryText.lowercase()
-        db.collection("Nanny")
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                val result = mutableListOf<Nanny>()
-                for (document in querySnapshot) {
-                    val nanny = document.toObject(Nanny::class.java).apply {
-                        id = document.id  // Set the id property
-                    }
-                    if (nanny.age.lowercase().contains(lowercaseQueryText) ||
-                        nanny.experience.lowercase().contains(lowercaseQueryText) ||
-                        nanny.gender.lowercase().contains(lowercaseQueryText) ||
-                        nanny.location.lowercase().contains(lowercaseQueryText) ||
-                        nanny.name.lowercase().contains(lowercaseQueryText) ||
-                        nanny.rate.lowercase().contains(lowercaseQueryText) ||
-                        nanny.salary.lowercase().contains(lowercaseQueryText) ||
-                        nanny.type.lowercase().contains(lowercaseQueryText) ||
-                        nanny.skills.any { it.lowercase().contains(lowercaseQueryText) }
-                    ) {
-                        result.add(nanny)
-                    }
+        db.collection("Nanny").get().addOnSuccessListener { querySnapshot ->
+            val result = mutableListOf<Nanny>()
+            for (document in querySnapshot) {
+                val nanny = document.toObject(Nanny::class.java).apply {
+                    id = document.id
                 }
-                onSuccess(result)
+                if (nanny.age.lowercase()
+                        .contains(lowercaseQueryText) || nanny.experience.lowercase()
+                        .contains(lowercaseQueryText) || nanny.gender.lowercase()
+                        .contains(lowercaseQueryText) || nanny.location.lowercase()
+                        .contains(lowercaseQueryText) || nanny.name.lowercase()
+                        .contains(lowercaseQueryText) || nanny.rate.lowercase()
+                        .contains(lowercaseQueryText) || nanny.salary.lowercase()
+                        .contains(lowercaseQueryText) || nanny.type.lowercase()
+                        .contains(lowercaseQueryText) || nanny.skills.any {
+                        it.lowercase().contains(lowercaseQueryText)
+                    }
+                ) {
+                    result.add(nanny)
+                }
             }
-            .addOnFailureListener { exception ->
-                onFailure(exception)
-            }
+            onSuccess(result)
+        }.addOnFailureListener { exception ->
+            onFailure(exception)
+        }
     }
 }

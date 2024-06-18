@@ -19,10 +19,13 @@ data class ElderlyCare(
     val websiteURL: String
 )
 
-class ElderlyCareAdapter(private var daycares: List<ElderlyCare>, private val itemClickListener: (String) -> Unit) : RecyclerView.Adapter<ElderlyCareAdapter.DaycareViewHolder>() {
+class ElderlyCareAdapter(
+    private var daycares: List<ElderlyCare>, private val itemClickListener: (String) -> Unit
+) : RecyclerView.Adapter<ElderlyCareAdapter.DaycareViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DaycareViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_daycare, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_daycare, parent, false)
         return DaycareViewHolder(itemView)
     }
 
@@ -36,9 +39,7 @@ class ElderlyCareAdapter(private var daycares: List<ElderlyCare>, private val it
             "${daycare.distanceFromUser} km"
         }
 
-        Glide.with(holder.itemView.context)
-            .load(daycare.photoURL)
-            .into(holder.photoImageView)
+        Glide.with(holder.itemView.context).load(daycare.photoURL).into(holder.photoImageView)
 
         holder.itemView.setOnClickListener {
             itemClickListener(daycare.websiteURL)

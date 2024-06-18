@@ -32,26 +32,31 @@ class RegisterActivity : AppCompatActivity() {
 
             if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && fullName.isNotEmpty() && phone.isNotEmpty()) {
                 if (password == confirmPassword) {
-                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { createUserTask ->
-                        if (createUserTask.isSuccessful) {
-                            val user = firebaseAuth.currentUser
-                            val uid = user?.uid
+                    firebaseAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { createUserTask ->
+                            if (createUserTask.isSuccessful) {
+                                val user = firebaseAuth.currentUser
+                                val uid = user?.uid
 
-                            uid?.let { uid ->
-                                saveUserDataToFirestore(uid, fullName, email, phone)
+                                uid?.let { uid ->
+                                    saveUserDataToFirestore(uid, fullName, email, phone)
+                                }
+                                sendEmailVerification()
+                                firebaseAuth.signOut()
+                                val intent = Intent(this, LoginActivity::class.java)
+                                intent.putExtra("isNewUser", true)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(
+                                    this, createUserTask.exception.toString(), Toast.LENGTH_SHORT
+                                ).show()
                             }
-                            sendEmailVerification()
-                            firebaseAuth.signOut() // Sign out the user after sending the verification email
-                            val intent = Intent(this, LoginActivity::class.java)
-                            intent.putExtra("isNewUser", true)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            Toast.makeText(this, createUserTask.exception.toString(), Toast.LENGTH_SHORT).show()
                         }
-                    }
                 } else {
-                    Toast.makeText(this, "Passwords do not match. Please try again.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this, "Passwords do not match. Please try again.", Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
                 Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show()
@@ -64,7 +69,9 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveUserDataToFirestore(uid: String, fullName: String, email: String, phone: String) {
+    private fun saveUserDataToFirestore(
+        uid: String, fullName: String, email: String, phone: String
+    ) {
         val userData = hashMapOf(
             "uid" to uid,
             "fullName" to fullName,
@@ -75,10 +82,7 @@ class RegisterActivity : AppCompatActivity() {
             "birth" to ""
         )
 
-        firestore.collection("User").document(uid)
-            .set(userData)
-            .addOnSuccessListener {
-            }
+        firestore.collection("User").document(uid).set(userData).addOnSuccessListener {}
             .addOnFailureListener { exception ->
                 Log.e("RegisterActivity", "Error writing document", exception)
             }
@@ -86,13 +90,15 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun sendEmailVerification() {
         val user = firebaseAuth.currentUser
-        user?.sendEmailVerification()
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "Verification email sent to ${user.email}", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Failed to send verification email.", Toast.LENGTH_SHORT).show()
-                }
+        user?.sendEmailVerification()?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(
+                    this, "Verification email sent to ${user.email}", Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(this, "Failed to send verification email.", Toast.LENGTH_SHORT)
+                    .show()
             }
+        }
     }
 }

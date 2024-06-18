@@ -163,9 +163,9 @@
                         android:id="@+id/btn_edit_profile"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:contentDescription="Edit Profile"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="10dp"
+                        android:contentDescription="Edit Profile"
                         android:src="@drawable/ic_pencil" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -174,12 +174,12 @@
                 android:id="@+id/bookmarkActivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:gravity="center_horizontal">
+                android:paddingBottom="16dp">
 
                 <LinearLayout
                     android:id="@+id/leftAlignedBookmark"
@@ -195,6 +195,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_bookmark" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -213,8 +214,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:gravity="end"
                     android:layout_marginEnd="12dp"
+                    android:gravity="end"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -232,12 +233,12 @@
                 android:id="@+id/accountSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:gravity="center_horizontal">
+                android:paddingBottom="16dp">
 
                 <LinearLayout
                     android:id="@+id/leftAlignedRating"
@@ -253,6 +254,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_accountsetting2" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -271,8 +273,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:gravity="end"
                     android:layout_marginEnd="12dp"
+                    android:gravity="end"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -345,72 +347,73 @@
             </RelativeLayout>
 
 
-        <RelativeLayout
-            android:id="@+id/privacyPolicy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:gravity="center_horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/privacyPolicy"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="12dp"
-                android:gravity="start"
-                android:orientation="horizontal">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_privacy_policy" />
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="16dp"
-                    android:fontFamily="@font/montserrat"
-                    android:text="Privacy Policy"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="12dp"
+                    android:gravity="start"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_privacy_policy" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/montserrat"
+                        android:text="Privacy Policy"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
 
 
-            </LinearLayout>
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:gravity="end"
-                android:layout_marginEnd="12dp"
-                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="12dp"
+                    android:gravity="end"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="arrow"
-                    android:src="@drawable/ic_arrow" />
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="arrow"
+                        android:src="@drawable/ic_arrow" />
 
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </RelativeLayout>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/aboutPage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:gravity="center_horizontal">
+                android:paddingBottom="16dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -425,6 +428,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_about" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -442,8 +446,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:gravity="end"
                     android:layout_marginEnd="12dp"
+                    android:gravity="end"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -462,12 +466,12 @@
                 android:id="@+id/logoutButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:gravity="center_horizontal">
+                android:paddingBottom="16dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -482,6 +486,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_logout2" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -499,8 +504,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:gravity="end"
                     android:layout_marginEnd="12dp"
+                    android:gravity="end"
                     android:orientation="horizontal">
 
                     <ImageView

@@ -6,7 +6,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.app.famcare.view.historyimport.HistoryBDFragment
 import com.app.famcare.view.historyimport.HistoryBMFragment
 
-class HistoryPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class HistoryPagerAdapter(fragmentActivity: FragmentActivity) :
+    FragmentStateAdapter(fragmentActivity) {
 
     override fun getItemCount(): Int {
         return NUM_PAGES
@@ -24,4 +25,3 @@ class HistoryPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAda
         private const val NUM_PAGES = 2
     }
 }
-

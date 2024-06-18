@@ -1,14 +1,10 @@
 package com.app.famcare.view.profile
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.app.famcare.R
-import com.app.famcare.view.bookmark.BookmarkActivity
-import com.app.famcare.view.main.MainActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TermsOfServicesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

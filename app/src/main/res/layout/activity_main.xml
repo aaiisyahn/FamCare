@@ -11,15 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Welcome CardView -->
         <androidx.cardview.widget.CardView
             android:id="@+id/welcomeLayout"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
             android:clipToPadding="true"
             app:cardCornerRadius="12dp">
 
@@ -27,27 +26,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Background Image -->
                 <ImageView
                     android:id="@+id/backgroundImage"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
+                    android:contentDescription="welcome_background"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/welcoming"
-                    android:contentDescription="welcome_background"/>
+                    android:src="@drawable/welcoming" />
 
-                <!-- Black Shadow with Opacity -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:background="#80000000"/>
+                    android:background="#80000000" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp">
 
-                    <!-- Welcome TextView -->
                     <TextView
                         android:id="@+id/welcomeTextView"
                         android:layout_width="wrap_content"
@@ -56,24 +52,22 @@
                         android:text="Welcome,"
                         android:textColor="@android:color/white"
                         android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
-                    <!-- User Name TextView -->
                     <TextView
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/welcomeTextView"
+                        android:layout_marginTop="8dp"
                         android:fontFamily="@font/montserratsemibold"
-                        android:textColor="@android:color/white"
-                        android:textSize="24sp"
                         android:text=" "
-                        android:layout_marginTop="8dp"/>
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp" />
                 </RelativeLayout>
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Search Bar Layout -->
         <androidx.cardview.widget.CardView
             android:id="@+id/SearchBarLayout"
             android:layout_width="match_parent"
@@ -106,7 +100,6 @@
                     android:singleLine="true"
                     android:textColorHint="@android:color/darker_gray" />
 
-                <!-- Filter ImageView -->
                 <ImageView
                     android:id="@+id/imageViewSearch"
                     android:layout_width="28dp"
@@ -121,12 +114,10 @@
                     android:src="@drawable/ic_search" />
 
 
-
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Bookmark Activity Layout -->
         <RelativeLayout
             android:id="@+id/bookmarkActivity"
             android:layout_width="match_parent"
@@ -135,9 +126,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:gravity="center_horizontal"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:gravity="center_horizontal">
+            android:paddingBottom="10dp">
 
             <LinearLayout
                 android:id="@+id/leftAlignedBookmark"
@@ -146,6 +137,7 @@
                 android:layout_alignParentStart="true"
                 android:gravity="start"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -162,11 +154,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:gravity="end"
                 android:layout_marginEnd="12dp"
+                android:gravity="end"
                 android:orientation="horizontal">
 
-                <!-- List Option ImageView -->
                 <ImageView
                     android:id="@+id/listOption"
                     android:layout_width="30dp"
@@ -174,6 +165,7 @@
                     android:layout_marginLeft="12dp"
                     android:contentDescription="arrow"
                     android:src="@drawable/ic_list" />
+
                 <ImageView
                     android:id="@+id/imageViewFilter"
                     android:layout_width="30dp"
@@ -191,7 +183,6 @@
 
         </RelativeLayout>
 
-        <!-- Recycler View Layout -->
         <FrameLayout
             android:id="@+id/recyclerFrameLayout"
             android:layout_width="match_parent"
@@ -207,33 +198,35 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:visibility="gone" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="center_vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/ivEmptyData"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_leaf"
                     android:layout_gravity="center"
-                    android:visibility="gone"/>
+                    android:src="@drawable/ic_leaf"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tvEmptyData"
-                    android:layout_marginTop="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Sorry, no nannies/mannies found"
+                    android:layout_marginTop="16dp"
                     android:fontFamily="@font/montserrat"
+                    android:text="Sorry, no nannies/mannies found"
                     android:textColor="@color/dark_grey"
                     android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewNanny"
                 android:layout_width="match_parent"
@@ -246,7 +239,6 @@
                 tools:listitem="@layout/item_row_nanny" />
         </FrameLayout>
 
-        <!-- Fragment Layout -->
         <FrameLayout
             android:id="@+id/fragmentLayout"
             android:layout_width="match_parent"
@@ -254,7 +246,6 @@
 
     </RelativeLayout>
 
-    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"

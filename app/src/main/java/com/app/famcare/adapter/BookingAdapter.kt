@@ -10,7 +10,6 @@ import com.app.famcare.R
 import com.app.famcare.model.BookingDaily
 import com.app.famcare.model.BookingMonthly
 import com.app.famcare.model.BookingMonthlyHistory
-import com.app.famcare.model.BookingType
 
 class BookingAdapter(
     private var bookingList: List<Any>, private val listener: OnItemClickListener
@@ -28,16 +27,20 @@ class BookingAdapter(
                     .inflate(R.layout.item_row_history_b_d, parent, false)
                 DailyViewHolder(view)
             }
+
             MONTHLY_VIEW_TYPE -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_row_history_b_m, parent, false)
                 MonthlyViewHolder(view)
             }
+
             MONTHLY_HISTORY_VIEW_TYPE -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_row_history_b_m, parent, false) // Use a suitable layout for BookingMonthlyHistory if needed
+                val view = LayoutInflater.from(parent.context).inflate(
+                    R.layout.item_row_history_b_m, parent, false
+                )
                 MonthlyHistoryViewHolder(view)
             }
+
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -49,10 +52,12 @@ class BookingAdapter(
                 val bookingDaily = booking as BookingDaily
                 holder.bind(bookingDaily)
             }
+
             is MonthlyViewHolder -> {
                 val bookingMonthly = booking as BookingMonthly
                 holder.bind(bookingMonthly)
             }
+
             is MonthlyHistoryViewHolder -> {
                 val bookingMonthlyHistory = booking as BookingMonthlyHistory
                 holder.bind(bookingMonthlyHistory)

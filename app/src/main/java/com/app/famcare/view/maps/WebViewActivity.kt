@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import com.app.famcare.R
 import com.app.famcare.databinding.ActivityWebViewBinding
 
 class WebViewActivity : AppCompatActivity() {
@@ -15,14 +14,12 @@ class WebViewActivity : AppCompatActivity() {
         binding = ActivityWebViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Setup Toolbar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             title = ""
         }
 
-        // Setup WebView
         val webView: WebView = binding.webView
         webView.webViewClient = WebViewClient()
         webView.settings.javaScriptEnabled = true

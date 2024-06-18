@@ -3,7 +3,6 @@ package com.app.famcare.view.detailpost
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,6 @@ import com.app.famcare.view.booking.BookDailyActivity
 import com.app.famcare.view.booking.BookMonthlyActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DetailPostActivity : AppCompatActivity() {
@@ -52,7 +50,7 @@ class DetailPostActivity : AppCompatActivity() {
         }
 
         binding.ivBookmark.setOnClickListener {
-            toggleBookmark() // Toggle bookmark status
+            toggleBookmark()
         }
 
         binding.toolbar.setNavigationOnClickListener {
@@ -70,7 +68,6 @@ class DetailPostActivity : AppCompatActivity() {
 
                 nanny?.let { nannyData ->
                     isBookmarked = document.get("bookmarkedBy.$userId") != null
-                    // Set button text based on nanny's gender
                     val buttonBookNanny = binding.buttonBookNanny
                     buttonBookNanny.text = if (nannyData.gender == "male") {
                         "Book Manny"
@@ -133,7 +130,6 @@ class DetailPostActivity : AppCompatActivity() {
         val bookmarkRef = db.collection("Bookmarks").document(nannyId)
 
         if (isBookmarked) {
-            // Remove bookmark
             bookmarkRef.delete().addOnSuccessListener {
                 isBookmarked = false
                 updateBookmarkIcon()

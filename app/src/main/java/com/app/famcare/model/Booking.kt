@@ -22,16 +22,14 @@ data class BookingDailyHistory(
     val nannyName: String = "",
     val bookDate: String = "",
     val bookHours: String = "",
-    var bookDuration: String = "", // Ensure this field exists
-    var startTime: String = "",    // Ensure this field exists
-    var endHours: String = "",      // Ensure this field exists
-    var salary: String = "",       // Ensure this field exists
+    var bookDuration: String = "",
+    var startTime: String = "",
+    var endHours: String = "",
+    var salary: String = "",
     val type: BookingType = BookingType.DAILY,
     val nannyID: String = "",
     val totalCost: String = ""
-) {
-    constructor() : this("", "", "", "", "", "", "", "", BookingType.DAILY, "", "")
-}
+)
 
 data class BookingMonthlyHistory(
     val bookID: String = "",
@@ -41,9 +39,7 @@ data class BookingMonthlyHistory(
     val type: BookingType = BookingType.MONTHLY,
     val nannyID: String = "",
     val totalCost: String = ""
-) {
-    constructor() : this("", "", "", "", BookingType.MONTHLY, "", "")
-}
+)
 
 enum class BookingType {
     DAILY, MONTHLY

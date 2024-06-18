@@ -32,14 +32,10 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.MessageViewHolder>() {
 
                 binding.tvMessenger.text = displayName
                 if (profileImageUrl != null) {
-                    Glide.with(binding.ivMessenger.context)
-                        .load(profileImageUrl)
-                        .circleCrop()
+                    Glide.with(binding.ivMessenger.context).load(profileImageUrl).circleCrop()
                         .into(binding.ivMessenger)
                 } else {
-                    Glide.with(binding.ivMessenger.context)
-                        .load(R.drawable.user)
-                        .circleCrop()
+                    Glide.with(binding.ivMessenger.context).load(R.drawable.user).circleCrop()
                         .into(binding.ivMessenger)
                 }
             }

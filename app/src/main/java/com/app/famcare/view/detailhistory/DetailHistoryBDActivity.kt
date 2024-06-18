@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar
 import com.app.famcare.R
 import com.app.famcare.model.BookingDailyHistory
 import com.app.famcare.view.history.HistoryActivity
-import com.app.famcare.view.historyimport.HistoryBDFragment
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue

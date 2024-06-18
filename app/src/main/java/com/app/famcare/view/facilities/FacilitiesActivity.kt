@@ -4,7 +4,6 @@ package com.app.famcare.view.facilities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import com.app.famcare.R
 import com.app.famcare.databinding.ActivityFacilitiesBinding
 import com.app.famcare.view.history.HistoryActivity
@@ -65,6 +64,5 @@ class FacilitiesActivity : AppCompatActivity() {
             }
         }
     }
-
 
 }

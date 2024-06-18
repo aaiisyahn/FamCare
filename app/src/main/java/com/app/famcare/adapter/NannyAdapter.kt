@@ -13,9 +13,7 @@ import com.app.famcare.repository.NannyRepository
 import com.bumptech.glide.Glide
 
 class NannyAdapter(
-    private val context: Context,
-    var layoutResource: Int,
-    private val onItemClick: (String) -> Unit
+    private val context: Context, var layoutResource: Int, private val onItemClick: (String) -> Unit
 ) : RecyclerView.Adapter<NannyAdapter.NannyViewHolder>() {
 
     private var nannyList: MutableList<Nanny> = mutableListOf()
@@ -67,12 +65,10 @@ class NannyAdapter(
             nannyList.clear()
             nannyList.addAll(filteredNannies)
             notifyDataSetChanged()
-            onFilterApplied() // Panggil callback ketika filter selesai
+            onFilterApplied()
         }, onFailure = { exception ->
         })
     }
-
-
 
     fun updateNannyList(newNannyList: List<Nanny>) {
         nannyList.clear()
@@ -92,6 +88,5 @@ class NannyAdapter(
     fun isEmpty(): Boolean {
         return nannyList.isEmpty()
     }
-
 
 }

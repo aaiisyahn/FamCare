@@ -3,8 +3,6 @@ package com.app.famcare.view.profile
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -14,12 +12,10 @@ import androidx.cardview.widget.CardView
 import com.app.famcare.R
 import com.app.famcare.databinding.ActivityProfileBinding
 import com.app.famcare.view.bookmark.BookmarkActivity
-import com.app.famcare.view.chat.ChatActivity
 import com.app.famcare.view.facilities.FacilitiesActivity
 import com.app.famcare.view.history.HistoryActivity
 import com.app.famcare.view.login.LoginActivity
 import com.app.famcare.view.main.MainActivity
-import com.app.famcare.view.maps.DaycareMapsActivity
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -44,7 +40,6 @@ class ProfileActivity : AppCompatActivity() {
 
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
         val bottomNavigation: BottomNavigationView = binding.bottomNavigation
@@ -116,14 +111,11 @@ class ProfileActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Are you sure you want to log out?")
             .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
-                // User clicked OK button
                 firebaseAuth.signOut()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
-            })
-            .setNegativeButton("No", DialogInterface.OnClickListener { dialog, id ->
-                // User cancelled the dialog
+            }).setNegativeButton("No", DialogInterface.OnClickListener { dialog, id ->
                 dialog.dismiss()
             })
         builder.create().show()
@@ -139,8 +131,7 @@ class ProfileActivity : AppCompatActivity() {
         val currentUserUid = firebaseAuth.currentUser?.uid
 
         if (currentUserUid != null) {
-            firestore.collection("User").document(currentUserUid)
-                .get()
+            firestore.collection("User").document(currentUserUid).get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         val name = document.getString("fullName")
@@ -153,14 +144,10 @@ class ProfileActivity : AppCompatActivity() {
 
                         val imageUrl = document.getString("profileImageUrl")
                         if (imageUrl != null && imageUrl.isNotEmpty()) {
-                            Glide.with(this)
-                                .load(imageUrl)
-                                .into(binding.imageprofile)
+                            Glide.with(this).load(imageUrl).into(binding.imageprofile)
                         }
                     }
-                }
-                .addOnFailureListener { exception ->
-                    // Handle failure
+                }.addOnFailureListener { exception ->
                 }
         }
     }

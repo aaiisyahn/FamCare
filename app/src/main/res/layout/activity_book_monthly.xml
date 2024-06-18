@@ -163,10 +163,10 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="20dp"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/montserrat"
                             android:background="@drawable/bg_spinner"
-                            android:spinnerMode="dropdown" />
+                            android:fontFamily="@font/montserrat"
+                            android:spinnerMode="dropdown"
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/selectTimeTextView"
@@ -194,7 +194,6 @@
                             android:inputType="none"
                             android:textSize="16sp" />
 
-                        <!-- Output Selected Working Hours -->
                         <TextView
                             android:id="@+id/outputBookingDuration"
                             android:layout_width="wrap_content"
@@ -207,7 +206,6 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
-                        <!-- Output Selected Booking Date -->
                         <TextView
                             android:id="@+id/outputStartDate"
                             android:layout_width="wrap_content"
@@ -240,8 +238,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/locationLayout"
                             android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
-                            android:baselineAligned="true">
+                            android:baselineAligned="true"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/textCost"
@@ -250,11 +248,11 @@
                                 android:layout_marginStart="20dp"
                                 android:layout_marginEnd="5dp"
                                 android:fontFamily="@font/montserratsemibold"
-                                android:text="Total Cost                  :"
+                                android:gravity="top|start"
+                                android:text="Cost                            :"
                                 android:textColor="@color/black"
                                 android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:gravity="top|start" />
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/text_salary"
@@ -270,11 +268,14 @@
 
                     <Button
                         android:id="@+id/buttonBookNanny"
-                        android:layout_width="300dp"
+                        android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_below="@id/formBooking"
                         android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="32dp"
                         android:layout_marginTop="60dp"
+                        android:layout_marginEnd="32dp"
                         android:layout_marginBottom="15dp"
                         android:fontFamily="@font/montserratsemibold"
                         android:text="Book Now"

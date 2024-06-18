@@ -1,7 +1,6 @@
 package com.app.famcare.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,30 +39,23 @@ class BookmarkAdapter(
     override fun onBindViewHolder(holder: BookmarkViewHolder, position: Int) {
         val nanny = nannyList[position]
 
-        // Load nanny image using Glide
-        Glide.with(context)
-            .load(nanny.pict)
-            .placeholder(R.drawable.placeholder_image)
+        Glide.with(context).load(nanny.pict).placeholder(R.drawable.placeholder_image)
             .into(holder.imageViewNanny)
 
-        // Set text for name, category, and rating
         holder.textViewName.text = nanny.name
         holder.textViewCategory.text = nanny.type
         holder.textViewRating.text = nanny.rate
 
-        // Set bookmark icon based on isBookmarked status
         if (nanny.isBookmarked) {
             holder.imageViewBookmark.setImageResource(R.drawable.baseline_bookmark_24)
         } else {
             holder.imageViewBookmark.setImageResource(R.drawable.outline_bookmark_24)
         }
 
-        // Handle item click to open detail activity
         holder.itemView.setOnClickListener {
             clickListener.onBookmarkItemClick(nanny)
         }
 
-        // Handle bookmark icon click to toggle bookmark status
         holder.imageViewBookmark.setOnClickListener {
             clickListener.onBookmarkIconClick(nanny)
         }

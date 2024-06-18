@@ -8,13 +8,11 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -25,7 +23,6 @@ import com.app.famcare.R
 import com.app.famcare.databinding.ActivityElderlyMapsBinding
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.GeoPoint
 import java.io.IOException
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -80,14 +77,12 @@ class ElderlyMapsActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        // Initialize locationRequest
         locationRequest = LocationRequest.create().apply {
             interval = 10000
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
 
-        // Initialize locationCallback
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
@@ -100,26 +95,30 @@ class ElderlyMapsActivity : AppCompatActivity() {
         }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             enableMyLocation()
         } else {
-            ActivityCompat.requestPermissions(this,
+            ActivityCompat.requestPermissions(
+                this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                LOCATION_PERMISSION_REQUEST_CODE)
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
         }
 
-        // Initialize CardView and set onClickListener
         val locationLayout = findViewById<CardView>(R.id.locationLayout)
         locationLayout.setOnClickListener {
-            // Check if location permission is granted
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+                == PackageManager.PERMISSION_GRANTED
+            ) {
                 fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                     if (location != null) {
-                        Log.d(TAG, "User location: Lat=${location.latitude}, Lng=${location.longitude}")
+                        Log.d(
+                            TAG,
+                            "User location: Lat=${location.latitude}, Lng=${location.longitude}"
+                        )
                         showLocationPopup(location)
                     } else {
-                        // Handle location not available
                         showLocationPopup(null)
                     }
                 }.addOnFailureListener { exception ->
@@ -127,7 +126,11 @@ class ElderlyMapsActivity : AppCompatActivity() {
                     showLocationPopup(null)
                 }
             } else {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_PERMISSION_REQUEST_CODE
+                )
             }
         }
     }
@@ -136,7 +139,8 @@ class ElderlyMapsActivity : AppCompatActivity() {
         val message = if (location != null) {
             val geocoder = Geocoder(this, Locale.getDefault())
             try {
-                val addresses: List<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                val addresses: List<Address>? =
+                    geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 addresses?.get(0)?.getAddressLine(0) ?: "Unknown location"
             } catch (e: IOException) {
                 Log.e(TAG, "Geocoder failed", e)
@@ -155,8 +159,13 @@ class ElderlyMapsActivity : AppCompatActivity() {
 
     private fun enableMyLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
             return
         }
 
@@ -177,7 +186,8 @@ class ElderlyMapsActivity : AppCompatActivity() {
     private fun getUserAddress(location: Location) {
         val geocoder = Geocoder(this, Locale.getDefault())
         try {
-            val addresses: List<Address>? = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            val addresses: List<Address>? =
+                geocoder.getFromLocation(location.latitude, location.longitude, 1)
             val address = addresses?.get(0)?.getAddressLine(0) ?: "Unknown location"
             if (address == "Unnamed Road") {
                 Log.d(TAG, "Geocoder returned 'Unnamed Road'")
@@ -215,8 +225,20 @@ class ElderlyMapsActivity : AppCompatActivity() {
                         val df = DecimalFormat("#.#").apply { roundingMode = RoundingMode.HALF_UP }
                         val roundedDistanceInKilometers = df.format(distanceInKilometers).toDouble()
 
-                        daycares.add(ElderlyCare(daycareName, locationName, photoURL, geoPoint, roundedDistanceInKilometers, websiteURL))
-                        Log.d(TAG, "Daycare: $daycareName, Lat=${geoPoint.latitude}, Lng=${geoPoint.longitude}, Distance: $roundedDistanceInKilometers km")
+                        daycares.add(
+                            ElderlyCare(
+                                daycareName,
+                                locationName,
+                                photoURL,
+                                geoPoint,
+                                roundedDistanceInKilometers,
+                                websiteURL
+                            )
+                        )
+                        Log.d(
+                            TAG,
+                            "Daycare: $daycareName, Lat=${geoPoint.latitude}, Lng=${geoPoint.longitude}, Distance: $roundedDistanceInKilometers km"
+                        )
                     } else {
                         Log.d(TAG, "Document is missing required fields")
                     }
@@ -232,7 +254,11 @@ class ElderlyMapsActivity : AppCompatActivity() {
             }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
@@ -261,7 +287,16 @@ class ElderlyMapsActivity : AppCompatActivity() {
                     val websiteURL = document.getString("WebsiteURL")
 
                     if (geoPoint != null && locationName != null && daycareName != null && photoURL != null && websiteURL != null) {
-                        daycares.add(ElderlyCare(daycareName, locationName, photoURL, geoPoint, 0.0, websiteURL))
+                        daycares.add(
+                            ElderlyCare(
+                                daycareName,
+                                locationName,
+                                photoURL,
+                                geoPoint,
+                                0.0,
+                                websiteURL
+                            )
+                        )
                     } else {
                         Log.d(TAG, "Document is missing required fields")
                     }
@@ -274,6 +309,7 @@ class ElderlyMapsActivity : AppCompatActivity() {
                 progressBar.visibility = View.GONE
             }
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

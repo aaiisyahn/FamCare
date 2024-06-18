@@ -70,8 +70,7 @@ class SettingsActivity : AppCompatActivity() {
         if (user != null && user.email != null) {
             val credential = EmailAuthProvider.getCredential(user.email!!, currentPassword)
 
-            user.reauthenticate(credential)
-                .addOnCompleteListener { task ->
+            user.reauthenticate(credential).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         sendPasswordResetEmail(user.email!!)
                     } else {
@@ -82,8 +81,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun sendPasswordResetEmail(userEmail: String) {
-        firebaseAuth.sendPasswordResetEmail(userEmail)
-            .addOnCompleteListener { task ->
+        firebaseAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     showAlertDialog("Success", "Password reset email sent.") {
                         logoutUser()
@@ -95,26 +93,23 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun logoutUser() {
-        firebaseAuth.signOut() // Sign out the current user from Firebase Authentication
-        navigateToLoginScreen() // Navigate to LoginActivity or main screen after logout
+        firebaseAuth.signOut()
+        navigateToLoginScreen()
     }
 
     private fun navigateToLoginScreen() {
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
-        finish() // Optional: call finish() to close the current activity
+        finish()
     }
 
     private fun showAlertDialog(title: String, message: String, onDismiss: (() -> Unit)? = null) {
-        AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(message)
+        AlertDialog.Builder(this).setTitle(title).setMessage(message)
             .setPositiveButton(android.R.string.ok) { dialog, _ ->
                 dialog.dismiss()
                 onDismiss?.invoke()
-            }
-            .show()
+            }.show()
     }
 
     override fun onSupportNavigateUp(): Boolean {
