@@ -168,8 +168,8 @@
 
                 <ImageView
                     android:id="@+id/imageViewFilter"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -177,7 +177,7 @@
                     android:layout_marginEnd="8dp"
                     android:adjustViewBounds="true"
                     android:contentDescription="Filter"
-                    android:src="@drawable/ic_filter" />
+                    android:src="@drawable/ic_filterr" />
 
             </LinearLayout>
 

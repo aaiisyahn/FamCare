@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,6 +30,7 @@ class BookDailyActivity : AppCompatActivity() {
     private lateinit var startHourEditText: EditText
     private lateinit var outputBookingDate: TextView
     private lateinit var outputBookingDuration: TextView
+    private lateinit var totalPricingText: TextView
     private lateinit var outputStartHour: TextView
     private lateinit var outputEndHour: TextView
     private lateinit var buttonBookNanny: Button
@@ -67,6 +69,8 @@ class BookDailyActivity : AppCompatActivity() {
         outputStartHour = findViewById(R.id.outputStartHour)
         outputEndHour = findViewById(R.id.outputEndHour)
         buttonBookNanny = findViewById(R.id.buttonBookNanny)
+        totalPricingText = findViewById(R.id.textCost)
+        totalPricingText.text = "Total Pricing              :"
 
         bookingDateEditText.setOnClickListener {
             showDatePickerDialog()
@@ -84,7 +88,7 @@ class BookDailyActivity : AppCompatActivity() {
                     parent: AdapterView<*>?, view: View?, position: Int, id: Long
                 ) {
                     selectedDuration = parent?.getItemAtPosition(position).toString()
-                    outputBookingDuration.text = "Booking Duration   : $selectedDuration hours"
+                    outputBookingDuration.text = "Booking Duration    : $selectedDuration hours"
                     if (selectedStartHour.isNotEmpty()) {
                         calculateEndHour(selectedDuration.substringBefore(" ").toInt())
                     }
@@ -131,7 +135,7 @@ class BookDailyActivity : AppCompatActivity() {
                 selectedCalendar.set(year, month, dayOfMonth)
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 selectedDate = sdf.format(selectedCalendar.time)
-                outputBookingDate.text = "Booking Date           : $selectedDate"
+                outputBookingDate.text = "Booking Date            : $selectedDate"
                 bookingDateEditText.setText(selectedDate)
                 resetOutputTimes()
 
@@ -224,12 +228,30 @@ class BookDailyActivity : AppCompatActivity() {
             } else {
                 selectedEndHour = format.format(calendar.time)
                 outputEndHour.text = "End Time                   : $selectedEndHour"
+
+                val nannyRef = db.collection("Nanny").document(nannyId)
+                nannyRef.get().addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val nanny = document.toObject(Nanny::class.java)
+                        nanny?.let { nannyData ->
+                            val totalPricing = nannyData.pricing * durationHours
+                            val currencyFormat = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+                            val formattedTotalPricing = currencyFormat.format(totalPricing)
+
+                            totalPricingText.text = "Total Pricing              : $formattedTotalPricing"
+                        }
+                    }
+                }.addOnFailureListener { e ->
+                    Log.d(TAG, "Error calculating total pricing", e)
+                    Toast.makeText(this, "Error calculating total pricing", Toast.LENGTH_SHORT).show()
+                }
             }
         } catch (e: ParseException) {
             e.printStackTrace()
             Toast.makeText(this, "Error calculating end hour", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun validateInputs(): Boolean {
         if (selectedDate.isEmpty()) {
@@ -248,10 +270,6 @@ class BookDailyActivity : AppCompatActivity() {
     }
 
     private fun saveBookingToFirestore() {
-        val progressDialog = ProgressDialog(this)
-        progressDialog.setMessage("Booking nanny...")
-        progressDialog.show()
-
         val user = auth.currentUser
         val userId = user?.uid ?: ""
 
@@ -259,73 +277,64 @@ class BookDailyActivity : AppCompatActivity() {
         nannyRef.get().addOnSuccessListener { document ->
             if (document != null && document.exists()) {
                 val nanny = document.toObject(Nanny::class.java)
-                val totalCost = nanny?.salary ?: "N/A"
+                nanny?.let { nannyData ->
+                    val durationHours = selectedDuration.substringBefore(" ").toInt()
+                    val totalPricing = nannyData.pricing * durationHours
+                    val booking = hashMapOf(
+                        "userID" to userId,
+                        "nannyID" to nannyId,
+                        "bookDate" to selectedDate,
+                        "bookHours" to selectedStartHour,
+                        "endHours" to selectedEndHour,
+                        "bookDuration" to selectedDuration,
+                        "totalPricing" to totalPricing
+                    )
 
-                val booking = hashMapOf(
-                    "userID" to userId,
-                    "nannyID" to nannyId,
-                    "bookDate" to selectedDate,
-                    "bookHours" to selectedStartHour,
-                    "endHours" to selectedEndHour,
-                    "bookDuration" to selectedDuration,
-                    "totalCost" to totalCost
-                )
+                    db.collection("BookingDaily")
+                        .whereEqualTo("nannyID", nannyId)
+                        .whereEqualTo("bookDate", selectedDate)
+                        .get()
+                        .addOnSuccessListener { documents ->
+                            if (!documents.isEmpty) {
+                                showBookingExistsDialog()
+                            } else {
+                                db.collection("BookingDaily").add(booking)
+                                    .addOnSuccessListener { documentReference ->
+                                        Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                                        nannyRef.update("bookID", documentReference.id)
+                                            .addOnSuccessListener {
+                                                Log.d(TAG, "bookID updated successfully")
+                                            }
+                                            .addOnFailureListener { e ->
+                                                Log.w(TAG, "Error updating bookID", e)
+                                            }
 
-                db.collection("BookingDaily").whereEqualTo("nannyID", nannyId)
-                    .whereEqualTo("bookDate", selectedDate).get()
-                    .addOnSuccessListener { documents ->
-                        if (!documents.isEmpty) {
-                            showBookingExistsDialog()
-                        } else {
-                            db.collection("BookingDaily").add(booking)
-                                .addOnSuccessListener { documentReference ->
-                                    Log.d(
-                                        TAG,
-                                        "DocumentSnapshot added with ID: ${documentReference.id}"
-                                    )
-
-                                    nannyRef.update("bookID", documentReference.id)
-                                        .addOnSuccessListener {
-                                            Log.d(TAG, "bookID updated successfully")
+                                        val userRef = db.collection("User").document(userId)
+                                        userRef.update(
+                                            "bookIDs", FieldValue.arrayUnion(documentReference.id)
+                                        ).addOnSuccessListener {
+                                            Log.d(TAG, "bookID added to user document successfully")
+                                            showSuccessDialog()
                                         }.addOnFailureListener { e ->
-                                            Log.w(TAG, "Error updating bookID", e)
+                                            Log.w(TAG, "Error updating user document with bookID", e)
                                         }
-
-                                    val userRef = db.collection("User").document(userId)
-                                    userRef.update(
-                                        "bookIDs", FieldValue.arrayUnion(documentReference.id)
-                                    ).addOnSuccessListener {
-                                        Log.d(TAG, "bookID added to user document successfully")
-                                        progressDialog.dismiss()
-                                        showSuccessDialog()
-                                    }.addOnFailureListener { e ->
-                                        Log.w(
-                                            TAG, "Error updating user document with bookID", e
-                                        )
-                                        progressDialog.dismiss()
                                     }
-                                }.addOnFailureListener { e ->
-                                    Log.w(TAG, "Error adding document", e)
-                                    progressDialog.dismiss()
-                                    Toast.makeText(
-                                        this, "Failed to book nanny", Toast.LENGTH_SHORT
-                                    ).show()
-                                }
+                                    .addOnFailureListener { e ->
+                                        Log.w(TAG, "Error adding document", e)
+                                        Toast.makeText(this, "Failed to book nanny", Toast.LENGTH_SHORT).show()
+                                    }
+                            }
                         }
-                    }.addOnFailureListener { e ->
-                        Log.w(TAG, "Error getting documents", e)
-                        progressDialog.dismiss()
-                        Toast.makeText(
-                            this, "Failed to check existing bookings", Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                        .addOnFailureListener { e ->
+                            Log.w(TAG, "Error getting documents", e)
+                            Toast.makeText(this, "Failed to check existing bookings", Toast.LENGTH_SHORT).show()
+                        }
+                }
             } else {
                 Log.d(TAG, "No such document")
-                Toast.makeText(this, "Failed to get nanny data", Toast.LENGTH_SHORT).show()
             }
         }.addOnFailureListener { exception ->
             Log.d(TAG, "get failed with ", exception)
-            Toast.makeText(this, "Failed to get nanny data", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -378,13 +387,10 @@ class BookDailyActivity : AppCompatActivity() {
     private fun displayNannyInformation(nanny: Nanny) {
         val nameTextView = findViewById<TextView>(R.id.text_name)
         val typeTextView = findViewById<TextView>(R.id.text_email)
-        val salaryTextView = findViewById<TextView>(R.id.text_salary)
         val profileImageView = findViewById<ImageView>(R.id.image_profile)
 
         nameTextView.text = nanny.name
         typeTextView.text = nanny.type
-        salaryTextView.text = nanny.salary
-
         Glide.with(this).load(nanny.pict).placeholder(R.drawable.nanny_placeholder)
             .error(R.drawable.placeholder_image).into(profileImageView)
     }

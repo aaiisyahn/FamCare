@@ -15,10 +15,12 @@ import androidx.appcompat.widget.Toolbar
 import com.app.famcare.R
 import com.app.famcare.model.BookingDailyHistory
 import com.app.famcare.view.history.HistoryActivity
+import com.app.famcare.view.historyimport.HistoryBDFragment
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.NumberFormat
 import java.util.Locale
 
 class DetailHistoryBDActivity : AppCompatActivity() {
@@ -91,7 +93,11 @@ class DetailHistoryBDActivity : AppCompatActivity() {
                     viewBookingDuration.text = "${it.bookDuration} Hours"
                     viewStartTime.text = it.bookHours
                     viewEndTime.text = it.endHours
-                    textSalary.text = it.salary
+
+                    val localeID = Locale("id", "ID")
+                    val formattedCurrency = NumberFormat.getCurrencyInstance(localeID).format(it.totalPricing.toLong())
+                    textSalary.text = formattedCurrency
+
                     nannyID = it.nannyID
 
                     loadNannyData(it.nannyID)
@@ -111,10 +117,7 @@ class DetailHistoryBDActivity : AppCompatActivity() {
             if (document != null && document.exists()) {
                 val nannyName = document.getString("name") ?: ""
                 val nannyPict = document.getString("pict") ?: ""
-                val nannySalary = document.getString("salary") ?: ""
-
                 textName.text = nannyName
-                textSalary.text = nannySalary
 
                 Glide.with(this).load(nannyPict).placeholder(R.drawable.nanny_placeholder)
                     .error(R.drawable.placeholder_image).into(imageProfile)

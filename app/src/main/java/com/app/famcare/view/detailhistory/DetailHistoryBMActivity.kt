@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -88,7 +89,10 @@ class DetailHistoryBMActivity : AppCompatActivity() {
                     textEmail.text = it.type.name.toLowerCase(Locale.ROOT)
                     viewStartDate.text = it.startDate
                     viewEndDate.text = it.endDate
-                    textSalary.text = it.totalCost
+                    val localeID = Locale("id", "ID")
+                    val formattedCurrency = NumberFormat.getCurrencyInstance(localeID).format(it.totalPricing.toLong())
+                    textSalary.text = formattedCurrency
+
                     nannyID = it.nannyID
 
                     viewBookingDuration.text = calculateBookingDuration(it.startDate, it.endDate)
@@ -112,7 +116,7 @@ class DetailHistoryBMActivity : AppCompatActivity() {
             val diffInMillis = endDate.time - startDate.time
             val diffInDays = TimeUnit.MILLISECONDS.toDays(diffInMillis)
             val months = (diffInDays / 30).toInt()
-            "$months bulan"
+            "$months months"
         } catch (e: Exception) {
             e.printStackTrace()
             "Unknown duration"
@@ -125,10 +129,8 @@ class DetailHistoryBMActivity : AppCompatActivity() {
             if (document != null && document.exists()) {
                 val nannyName = document.getString("name") ?: ""
                 val nannyPict = document.getString("pict") ?: ""
-                val nannySalary = document.getString("salary") ?: ""
 
                 textName.text = nannyName
-                textSalary.text = nannySalary
 
                 Glide.with(this).load(nannyPict).placeholder(R.drawable.nanny_placeholder)
                     .error(R.drawable.placeholder_image).into(imageProfile)

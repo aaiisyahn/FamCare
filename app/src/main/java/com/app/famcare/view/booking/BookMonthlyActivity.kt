@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,6 +27,7 @@ class BookMonthlyActivity : AppCompatActivity() {
     private lateinit var outputBookingDuration: TextView
     private lateinit var outputStartDate: TextView
     private lateinit var outputEndDate: TextView
+    private lateinit var textCost: TextView
     private lateinit var nannyId: String
     private lateinit var auth: FirebaseAuth
     private var selectedBookingDuration: Int = 0
@@ -63,7 +65,8 @@ class BookMonthlyActivity : AppCompatActivity() {
         startDateEditText.setOnClickListener {
             showDatePickerDialog()
         }
-
+        textCost = findViewById(R.id.textCost)
+        textCost.text = "Total Cost                  : " + formatCurrency(0)
         outputBookingDuration = findViewById(R.id.outputBookingDuration)
         outputBookingDuration.text = ""
 
@@ -77,6 +80,7 @@ class BookMonthlyActivity : AppCompatActivity() {
 
                     if (outputStartDate.text.isNotEmpty()) {
                         calculateEndDate()
+                        updateTotalPricing()
                     }
                 }
 
@@ -84,6 +88,7 @@ class BookMonthlyActivity : AppCompatActivity() {
                     outputBookingDuration.text = ""
                 }
             }
+
 
         val buttonBookNanny = findViewById<Button>(R.id.buttonBookNanny)
         buttonBookNanny.setOnClickListener {
@@ -122,6 +127,7 @@ class BookMonthlyActivity : AppCompatActivity() {
                         startDateEditText.setText(selectedDate)
 
                         calculateEndDate()
+                        updateTotalPricing()
                     }
                 },
                 calendar.get(Calendar.YEAR),
@@ -135,6 +141,7 @@ class BookMonthlyActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
     }
+
 
     private fun showDateAlreadyBookedDialog() {
         val builder = AlertDialog.Builder(this)
@@ -229,7 +236,9 @@ class BookMonthlyActivity : AppCompatActivity() {
                 nannyRef.get().addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
                         val nanny = document.toObject(Nanny::class.java)
-                        val totalCost = nanny?.salary ?: "N/A"
+
+                        val nannyPricing = nanny?.pricing ?: 0
+                        val totalPricing = nannyPricing * selectedBookingDuration
 
                         val booking = hashMapOf(
                             "userID" to userId,
@@ -237,16 +246,12 @@ class BookMonthlyActivity : AppCompatActivity() {
                             "bookingDuration" to selectedBookingDuration.toString(),
                             "startDate" to selectedStartDate,
                             "endDate" to selectedEndDate,
-                            "totalCost" to totalCost
+                            "totalPricing" to totalPricing
                         )
-
-                        val db = FirebaseFirestore.getInstance()
 
                         db.collection("BookingMonthly").add(booking)
                             .addOnSuccessListener { documentReference ->
-                                Log.d(
-                                    TAG, "DocumentSnapshot added with ID: ${documentReference.id}"
-                                )
+                                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
 
                                 nannyRef.update("bookID", documentReference.id)
                                     .addOnSuccessListener {
@@ -261,9 +266,7 @@ class BookMonthlyActivity : AppCompatActivity() {
                                 ).addOnSuccessListener {
                                     Log.d(TAG, "bookID added to user document successfully")
                                 }.addOnFailureListener { e ->
-                                    Log.w(
-                                        TAG, "Error updating user document with bookID", e
-                                    )
+                                    Log.w(TAG, "Error updating user document with bookID", e)
                                 }
 
                                 progressDialog.dismiss()
@@ -271,8 +274,7 @@ class BookMonthlyActivity : AppCompatActivity() {
                             }.addOnFailureListener { e ->
                                 Log.w(TAG, "Error adding document", e)
                                 progressDialog.dismiss()
-                                Toast.makeText(this, "Failed to book nanny", Toast.LENGTH_SHORT)
-                                    .show()
+                                Toast.makeText(this, "Failed to book nanny", Toast.LENGTH_SHORT).show()
                             }
                     } else {
                         Log.d(TAG, "No such document")
@@ -342,16 +344,29 @@ class BookMonthlyActivity : AppCompatActivity() {
             Log.d(TAG, "get failed with ", exception)
         }
     }
+    private fun updateTotalPricing() {
+        val nannyRef = db.collection("Nanny").document(nannyId)
+        nannyRef.get().addOnSuccessListener { document ->
+            if (document != null && document.exists()) {
+                val nanny = document.toObject(Nanny::class.java)
+                val nannyPricing = nanny?.pricing ?: 0
+                val totalPricing = nannyPricing * selectedBookingDuration
+                textCost.text = "Total Cost                  : " + formatCurrency(totalPricing)
+            } else {
+                Log.d(TAG, "No such document")
+            }
+        }.addOnFailureListener { exception ->
+            Log.d(TAG, "get failed with ", exception)
+        }
+    }
 
     private fun displayNannyInformation(nanny: Nanny) {
         val nameTextView = findViewById<TextView>(R.id.text_name)
         val typeTextView = findViewById<TextView>(R.id.text_email)
-        val salaryTextView = findViewById<TextView>(R.id.text_salary)
         val profileImageView = findViewById<ImageView>(R.id.image_profile)
 
         nameTextView.text = nanny.name
         typeTextView.text = nanny.type
-        salaryTextView.text = nanny.salary
 
         Glide.with(this).load(nanny.pict).placeholder(R.drawable.nanny_placeholder)
             .error(R.drawable.placeholder_image).into(profileImageView)
@@ -359,6 +374,10 @@ class BookMonthlyActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "BookMonthlyActivity"
+    }
+    private fun formatCurrency(value: Int): String {
+        val format = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+        return format.format(value)
     }
 
 }

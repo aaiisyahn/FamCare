@@ -3,6 +3,7 @@ package com.app.famcare.view.detailpost
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +16,10 @@ import com.app.famcare.view.booking.BookDailyActivity
 import com.app.famcare.view.booking.BookMonthlyActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.NumberFormat
+import java.util.*
 
 class DetailPostActivity : AppCompatActivity() {
 
@@ -87,10 +91,10 @@ class DetailPostActivity : AppCompatActivity() {
                         textViewAgeDP.text = "${nannyData.age} years old"
                         textViewRateDP.text = nannyData.rate
                         textViewTypeDP.text = nannyData.type
+                        textViewPerHour.text = if (nannyData.type == "daily") "per hour" else "per month"
                         textViewExperienceDP.text = "${nannyData.experience} experiences"
                         textViewLocationDP.text = nannyData.location
-                        textViewSalaryDP.text = nannyData.salary
-
+                        textViewSalaryDP.text = nannyData.pricing.formatToCurrency()
                         skillListLayout.removeAllViews()
                         nannyData.skills.forEach { skill ->
                             val textView = TextView(this@DetailPostActivity).apply {
@@ -124,6 +128,10 @@ class DetailPostActivity : AppCompatActivity() {
         }
     }
 
+    private fun Int.formatToCurrency(): String {
+        val format = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+        return format.format(this)
+    }
 
     private fun toggleBookmark() {
         val db = FirebaseFirestore.getInstance()

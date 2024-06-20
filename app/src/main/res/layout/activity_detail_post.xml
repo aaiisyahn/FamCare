@@ -259,6 +259,15 @@
                         android:textColor="@android:color/black"
                         android:textSize="17sp"
                         tools:text="@string/minimum_salary" />
+                    <TextView
+                        android:id="@+id/textViewPerHour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:fontFamily="@font/montserratsemibold"
+                        android:textColor="@android:color/black"
+                        android:textSize="17sp"
+                        tools:text="per hour" />
 
                 </LinearLayout>
 

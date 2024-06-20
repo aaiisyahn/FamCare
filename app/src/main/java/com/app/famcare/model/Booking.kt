@@ -28,7 +28,8 @@ data class BookingDailyHistory(
     var salary: String = "",
     val type: BookingType = BookingType.DAILY,
     val nannyID: String = "",
-    val totalCost: String = ""
+    val totalCost: String = "",
+    val totalPricing: Long = 0,
 )
 
 data class BookingMonthlyHistory(
@@ -38,7 +39,8 @@ data class BookingMonthlyHistory(
     val endDate: String = "",
     val type: BookingType = BookingType.MONTHLY,
     val nannyID: String = "",
-    val totalCost: String = ""
+    val totalCost: String = "",
+    val totalPricing: Long = 0,
 )
 
 enum class BookingType {

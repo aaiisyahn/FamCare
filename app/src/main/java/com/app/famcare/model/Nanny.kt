@@ -11,7 +11,7 @@ data class Nanny(
     val location: String = "",
     val name: String = "",
     val rate: String = "",
-    val salary: String = "",
+    val pricing: Int = 0,
     val skills: List<String> = listOf(),
     val type: String = "",
     val pict: String = "",
@@ -27,7 +27,7 @@ data class Nanny(
         location = parcel.readString() ?: "",
         name = parcel.readString() ?: "",
         rate = parcel.readString() ?: "",
-        salary = parcel.readString() ?: "",
+        pricing = parcel.readInt(),
         skills = parcel.createStringArrayList() ?: listOf(),
         type = parcel.readString() ?: "",
         pict = parcel.readString() ?: "",
@@ -44,7 +44,7 @@ data class Nanny(
         parcel.writeString(location)
         parcel.writeString(name)
         parcel.writeString(rate)
-        parcel.writeString(salary)
+        parcel.writeInt(pricing)
         parcel.writeStringList(skills)
         parcel.writeString(type)
         parcel.writeString(pict)

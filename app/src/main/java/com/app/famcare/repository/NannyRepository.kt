@@ -66,19 +66,22 @@ class NannyRepository {
                 val nanny = document.toObject(Nanny::class.java).apply {
                     id = document.id
                 }
-                if (nanny.age.lowercase()
-                        .contains(lowercaseQueryText) || nanny.experience.lowercase()
-                        .contains(lowercaseQueryText) || nanny.gender.lowercase()
-                        .contains(lowercaseQueryText) || nanny.location.lowercase()
-                        .contains(lowercaseQueryText) || nanny.name.lowercase()
-                        .contains(lowercaseQueryText) || nanny.rate.lowercase()
-                        .contains(lowercaseQueryText) || nanny.salary.lowercase()
-                        .contains(lowercaseQueryText) || nanny.type.lowercase()
-                        .contains(lowercaseQueryText) || nanny.skills.any {
-                        it.lowercase().contains(lowercaseQueryText)
-                    }
+
+                if (nanny.age.lowercase().contains(lowercaseQueryText) ||
+                    nanny.experience.lowercase().contains(lowercaseQueryText) ||
+                    nanny.gender.lowercase().contains(lowercaseQueryText) ||
+                    nanny.location.lowercase().contains(lowercaseQueryText) ||
+                    nanny.name.lowercase().contains(lowercaseQueryText) ||
+                    nanny.type.lowercase().contains(lowercaseQueryText) ||
+                    nanny.skills.any { it.lowercase().contains(lowercaseQueryText) }
                 ) {
                     result.add(nanny)
+                }
+                else {
+                    val pricingQuery = queryText.toIntOrNull()
+                    if (pricingQuery != null && nanny.pricing == pricingQuery) {
+                        result.add(nanny)
+                    }
                 }
             }
             onSuccess(result)
